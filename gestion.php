@@ -1,3 +1,9 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION["usuario"])) {
+        header('location: login.php');
+    }
+ ?>
 <!DOCTYPE html>
 <html lang="ES">
 <head>
@@ -102,13 +108,13 @@
                 <div class="navbar-header">
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
                 </div>
-                    <ul class="nav navbar-top-links navbar-right">
-                        <li>
-                            <a href="login.html">
-                                <i class="fa fa-sign-out"></i> Log out
-                            </a>
-                        </li>
-                    </ul>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="pull-right">
+                        <a href="php/funciones.php?opc=logout">
+                            <i class="fa fa-sign-out"></i> Salir
+                        </a>
+                    </li>
+                </ul>
 
                 </nav>
             </div>

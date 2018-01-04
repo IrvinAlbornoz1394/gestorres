@@ -1,5 +1,11 @@
-<?php 
-	switch ($_POST['opc']) {
+<?php
+ 
+	if(isset($_POST['opc'])){
+		$opc = $_POST['opc'];
+	}elseif (isset($_GET['opc'])) {
+		$opc = $_GET['opc'];
+	}
+	switch ($opc) {
 		case 'buscar_personas':
 			buscar_personas();
 			break;
@@ -45,6 +51,9 @@
 		case 'estatus_subCat':
 			estatus_subCat();
 			break;
+		case 'logout':
+			logout();
+			break;
 		default:
 			# code...
 			break;
@@ -58,6 +67,13 @@
 			return $mysqli;
 		}
 
+	}
+
+	function logout(){
+		session_start();
+		session_unset();
+		session_destroy();
+		header('location: ../login.php');
 	}
 
 
