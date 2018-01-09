@@ -7,7 +7,7 @@
 #
 # Host: 127.0.01 (MySQL 5.5.5-10.1.25-MariaDB)
 # Base de datos: gestorres
-# Tiempo de Generaci�n: 2018-01-04 05:22:25 +0000
+# Tiempo de Generaci�n: 2018-01-09 19:05:22 +0000
 # ************************************************************
 
 
@@ -1283,7 +1283,7 @@ LOCK TABLES `gestiones` WRITE;
 INSERT INTO `gestiones` (`idGestion`, `fecha_captura`, `fecha_entrega`, `fecha_real_entrega`, `idSolicitante`, `idBeneficiario`, `idCategoria`, `idSubCategoria`, `direccion_entrega`, `idColonia_entrega`, `detalles`, `estatus`, `comentarios_extras`)
 VALUES
 	(1,'0000-00-00','0000-00-00','0000-00-00',NULL,NULL,0,NULL,NULL,NULL,'',0,NULL),
-	(2,'2017-12-15','0000-00-00','0000-00-00',23,34,2,3,'nueva',138,'',1,NULL),
+	(2,'2017-12-15','0000-00-00','0000-00-00',23,34,2,3,'nueva',138,'',2,'                                \n                            fghj'),
 	(3,'2017-12-15','0000-00-00','2017-12-18',23,34,2,3,'nueva',138,'',2,NULL),
 	(4,'2017-12-15','2017-12-20','2017-12-18',23,34,2,3,'nueva',138,'',3,NULL),
 	(5,'2017-12-15','2017-12-20','2017-12-18',23,34,2,3,'nueva',138,'',0,NULL),
@@ -1299,7 +1299,10 @@ VALUES
 	(15,'2017-12-15','2018-01-03',NULL,27,23,2,3,'Ã±olkjhgbjnmk',3,'awsdadas',1,NULL),
 	(16,'2017-12-15','2018-02-05',NULL,29,29,1,2,'dlskmdspmds',32,'',1,NULL),
 	(17,'2017-12-22','2017-12-20','0000-00-00',27,27,1,1,'98767890',3,'comentarios',2,'sss'),
-	(18,'2017-12-23','2017-12-18','0000-00-00',29,29,2,4,'dlskmdspmds',32,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores vel nisi velit excepturi? Quos labore, sint praesentium aperiam dolore hic voluptatibus nobis perferendis rem fuga excepturi est labor',2,'                                \n                            nuevo');
+	(18,'2017-12-23','2017-12-18','0000-00-00',29,29,2,4,'dlskmdspmds',32,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores vel nisi velit excepturi? Quos labore, sint praesentium aperiam dolore hic voluptatibus nobis perferendis rem fuga excepturi est labor',3,'elimnada por x motivo'),
+	(19,'2018-01-09','2018-01-16','0000-00-00',29,29,2,6,'dlskmdspmds',33,'hjiop',2,''),
+	(20,'2018-01-22','2018-01-25','0000-00-00',29,29,1,9,'dlskmdspmds',32,'sdasdds',2,''),
+	(21,'2018-01-09','2018-02-06','0000-00-00',29,29,2,6,'dlskmdspmds',32,'asds',3,'elimnada por x motivo');
 
 /*!40000 ALTER TABLE `gestiones` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1479,7 +1482,7 @@ VALUES
 	(6,'nueva','',2,1),
 	(7,'nueva','',0,1),
 	(8,'ssss','',0,1),
-	(9,'sss','',1,1),
+	(9,'aaaasss','',1,1),
 	(10,'sss','',0,1),
 	(11,'ss','',1,0),
 	(12,'s','',0,1),
@@ -1489,7 +1492,9 @@ VALUES
 	(16,'sss','',0,1),
 	(17,'ss','',1,0),
 	(18,'sss','',2,0),
-	(19,'nuevaaaa','',2,0);
+	(19,'nuevaaaa','',2,0),
+	(20,'sub categoria','',9,1),
+	(21,'nnn sss','',2,1);
 
 /*!40000 ALTER TABLE `subcat` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1520,36 +1525,39 @@ VALUES
 	(4,'Equipo OrtopÃ©dicoo','',0),
 	(5,'Equipo','',0),
 	(6,'nuevooo','',0),
-	(7,'','',0);
+	(8,'nu','',1),
+	(7,'','',0),
+	(9,'categoria','',1);
 
 /*!40000 ALTER TABLE `tipo_gestion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Volcado de tabla usuario
+# Volcado de tabla usuarios
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `usuario`;
+DROP TABLE IF EXISTS `usuarios`;
 
-CREATE TABLE `usuario` (
+CREATE TABLE `usuarios` (
   `idusuario` int(11) NOT NULL AUTO_INCREMENT,
   `nomusuario` varchar(30) NOT NULL,
   `password` varchar(80) NOT NULL,
   `idrol` int(11) NOT NULL,
+  `estatus` int(11) DEFAULT NULL,
   PRIMARY KEY (`idusuario`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-LOCK TABLES `usuario` WRITE;
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+LOCK TABLES `usuarios` WRITE;
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 
-INSERT INTO `usuario` (`idusuario`, `nomusuario`, `password`, `idrol`)
+INSERT INTO `usuarios` (`idusuario`, `nomusuario`, `password`, `idrol`, `estatus`)
 VALUES
-	(1,'Erika','2ee3385315ca7a9fb81f01dda93bbb59',2),
-	(2,'Dafne','e10adc3949ba59abbe56e057f20f883e',3),
-	(3,'admin','e10adc3949ba59abbe56e057f20f883e',2),
-	(4,'irvin','cb06868bab236ab6a16bf1d86a788e29',2);
+	(1,'Erika','2ee3385315ca7a9fb81f01dda93bbb59',2,NULL),
+	(2,'Dafne','e10adc3949ba59abbe56e057f20f883e',3,NULL),
+	(3,'admin','e10adc3949ba59abbe56e057f20f883e',2,NULL),
+	(4,'irvin','cb06868bab236ab6a16bf1d86a788e29',2,1);
 
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
