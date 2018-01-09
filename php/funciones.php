@@ -387,11 +387,13 @@
 		$success = true;
 		if($estatus == 2){
 			$message = "Gestion Finalizada Correcamente";
+			$fecha_real = 'NOW()';
 		}
 		if($estatus == 3){
 			$message = "Gestion Eliminada Correcamente";
+			$fecha_real = "''";
 		}
-		$query = "UPDATE gestiones SET estatus = '$estatus', comentarios_extras = '$comentarios' Where idGestion = '$id'";
+		$query = "UPDATE gestiones SET fecha_real_entrega = $fecha_real, estatus = '$estatus', comentarios_extras = '$comentarios' Where idGestion = '$id'";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
