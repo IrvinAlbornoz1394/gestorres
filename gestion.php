@@ -189,6 +189,7 @@
                                                     <th>Direccion</th>
                                                     <th>Colonia</th>
                                                     <th>Cve Elector</th>
+                                                    <th width="10%">Militante</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -299,10 +300,34 @@
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-2">
                                             <div class="form-group">
-                                                <label class="font-noraml">Dirección de entrega</label>
-                                                <input type="text" class="form-control direccion_entrega" name="direccion_entrega" required>
+                                                <label class="font-noraml">calle</label>
+                                                <input type="text" class="form-control calle" name="calle" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Num Ext.</label>
+                                                <input type="text" class="form-control num_ext" name="num_ext" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Num Int.</label>
+                                                <input type="text" class="form-control num_int" name="num_int" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Cruzam. 1</label>
+                                                <input type="text" class="form-control cruzamiento_1" name="cruzamiento_1" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Cruzam. 2</label>
+                                                <input type="text" class="form-control cruzamiento_2" name="cruzamiento_2" required>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -318,7 +343,7 @@
                                             <div class="form-group">
                                                 <label class="font-noraml">Estatus</label>
                                                 <div class="input-group">
-                                                <select data-placeholder="Choose a Country..." class="chosen-select" name="estatus" style="width:200px;" tabindex="2">
+                                                <select data-placeholder="Cargando" class="chosen-select" name="estatus" style="width:200px;" tabindex="2">
                                                     <option value="1">Pediente</option>
                                                     <option value="2">Entregada</option>
                                                     <option value="3">Cancelada</option>
@@ -339,7 +364,7 @@
                                             <div class="form-group">
                                                 <label class="font-noraml">SubCategoria</label>
                                                 <div class="input-group">
-                                                <select data-placeholder="Choose a Country..." class="chosen-select select_subCategoria" name="subcategoria" style="width: 300px;" required="">
+                                                <select data-placeholder="Choose a Country..." class="chosen-select select_subCategoria" name="subcategoria" style="width: 300px;" required>
                                                     
                                                 </select>
                                                 </div>
@@ -347,11 +372,27 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Evento</label>
+                                                <div class="input-group">
+                                                <select data-placeholder="Choose a Country..." name="evento" class="chosen-select select_evento" style="width: 350px;" required>
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="font-noraml">Comentarios</label>
                                                 <textarea name="comentarios" id=""  rows="5" class="form-control"></textarea>
                                             </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="map" style="width: 100%;height: 200px;"></div>
+                                            <input type="hidden" name="lat" class="lat_map">
+                                            <input type="hidden" name="lng" class="lng_map">
                                         </div>
                                         <div class="col-md-12">
                                             <button type="button" class="btn btn-outline btn-default">
@@ -431,6 +472,7 @@
                                         <th>Direccion</th>
                                         <th>Colonia</th>
                                         <th>Cve Elector</th>
+                                        <th width="10%">Militante</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -504,24 +546,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label>Domicilio</label>
-                                    <input type="text" class="form-control" name="domicilio">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group group_col">
-                                    <label class="font-noraml">Colonia</label>
-                                    <div class="input-group">
-                                        <select class="chosen-select select_colonia" style="width:200px;" tabindex="2" name="colonia">
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 col-xs-6">
+                            <div class="col-md-2 col-xs-6">
                                 <div class="form-group">
                                     <label>Telefono</label>
                                     <input type="text" placeholder="" class="form-control" name="telefono">
@@ -536,7 +561,61 @@
                             <div class="col-md-3 col-xs-9">
                                 <div class="form-group">
                                     <label>Ocupacion</label>
-                                    <input type="text" placeholder="" class="form-control" name="ocupacion">
+                                    <select class="chosen-select select_ocupacion" id="id_ocupacion" tabindex="2" name="ocupacion" style="width: 100%;">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                             <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="font-noraml">calle</label>
+                                    <input type="text" class="form-control calle" name="calle" required>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="font-noraml">Num Ext.</label>
+                                    <input type="text" class="form-control num_ext" name="num_ext" required>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label class="font-noraml">N. Int.</label>
+                                    <input type="text" class="form-control num_int" name="num_int">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="font-noraml">Cruzam. 1</label>
+                                    <input type="text" class="form-control cruzamiento_1" name="cruzamiento_1">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="font-noraml">Cruzam. 2</label>
+                                    <input type="text" class="form-control cruzamiento_2" name="cruzamiento_2" >
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group group_col">
+                                    <label class="font-noraml">Colonia</label>
+                                    <div class="input-group">
+                                        <select class="chosen-select select_colonia" style="width:100%;" tabindex="2" name="colonia">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="font-noraml center-block text-center">Militante</label>
+                                <div class="switch" style="margin-left: 20%;">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" class="onoffswitch-checkbox" id="es_militante" class="es_militante" name="es_militante">
+                                        <label class="onoffswitch-label" for="es_militante">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -557,6 +636,7 @@
             </div>
         </div>
     </div>
+
 
 
     <!-- Mainly scripts -->
@@ -624,9 +704,10 @@
 
     <script>
 
-
+        var map;
         var categorias;
         var subcategorias;  
+        var marker;
 
         $(document).ready(function(){
             $(".lista_personas").hide();
@@ -635,8 +716,11 @@
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
+            get_eventos();
             get_cat_subCat();
             get_colonias();
+            get_ocupaciones();
+            
 
 
             $(".form_beneficiario").on('submit',function(e){
@@ -683,7 +767,6 @@
                 e.preventDefault();
                 var q = $(".es_beneficiario").val();
                 var datos = $(this).serialize();
-                alert(datos);
                 swal({
                     title: "La informacion es correcta?",
                     text: "Verifivar información",
@@ -736,7 +819,7 @@
 
             $(".btn_nva_persona").click(function(){
                 $(".origen").val("personas");
-                $(".seleccionado").iCheck('update')
+                $(".seleccionado").iCheck('update');
                 $("#modal_nva_persona").modal('show');
 
             });
@@ -749,6 +832,7 @@
 
             $('#modal_nva_persona').on('shown.bs.modal', function () {
               $('.select_colonia', this).chosen('destroy').chosen();
+              $('.select_ocupacion', this).chosen('destroy').chosen();
             });
 
 
@@ -796,12 +880,18 @@
             $(".id_beneficiario").val(json.id);
             $(".nombre_solicitante").val(json.nombres+" "+json.apellidopat+" "+json.apellidomat);
             $(".clave_solicitante").val(json.cve_elector);
-            $(".direccion_entrega").val(json.direccion);
+            $(".calle").val(json.calle);
+            $(".num_int").val(json.num_int);
+            $(".num_ext").val(json.num_ext);
+            $(".cruzamiento_1").val(json.cruzamiento1);
+            $(".cruzamiento_2").val(json.cruzamiento2);
             $('#id_colonia_gestion option[value='+json.id_colonia+']').attr("selected",true);
             $("#id_colonia_gestion").trigger("chosen:updated");
             $(".onoffswitch").trigger('click');
             $(".lista_personas").slideToggle('slow');
             $(".div_gestion").slideToggle('slow');
+            google.maps.event.trigger(map, 'resize');
+            set_marker();
         };
 
         function nva_gestion(datos){
@@ -867,13 +957,16 @@
                             $(".form_nueva_persona")[0].reset();
                         }else{
                             console.log("no usar");
-                            var datos = "opc=buscar_personas&nombres="+json.info.nombres+"&ap_paterno="+json.info.apellidopat+"&cve_elector="+json.info.cve_elector;
-                            buscar_personas(datos,'personas');
+                            if(json.info.origen == 'personas'){
+                                var datos = "opc=buscar_personas&nombres="+json.info.nombres+"&ap_paterno="+json.info.apellidopat+"&cve_elector="+json.info.cve_elector;
+                                buscar_personas(datos,'personas');
+                            }
                         }
                     }else{
                         swal ( "Oops" ,  success.message ,  "error" );
                     }
                     console.log(json);
+                    $(".form_nueva_persona")[0].reset();
                 },
                 error:function(error){
                     swal ( "Oops" ,  "Ocurrio un error en la consulta" ,  "error" );
@@ -904,6 +997,50 @@
             })
 
         }
+
+        function get_ocupaciones(){
+            $.ajax({
+                url:'php/funciones.php',
+                data: "opc=get_ocupaciones",
+                dataType:'json',
+                type:'post',
+                success: function(json){
+                    if(json.success){
+                        var ocup = "<option val='' disabled selected>Selecciona una opcion</option>";
+                        for (var i = 0; i < json.data.length; i++) {
+                            ocup += "<option value="+json.data[i].id+">"+json.data[i].nombre+"</option>";
+                        }
+                        $(".select_ocupacion").html(ocup).trigger("chosen:updated");
+                    }
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            });
+        }
+
+        function get_eventos(){
+            $.ajax({
+                url:'php/funciones.php',
+                data: "opc=get_eventos",
+                dataType:'json',
+                type:'post',
+                success: function(json){
+                    if(json.success){
+                        var ocup = "<option val='' disabled selected>Selecciona una opcion</option>";
+                        for (var i = 0; i < json.data.length; i++) {
+                            ocup += "<option value="+json.data[i].id+">"+json.data[i].nombre+"</option>";
+                        }
+                        $(".select_evento").html(ocup).trigger("chosen:updated");
+                    }
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            });
+        }
+
+
 
         function get_cat_subCat(){
             $.ajax({
@@ -960,7 +1097,11 @@
                                   + "<td>"+json.data[i].direccion+"</td>"
                                   + "<td>"+json.data[i].colonia+"</td>"
                                   + "<td>"+json.data[i].cve_elector+"</td>"
-                                  + "<td>"
+                                  +"<td>";
+                                    if(json.data[i].militante == 1){
+                                        html+="<i class='fa fa-check-square'></i></td>";
+                                    }
+                                  html+= "<td>"
                                     +"<button class='btn center-block btn-xs  btn-bitbucket btn-success'";
                                     if(tabla == 'personas'){
                                         html +=" onclick='set_gestion("+JSON .stringify(json.data[i])+");'>"
@@ -1030,6 +1171,54 @@
             $(selector).chosen(config[selector]);
         }
     </script>
+    <script>
+      function initMap() {
+        var uluru = {lat: 21.0127021, lng: -89.692326};
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: uluru
+        });
+      }
+
+    function set_marker(){
+        var col = $('#id_colonia_gestion option:selected').text();
+        var url = 'https://maps.googleapis.com/maps/api/geocode/json?address='+col+',yucatan&key=AIzaSyBn5leYbE_WFaLGF7yCiYXSBVNUZz02qZ4';
+        console.log(url);
+        $.ajax({
+            url: url,
+            dataType:'json',
+            success:function(json){
+                console.log(json);
+                var location = json.results[0].geometry.location;
+                marker = new google.maps.Marker({
+                    draggable: true,
+                    title:"Arrastrame al punto deseado",
+                    position: location,
+                    map: map
+                });
+                get_position(marker);
+                google.maps.event.addListener(marker, 'dragend', function() {
+                    get_position(marker);
+                });
+                map.setZoom(16);
+                map.setCenter(location);
+            },
+            error:function(error){
+                console.log(error);
+            }
+        });
+    }
+
+    function get_position(marker){
+        var markerLatLng = marker.getPosition();
+        $(".lat_map").val(markerLatLng.lat());
+        $(".lng_map").val(markerLatLng.lng());
+    }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn5leYbE_WFaLGF7yCiYXSBVNUZz02qZ4&callback=initMap">
+    </script>
+    <!--<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyBBzYyqUP5RqA_CKw3nceyYZ2PTgvlQcII&callback=initMap"></script>-->
 
 </body>
 

@@ -51,6 +51,12 @@
 		case 'estatus_subCat':
 			estatus_subCat();
 			break;
+		case 'get_ocupaciones':
+			get_ocupaciones();
+			break;
+		case 'get_eventos':
+			get_eventos();
+			break;
 		case 'logout':
 			logout();
 			break;
@@ -111,10 +117,15 @@
 								'fecha_nac' => $row['fecha_nac'],
 								'telefono' => $row['telefono'],
 								'celular' => $row['celular'],
-								'direccion' => $row['direccion'],
+								'calle' => $row['calle'],
+								'num_int' => $row['num_int'],
+								'num_ext' => $row['num_ext'],
+								'cruzamiento1' => $row['cruzamiento_1'],
+								'cruzamiento2' => $row['cruzamiento_2'],
 								'id_colonia' => $row['id_colonia'],
 								'colonia' => $row['prefijo']." ".$row['nombre_colonia'],
-								'cve_elector' => $row['clave_elec']
+								'cve_elector' => $row['clave_elec'],
+								'militante' => $row['es_militante']
 							);
 			}
 			$json = array('success' => true,
@@ -205,6 +216,60 @@
 		echo json_encode($json);
 	}
 
+	function get_ocupaciones(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		$success = true;
+		$message = "OK";
+		$ocupaciones = [];
+		$query = "SELECT * FROM ocupaciones";
+		$result = $mysqli->query($query);
+		if(!$result){
+			$success = false;
+			$message = "No se encontraron resultados de tipo de gestion";
+		}
+		while ($row = mysqli_fetch_array($result)) {
+			$ocupaciones[] = array('id' => $row['id'],
+						  'nombre' => $row['nombre_ocupacion']);
+		}
+		$json = array('success' => $success,
+					  'message' => $message,
+					  'data' => $ocupaciones);
+		echo json_encode($json);
+	}
+
+	function get_eventos(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		$success = true;
+		$message = "OK";
+		$ocupaciones = [];
+		$query = "SELECT * FROM eventos Where estatus = 1";
+		$result = $mysqli->query($query);
+		if(!$result){
+			$success = false;
+			$message = "No se encontraron resultados de tipo de gestion";
+		}
+		while ($row = mysqli_fetch_array($result)) {
+			$eventos[] = array('id' => $row['id'],
+						  'nombre' => $row['nombre_evento']);
+		}
+		$json = array('success' => $success,
+					  'message' => $message,
+					  'data' => $eventos);
+		echo json_encode($json);
+	}
+
 	function nva_persona(){
 		$mysqli = conexion();
 		$nombres = $_POST['nombres'];
@@ -215,12 +280,21 @@
 		$aux = explode("/", $fecha_nac);
 		$fecha_nac = $aux[2]."-".$aux[1]."-".$aux[0];
 		$sexo = $_POST['sexo'];
-		$domicilio = $_POST['domicilio'];
+		$calle = $_POST['calle'];
+		$num_ext = $_POST['num_ext'];
+		$num_int = $_POST['num_int'];
+		$cruzamiento_1 = $_POST['cruzamiento_1'];
+		$cruzamiento_2 = $_POST['cruzamiento_2'];
 		$colonia = $_POST['colonia'];
 		$telefono = $_POST['telefono'];
 		$celular = $_POST['celular'];
 		$ocupacion = $_POST['ocupacion'];
 		$origen = $_POST['origen'];
+		$militante = 0;
+		if(isset($_POST['es_militante'])){
+			$militante = 1;
+		}
+
 		$usar = false;
 		$info = "";
 		$success = true;
@@ -232,7 +306,7 @@
 			exit();
 		}
 
-		$query = "INSERT INTO personas VALUES ('','$nombres','$apellidopat','$apellidomat','$fecha_nac','','$sexo','$telefono','$celular','$domicilio','','$cve_elector',NOW(),'$ocupacion','$colonia') ON DUPLICATE KEY UPDATE nombres = '$nombres', apellidopat = '$apellidopat', apellidomat = '$apellidomat', fecha_nac = '$fecha_nac', telefono = '$telefono', celular = '$celular',direccion = '$domicilio', ocupacion = '$ocupacion', id_colonia = '$colonia'";
+		$query = "INSERT INTO personas VALUES ('','$nombres','$apellidopat','$apellidomat','$fecha_nac',0,'$sexo','$telefono','$celular','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$cve_elector',NOW(),'$ocupacion','$colonia',$militante) ON DUPLICATE KEY UPDATE nombres = '$nombres', apellidopat = '$apellidopat', apellidomat = '$apellidomat', fecha_nac = '$fecha_nac', telefono = '$telefono', celular = '$celular', id_ocupacion = '$ocupacion',calle = ''$calle,num_ext = '$num_ext',num_int = '$num_int',cruzamiento_1 = '$cruzamiento_1', cruzamiento2 = '$cruzamiento_2',id_colonia = '$colonia', es_militante = $militante";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "NO se pudo crear la información";
@@ -245,7 +319,11 @@
 						  'apellidopat' => $apellidopat,
 						  'apellidomat' => $apellidomat,
 						  'cve_elector' => $cve_elector,
-						  'direccion' => $domicilio,
+						  'calle' => $calle,
+						  'num_int' => $num_int,
+						  'num_ext' => $num_ext,
+						  'cruzamiento1' => $cruzamiento_1,
+						  'cruzamiento2' => $cruzamiento_2,
 						  'id_colonia' => $colonia,
 						  'origen' => $origen
 						);
@@ -270,12 +348,20 @@
 		$fecha_entrega = $_POST['fecha_entrega'];
 		$aux2 = explode("/", $fecha_entrega);
 		$fecha_entrega = $aux2[2]."-".$aux2[0]."-".$aux2[1];
-		$direccion = $_POST['direccion_entrega'];
+		$calle = $_POST['calle'];
+		$num_ext = $_POST['num_ext'];
+		$num_int = $_POST['num_int'];
+		$cruzamiento_1 = $_POST['cruzamiento_1'];
+		$cruzamiento_2 = $_POST['cruzamiento_2'];
 		$id_colonia = $_POST['id_colonia_gestion'];
 		$estatus = $_POST['estatus'];
 		$cat = $_POST['categoria'];
 		$subcat = $_POST['subcategoria'];
 		$comentarios = $_POST['comentarios'];
+		$id_evento = $_POST['evento'];
+		$lat = $_POST['lat'];
+		$lng = $_POST['lng'];
+
 		if(isset($_POST['es_beneficiario'])){
 			$id_beneficiario = $id_solicitante;
 		}
@@ -285,7 +371,7 @@
 			echo json_encode($json);
 			exit();
 		}
-		$query = "INSERT INTO gestiones VALUES ('','$fecha_captura','$fecha_entrega','','$id_solicitante','$id_beneficiario','$cat','$subcat','$direccion','$id_colonia','$comentarios','$estatus','')";
+		$query = "INSERT INTO gestiones VALUES ('','$fecha_captura','$fecha_entrega','','$id_solicitante','$id_beneficiario','$cat','$subcat','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$id_colonia','$comentarios','$estatus','','$id_evento','$lat','$lng')";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "NO se guarda la informacion intentalo mas tarde.";

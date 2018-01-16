@@ -282,6 +282,179 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal inmodal" id="modal_editar" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content animated bounceInRight">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <i class="fa fa-laptop modal-icon"></i>
+                            <h4 class="modal-title">Modal title</h4>
+                            <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" class="form_gestion form">
+                                    <div class="row">
+                                        <div class="col-md-12 col-xs-12">
+                                            
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h3>
+                                                Informacion del solicitante
+                                            </h3>
+                                        </div>
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Nombre completo</label>
+                                                <input type="text" class="form-control nombre_solicitante" name="nombre_solicitante" readonly>
+                                                <input type="hidden" name="id_solicitante" class="id_solicitante" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Clave de elector</label>
+                                                <input type="text" class="form-control clave_solicitante" name="clave_solicitante" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="font-noraml">La persona es beneficiario</label>
+                                            <div class="switch" style="margin-left: 20%;">
+                                                <div class="onoffswitch">
+                                                    <input type="checkbox" checked class="onoffswitch-checkbox" id="es_beneficiario" class="es_beneficiario" name="es_beneficiario">
+                                                    <label class="onoffswitch-label" for="es_beneficiario">
+                                                        <span class="onoffswitch-inner"></span>
+                                                        <span class="onoffswitch-switch"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row" id="beneficiario" style="display: none;">
+                                        <div class="col-md-12">
+                                            <h3>
+                                                Informacion del Beneficiario
+                                            </h3>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Nombre completo</label>
+                                                <input type="text" class="form-control nombre_beneficiario" name="nombre_beneficiario" readonly>
+                                                <input type="hidden" name="id_beneficiario" class="id_beneficiario" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Clave de elector</label>
+                                                <input type="text" class="form-control clave_beneficiario" name="clave_beneficiario" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Buscar</label>
+                                                <div class="">
+                                                    <button class="btn btn-success open_modal_busqueda" type="button" style="bottom: 0px;">...</button>    
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h3>
+                                                Informacion de la gestión
+                                            </h3>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" id="data_1">
+                                                <label class="font-noraml">Fecha de Captura</label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control fecha_captura fechas" name="fecha_captura" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" id="data_1">
+                                                <label class="font-noraml">Fecha de entrega</label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control fecha_entrega fechas" name="fecha_entrega" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Dirección de entrega</label>
+                                                <input type="text" class="form-control direccion_entrega" name="direccion_entrega" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Colonia/Fracc.</label>
+                                                <select class="chosen-select select_colonia" id="id_colonia_gestion" style="width:200px;" tabindex="2" name="id_colonia_gestion">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Estatus</label>
+                                                <div class="input-group">
+                                                <select data-placeholder="Choose a Country..." class="chosen-select" name="estatus" style="width:200px;" tabindex="2">
+                                                    <option value="1">Pediente</option>
+                                                    <option value="2">Entregada</option>
+                                                    <option value="3">Cancelada</option>
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Categoria</label>
+                                                <div class="input-group">
+                                                <select data-placeholder="Choose a Country..." name="categoria" class="chosen-select select_categoria" style="width: 300px;" required>
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="font-noraml">SubCategoria</label>
+                                                <div class="input-group">
+                                                <select data-placeholder="Choose a Country..." class="chosen-select select_subCategoria" name="subcategoria" style="width: 300px;" required="">
+                                                    
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Comentarios</label>
+                                                <textarea name="comentarios" id=""  rows="5" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="button" class="btn btn-outline btn-default">
+                                                Cancelar 
+                                            </button>
+                                            <button class="btn btn-primary dim pull-right" type="submit">
+                                                Guardar <i class="fa fa-save"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="footer">
                 <div class="pull-right">
                     10GB of <strong>250GB</strong> Free.
@@ -636,6 +809,8 @@
 
         function editar_gestion(json){
             console.log(json);
+            $(".chosen-container").css({'width':'100%'});
+            $("#modal_editar").modal('show');
         }
 
         function finalizar_gestion(json){
@@ -696,6 +871,19 @@
                     swal("Error!", "Error en el sistema", "error");
                 }
             })
+        }
+
+
+
+         var config = {
+                '.chosen-select'           : {},
+                '.chosen-select-deselect'  : {allow_single_deselect:true},
+                '.chosen-select-no-single' : {disable_search_threshold:10},
+                '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+                '.chosen-select-width'     : {width:"95%"}
+                }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
         }
     </script>
 
