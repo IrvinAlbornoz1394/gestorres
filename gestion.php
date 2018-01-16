@@ -883,8 +883,8 @@
             $(".calle").val(json.calle);
             $(".num_int").val(json.num_int);
             $(".num_ext").val(json.num_ext);
-            $(".cruzamiento_1").val(json.cruzamiento1);
-            $(".cruzamiento_2").val(json.cruzamiento2);
+            $(".cruzamiento_1").val(json.cruzamiento_1);
+            $(".cruzamiento_2").val(json.cruzamiento_2);
             $('#id_colonia_gestion option[value='+json.id_colonia+']').attr("selected",true);
             $("#id_colonia_gestion").trigger("chosen:updated");
             $(".onoffswitch").trigger('click');
@@ -1069,7 +1069,11 @@
             $(".id_beneficiario").val(json.id);
             $(".nombre_beneficiario").val(json.nombres+" "+json.apellidopat+" "+json.apellidomat);
             $(".clave_beneficiario").val(json.cve_elector);
-            $(".direccion_entrega").val(json.direccion);
+            $(".calle").val(json.calle);
+            $(".num_int").val(json.num_int);
+            $(".num_ext").val(json.num_ext);
+            $(".cruzamiento_1").val(json.cruzamiento_1);
+            $(".cruzamiento_2").val(json.cruzamiento_2);
             //$(".colonia_frac").val(json.colonia);
             $("#modal_busqueda").modal('hide');
             $('#id_colonia_gestion option[value='+json.id_colonia+']').attr("selected",true);
@@ -1092,9 +1096,13 @@
                         $('.form_beneficiario')[0].reset();
                         var html = "";
                         for (var i = 0; i < json.data.length; i++) {
+                            var num_int = "";
+                            if(json.data[i].num_int !== ""){
+                                num_int = " Interior "+json.data[i].num_int;
+                            }
                             html += "<tr>"
                                   + "<td>"+json.data[i].nombres+" "+json.data[i].apellidopat+" "+json.data[i].apellidomat+"</td>"
-                                  + "<td>"+json.data[i].direccion+"</td>"
+                                  + "<td> Calle "+json.data[i].calle+" No. "+json.data[i].num_int+num_int+" por "+json.data[i].cruzamiento_1+" y "+json.data[i].cruzamiento_2+"</td>"
                                   + "<td>"+json.data[i].colonia+"</td>"
                                   + "<td>"+json.data[i].cve_elector+"</td>"
                                   +"<td>";

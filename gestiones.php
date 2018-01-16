@@ -175,6 +175,7 @@
                                                 <th>Fecha alta</th>
                                                 <th>Direccion entrega</th>
                                                 <th>Estatus</th>
+                                                <th>Indicador</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -603,24 +604,25 @@
 
                             switch(json.data[i].estatus) {
                                 case '1':
-                                label_estatus = "<span class='label label-success'>Pendiente</span>"
+                                label_estatus = "Pendiente";
                                     break;
                                 case '2':
-                                    label_estatus = "<span class='label label-primary'>Entregado</span>"
+                                    label_estatus = "Entregado";
                                     break;
                                 case '3':
-                                    label_estatus = "<span class='label label-danger'>Cancelado</span>"
+                                    label_estatus = "Cancelado";
                                     break;
                                 default:
-                                    label_estatus = "<span class='label label-default'>Desconocido</span>"
+                                    label_estatus = "Desconocido";
                             }
 
                             html += "<tr>"
                                   + "<td>"+json.data[i].subcat+"</td>"
                                   + "<td>"+json.data[i].solicitante+"</td>"
                                   + "<td>"+fa+"</td>"
-                                  + "<td>"+json.data[i].direccion_entrega+" "+json.data[i].colonia+"</td>"
-                                  + "<td>"+label_estatus+"</td>"
+                                  + "<td> Calle "+json.data[i].calle+" No. "+json.data[i].num_int+num_int+" por "+json.data[i].cruzamiento_1+" y "+json.data[i].cruzamiento_2+" "+json.data[i].colonia+"</td>"
+                                  + "<td><span class='label label-default'>"+label_estatus+"</span></td>"
+                                  + "<td></td>"
                                   + '<td>'
                                         +'<div class="btn-group">'
                                             +'<button data-toggle="dropdown" class="btn btn-default btn-xs dropdown-toggle" aria-expanded="false">Accion <span class="caret"></span></button>'
@@ -702,25 +704,29 @@
 
                             switch(json.data[i].estatus) {
                                 case '1':
-                                label_estatus = "<span class='label label-success'>Pendiente</span>"
+                                label_estatus = "Pendiente";
                                     break;
                                 case '2':
-                                    label_estatus = "<span class='label label-primary'>Entregado</span>"
+                                    label_estatus = "Entregado";
                                     break;
                                 case '3':
-                                    label_estatus = "<span class='label label-danger'>Cancelado</span>"
+                                    label_estatus = "Cancelado";
                                     break;
                                 default:
-                                    label_estatus = "<span class='label label-default'>Desconocido</span>"
+                                    label_estatus = "Desconocido";
                             }
 
+                            if(json.data[i].num_int !== ""){
+                                num_int = " Interior "+json.data[i].num_int;
+                            }
 
                             html += "<tr>"
                                   + "<td>"+json.data[i].subcat+"</td>"
                                   + "<td>"+json.data[i].solicitante+"</td>"
                                   + "<td>"+fa+"</td>"
-                                  + "<td>"+json.data[i].direccion_entrega+" "+json.data[i].colonia+"</td>"
-                                  + "<td>"+label_estatus+"</td>"
+                                  + "<td> Calle "+json.data[i].calle+" No. "+json.data[i].num_int+num_int+" por "+json.data[i].cruzamiento_1+" y "+json.data[i].cruzamiento_2+" "+json.data[i].colonia+"</td>"
+                                  + "<td><span class='label label-default'>"+label_estatus+"</span></td>"
+                                  + "<td></td>"
                                   + '<td>'
                                         +'<div class="btn-group">'
                                             +'<button data-toggle="dropdown" class="btn btn-default btn-xs dropdown-toggle" aria-expanded="false">Accion <span class="caret"></span></button>'
