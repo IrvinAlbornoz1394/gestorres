@@ -237,7 +237,7 @@
                                             <label class="font-noraml">La persona es beneficiario</label>
                                             <div class="switch" style="margin-left: 20%;">
                                                 <div class="onoffswitch">
-                                                    <input type="checkbox" checked class="onoffswitch-checkbox" id="es_beneficiario" class="es_beneficiario" name="es_beneficiario">
+                                                    <input type="checkbox" class="onoffswitch-checkbox es_beneficiario" id="es_beneficiario"  name="es_beneficiario">
                                                     <label class="onoffswitch-label" for="es_beneficiario">
                                                         <span class="onoffswitch-inner"></span>
                                                         <span class="onoffswitch-switch"></span>
@@ -247,7 +247,7 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="row" id="beneficiario" style="display: none;">
+                                    <div class="row" id="beneficiario">
                                         <div class="col-md-12">
                                             <h3>
                                                 Informacion del Beneficiario
@@ -284,18 +284,18 @@
                                             </h3>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="form-group" id="data_1">
+                                            <div class="form-group">
                                                 <label class="font-noraml">Fecha de Captura</label>
-                                                <div class="input-group date">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control fecha_captura fechas" name="fecha_captura" required>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" data-mask="99/99/9999"  class="form-control fecha_entrega" name="fecha_captura">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="form-group" id="data_1">
+                                            <div class="form-group">
                                                 <label class="font-noraml">Fecha de entrega</label>
-                                                <div class="input-group date">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control fecha_entrega fechas" name="fecha_entrega" required>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" data-mask="99/99/9999"  class="form-control fecha_entrega" name="fecha_entrega">
                                                 </div>
                                             </div>
                                         </div>
@@ -303,19 +303,19 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label class="font-noraml">calle</label>
-                                                <input type="text" class="form-control calle" name="calle" required>
+                                                <input type="text" class="form-control calle form_domicilio" name="calle" required>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label class="font-noraml">Num Ext.</label>
-                                                <input type="text" class="form-control num_ext" name="num_ext" required>
+                                                <input type="text" class="form-control num_ext form_domicilio" name="num_ext" required>
                                             </div>
                                         </div>
                                         <div class="col-md-1">
                                             <div class="form-group">
                                                 <label class="font-noraml">Num Int.</label>
-                                                <input type="text" class="form-control num_int" name="num_int" required>
+                                                <input type="text" class="form-control num_int" name="num_int">
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -333,7 +333,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label class="font-noraml">Colonia/Fracc.</label>
-                                                <select class="chosen-select select_colonia" id="id_colonia_gestion" style="width:200px;" tabindex="2" name="id_colonia_gestion">
+                                                <select class="chosen-select select_colonia select_colonia_gestion" id="id_colonia_gestion" style="width:200px;" tabindex="2" name="id_colonia_gestion">
                                                 </select>
                                             </div>
                                         </div>
@@ -394,12 +394,14 @@
                                             <input type="hidden" name="lat" class="lat_map">
                                             <input type="hidden" name="lng" class="lng_map">
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-12">
+                                            <button class="btn btn-primary dim" type="submit">
+                                                Guardar <i class="fa fa-save"></i></button>
                                             <button type="button" class="btn btn-outline btn-default">
                                                 Cancelar 
                                             </button>
-                                            <button class="btn btn-primary dim pull-right" type="submit">
-                                                Guardar <i class="fa fa-save"></i></button>
                                         </div>
                                     </div>
                                 </form>
@@ -537,7 +539,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-1 col-xs-3">
+                            <div class="col-md-2 col-xs-3">
                                 <div class="form-group">
                                     <label>Sexo</label>
                                     <select name="sexo" id="" class="form-control">
@@ -546,7 +548,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-2 col-xs-6">
+                            <div class="col-md-3 col-xs-6">
                                 <div class="form-group">
                                     <label>Telefono</label>
                                     <input type="text" placeholder="" class="form-control" name="telefono">
@@ -558,52 +560,54 @@
                                     <input type="text" placeholder="" class="form-control" name="celular">
                                 </div>
                             </div>
-                            <div class="col-md-3 col-xs-9">
-                                <div class="form-group">
-                                    <label>Ocupacion</label>
-                                    <select class="chosen-select select_ocupacion" id="id_ocupacion" tabindex="2" name="ocupacion" style="width: 100%;">
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
-                             <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="font-noraml">calle</label>
-                                    <input type="text" class="form-control calle" name="calle" required>
+                                    <input type="text" class="form-control calle_persona" name="calle" required>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="font-noraml">Num Ext.</label>
-                                    <input type="text" class="form-control num_ext" name="num_ext" required>
+                                    <input type="text" class="form-control num_ext_persona" name="num_ext" required>
                                 </div>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="font-noraml">N. Int.</label>
-                                    <input type="text" class="form-control num_int" name="num_int">
+                                    <input type="text" class="form-control num_int_persona" name="num_int">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="font-noraml">Cruzam. 1</label>
-                                    <input type="text" class="form-control cruzamiento_1" name="cruzamiento_1">
+                                    <input type="text" class="form-control cruzamiento_1_persona" name="cruzamiento_1">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="font-noraml">Cruzam. 2</label>
-                                    <input type="text" class="form-control cruzamiento_2" name="cruzamiento_2" >
+                                    <input type="text" class="form-control cruzamiento_2_persona" name="cruzamiento_2" >
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group group_col">
                                     <label class="font-noraml">Colonia</label>
                                     <div class="input-group">
-                                        <select class="chosen-select select_colonia" style="width:100%;" tabindex="2" name="colonia">
+                                        <select class="chosen-select select_colonia select_colonia_persona" style="width:100%;" tabindex="2" name="colonia">
                                         </select>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-9">
+                                <div class="form-group">
+                                    <label>Ocupacion</label>
+                                    <select class="chosen-select select_ocupacion" id="id_ocupacion" tabindex="2" name="ocupacion" style="width: 100%;">
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -616,14 +620,6 @@
                                             <span class="onoffswitch-switch"></span>
                                         </label>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group text-center">
-                                    <label for="">Seleccionar</label>
-                                    <label class="form-control" style="background: none;border: 0px;">
-                                        <input type="checkbox" class="i-checks seleccionado" name="seleccionado">
-                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -765,7 +761,6 @@
 
             $(".form_gestion").on('submit',function(e){
                 e.preventDefault();
-                var q = $(".es_beneficiario").val();
                 var datos = $(this).serialize();
                 swal({
                     title: "La informacion es correcta?",
@@ -811,9 +806,10 @@
             $(".denuevo_tabla").click(function(){
                 $(".lista_personas").slideToggle('slow');
                 $(".div_gestion").slideToggle('slow');
+                deleteMarkers();
             });
 
-            $(".onoffswitch-checkbox").click(function(){
+            $(".es_beneficiario").click(function(){
                 $("#beneficiario").slideToggle('slow');
             });
 
@@ -831,22 +827,14 @@
             });
 
             $('#modal_nva_persona').on('shown.bs.modal', function () {
-              $('.select_colonia', this).chosen('destroy').chosen();
+              $('.select_colonia_persona', this).chosen('destroy').chosen();
               $('.select_ocupacion', this).chosen('destroy').chosen();
             });
 
-
-            $('.fechas').datepicker({
-                dateFormat: 'dd-mm-yy',
-                date: new Date(1434544882775),
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true
-            });
-
-            /*$('.fechas').datepicker('update', '01-03-1980');*/
+            $(".form_domicilio").keyup(function(){
+                deleteMarkers();
+                set_marker();
+            })
 
             $(".select_categoria").change(function(){
                 var id = $(".select_categoria").val();
@@ -858,6 +846,10 @@
                     }
                 }
                 $(".select_subCategoria").html(subcat).trigger("chosen:updated");
+            });
+
+            $("#id_colonia_gestion").change(function(){
+                set_marker();                
             });
 
         });
@@ -887,7 +879,6 @@
             $(".cruzamiento_2").val(json.cruzamiento_2);
             $('#id_colonia_gestion option[value='+json.id_colonia+']').attr("selected",true);
             $("#id_colonia_gestion").trigger("chosen:updated");
-            $(".onoffswitch").trigger('click');
             $(".lista_personas").slideToggle('slow');
             $(".div_gestion").slideToggle('slow');
             google.maps.event.trigger(map, 'resize');
@@ -906,6 +897,8 @@
                     if(json.success){
                         swal("Correcto", "Informacion guardada", "success");
                         $('.form')[0].reset();
+                        deleteMarkers();
+
                     }else{
                         swal ( "Oops" ,  success.message ,  "error" );
                     }
@@ -946,22 +939,13 @@
                     if(json.success){
                         swal("Correcto", "Informacion guardada", "success");
                         $("#modal_nva_persona").modal('hide');
-                        if(json.usar){
-                            if(json.info.origen == 'personas'){
-                                set_gestion(json.info);    
-                            }
-                            if(json.info.origen == 'beneficiarios'){
-                                set_beneficiario(json.info);    
-                            }
-                            
-                            $(".form_nueva_persona")[0].reset();
-                        }else{
-                            console.log("no usar");
-                            if(json.info.origen == 'personas'){
-                                var datos = "opc=buscar_personas&nombres="+json.info.nombres+"&ap_paterno="+json.info.apellidopat+"&cve_elector="+json.info.cve_elector;
-                                buscar_personas(datos,'personas');
-                            }
+                        if(json.info.origen == 'personas'){
+                            set_gestion(json.info);
                         }
+                        if(json.info.origen == 'beneficiarios'){
+                            set_beneficiario(json.info);    
+                        }
+                        $(".form_nueva_persona")[0].reset();
                     }else{
                         swal ( "Oops" ,  success.message ,  "error" );
                     }
@@ -1040,7 +1024,9 @@
             });
         }
 
-
+        function deleteMarkers(){
+            marker.setMap(null);
+        }
 
         function get_cat_subCat(){
             $.ajax({
@@ -1102,7 +1088,7 @@
                             }
                             html += "<tr>"
                                   + "<td>"+json.data[i].nombres+" "+json.data[i].apellidopat+" "+json.data[i].apellidomat+"</td>"
-                                  + "<td> Calle "+json.data[i].calle+" No. "+json.data[i].num_int+num_int+" por "+json.data[i].cruzamiento_1+" y "+json.data[i].cruzamiento_2+"</td>"
+                                  + "<td> Calle "+json.data[i].calle+" No. "+json.data[i].num_ext+num_int+" por "+json.data[i].cruzamiento_1+" y "+json.data[i].cruzamiento_2+"</td>"
                                   + "<td>"+json.data[i].colonia+"</td>"
                                   + "<td>"+json.data[i].cve_elector+"</td>"
                                   +"<td>";
@@ -1190,7 +1176,9 @@
 
     function set_marker(){
         var col = $('#id_colonia_gestion option:selected').text();
-        var url = 'https://maps.googleapis.com/maps/api/geocode/json?address='+col+',yucatan&key=AIzaSyBn5leYbE_WFaLGF7yCiYXSBVNUZz02qZ4';
+        var calle = $('.calle').val();
+        var num = $('.num_ext').val();
+        var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=calle'+calle+','+num+'+'+col+',yucatan&key=AIzaSyBn5leYbE_WFaLGF7yCiYXSBVNUZz02qZ4';
         console.log(url);
         $.ajax({
             url: url,

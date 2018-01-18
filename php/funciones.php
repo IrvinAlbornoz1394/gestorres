@@ -295,7 +295,6 @@
 			$militante = 1;
 		}
 
-		$usar = false;
 		$info = "";
 		$success = true;
 		$message = "OK";
@@ -306,14 +305,11 @@
 			exit();
 		}
 
-		$query = "INSERT INTO personas VALUES ('','$nombres','$apellidopat','$apellidomat','$fecha_nac',0,'$sexo','$telefono','$celular','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$cve_elector',NOW(),'$ocupacion','$colonia',$militante) ON DUPLICATE KEY UPDATE nombres = '$nombres', apellidopat = '$apellidopat', apellidomat = '$apellidomat', fecha_nac = '$fecha_nac', telefono = '$telefono', celular = '$celular', id_ocupacion = '$ocupacion',calle = ''$calle,num_ext = '$num_ext',num_int = '$num_int',cruzamiento_1 = '$cruzamiento_1', cruzamiento2 = '$cruzamiento_2',id_colonia = '$colonia', es_militante = $militante";
+		$query = "INSERT INTO personas VALUES ('','$nombres','$apellidopat','$apellidomat','$fecha_nac',0,'$sexo','$telefono','$celular','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$cve_elector',NOW(),'$ocupacion','$colonia',$militante) ON DUPLICATE KEY UPDATE nombres = '$nombres', apellidopat = '$apellidopat', apellidomat = '$apellidomat', fecha_nac = '$fecha_nac', telefono = '$telefono', celular = '$celular', id_ocupacion = '$ocupacion',calle = '$calle',num_ext = '$num_ext',num_int = '$num_int',cruzamiento_1 = '$cruzamiento_1', cruzamiento_2 = '$cruzamiento_2',id_colonia = '$colonia', es_militante = $militante";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "NO se pudo crear la información";
 		}else{
-			if(isset($_POST['seleccionado'])){
-				$usar = true;;
-			}
 			$info = array('id' => $mysqli->insert_id,
 						  'nombres' => $nombres,
 						  'apellidopat' => $apellidopat,
@@ -322,16 +318,15 @@
 						  'calle' => $calle,
 						  'num_int' => $num_int,
 						  'num_ext' => $num_ext,
-						  'cruzamiento1' => $cruzamiento_1,
-						  'cruzamiento2' => $cruzamiento_2,
+						  'cruzamiento_1' => $cruzamiento_1,
+						  'cruzamiento_2' => $cruzamiento_2,
 						  'id_colonia' => $colonia,
 						  'origen' => $origen
 						);
 		}
 		$json = array('success' => $success,
 					  'message' => $message,
-					  'info' => $info,
-					  'usar' => $usar);
+					  'info' => $info);
 		echo json_encode($json);
 	}
 
@@ -343,11 +338,11 @@
 		$id_beneficiario = $_POST['id_beneficiario'];
 		$fecha_captura = $_POST['fecha_captura'];
 		$aux = explode("/", $fecha_captura);
-		$fecha_captura = $aux[2]."-".$aux[0]."-".$aux[1];
+		$fecha_captura = $aux[2]."-".$aux[1]."-".$aux[0];
 
 		$fecha_entrega = $_POST['fecha_entrega'];
 		$aux2 = explode("/", $fecha_entrega);
-		$fecha_entrega = $aux2[2]."-".$aux2[0]."-".$aux2[1];
+		$fecha_entrega = $aux2[2]."-".$aux2[1]."-".$aux2[0];
 		$calle = $_POST['calle'];
 		$num_ext = $_POST['num_ext'];
 		$num_int = $_POST['num_int'];
