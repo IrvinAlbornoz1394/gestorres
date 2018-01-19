@@ -92,7 +92,14 @@
                         <a href="gestiones.php"><i class="fa fa-th-list"></i> <span class="nav-label">Gestiones</span></a>
                     </li>
                     <li>
-                        <a href="militantes.php"><i class="fa fa-child"></i><span class="nav-label">Militantes</span></a>
+                        <a href="index.php">
+                            <i class="fa fa-child"></i>
+                            <span class="nav-label">Personas</span><span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="personas.php"><i class="fa fa-list"></i> Listas</a></li>
+                            <li><a href="nva_persona.php"><i class="fa fa-plus"></i> Nuevo</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a href="usuarios.php"><i class="fa fa-users"></i><span class="nav-label">Usuarios</span></a>
@@ -164,27 +171,27 @@
                                 </div>
                             </div>
                             <div class="ibox-content table-responsive">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table_gestiones table table-stripped toggle-arrow-tiny" data-page-size="8">
-                                        <thead>
-                                            <tr>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table_gestiones table table-stripped toggle-arrow-tiny" data-page-size="8">
+                                            <thead>
+                                                <tr>
 
-                                                <th>Articulo</th>
-                                                <th>Solicitante</th>
-                                                <th>Fecha alta</th>
-                                                <th>Direccion entrega</th>
-                                                <th>Estatus</th>
-                                                <th>Indicador</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="tbody_gestiones">
-                                        </tbody>
-                                    </table>
+                                                    <th>Articulo</th>
+                                                    <th>Solicitante</th>
+                                                    <th>Fecha alta</th>
+                                                    <th>Direccion entrega</th>
+                                                    <th>Estatus</th>
+                                                    <th>Indicador</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="tbody_gestiones">
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>

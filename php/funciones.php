@@ -92,17 +92,20 @@
 			echo json_encode($json);
 			exit();
 		}
-		$cve_elector = $_POST['cve_elector'];
-		$nombres = $_POST['nombres'];
-		$apellido = $_POST['ap_paterno'];
+		$filtro = "";
+		if(isset($_POST['cve_elector']) || isset($_POST['nombres']) || isset($_POST['ap_paterno'])){
+			$cve_elector = $_POST['cve_elector'];
+			$nombres = $_POST['nombres'];
+			$apellido = $_POST['ap_paterno'];
 
-		if($cve_elector != ""){
-			$filtro = "clave_elec = '$cve_elector'";
-		}else{
-			$filtro = "(nombres like '%".$nombres."%' AND apellidopat like '%".$apellido."%') || (nombres like '%".$nombres."%' AND apellidomat like '%".$apellido."%')";
+			if($cve_elector != ""){
+				$filtro = "WHERE clave_elec = '$cve_elector'";
+			}else{
+				$filtro = "WHERE (nombres like '%".$nombres."%' AND apellidopat like '%".$apellido."%') || (nombres like '%".$nombres."%' AND apellidomat like '%".$apellido."%')";
+			}
 		}
 
-		$query = "SELECT p.*,c.prefijo, c.nombre_colonia FROM personas p inner join catColonias c on (c.idColonia = p.id_colonia) Where ".$filtro;
+		$query = "SELECT p.*,c.prefijo, c.nombre_colonia FROM personas p inner join catColonias c on (c.idColonia = p.id_colonia) ".$filtro;
 		$result = $mysqli->query($query);
 		if(!$result){
 			$success = false;
