@@ -149,25 +149,25 @@
                                                     <input type="hidden" name="origen" class="origen">
                                                     <div class="form-group">
                                                         <label>Nombres</label>
-                                                        <input type="text" placeholder="" class="form-control" name="nombres">
+                                                        <input type="text" placeholder="" class="form-control" name="nombres" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label>Primer Apellido</label>
-                                                        <input type="text" placeholder="" class="form-control" name="apellidopat">
+                                                        <input type="text" placeholder="" class="form-control" name="apellidopat" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label>Segundo Apellido</label>
-                                                        <input type="text" placeholder="" class="form-control" name="apellidomat">
+                                                        <input type="text" placeholder="" class="form-control" name="apellidomat" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label>Cve Elector</label>
-                                                        <input type="text" class="form-control" name="cve_elector">
+                                                        <input type="text" class="form-control" name="cve_elector" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -176,14 +176,14 @@
                                                     <div class="form-group">
                                                         <label >Fecha de Nacimiento</label>
                                                         <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" data-mask="99/99/9999"  class="form-control fecha_nacimiento" name="fecha_nacimiento">
+                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" data-mask="99/99/9999"  class="form-control fecha_nacimiento" name="fecha_nacimiento" required>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2 col-xs-3">
                                                     <div class="form-group">
                                                         <label>Sexo</label>
-                                                        <select name="sexo" id="" class="form-control">
+                                                        <select name="sexo" id="" class="form-control"  required>
                                                             <option value="M">M</option>
                                                             <option value="F">F</option>
                                                         </select>
@@ -236,12 +236,10 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <div class="form-group group_col">
-                                                        <label class="font-noraml">Colonia</label>
-                                                        <div class="input-group">
-                                                            <select class="chosen-select select_colonia select_colonia_persona" style="width:100%;" tabindex="2" name="colonia">
-                                                            </select>
-                                                        </div>
+                                                    <div class="form-group">
+                                                        <label>Colonia</label>
+                                                        <select class="chosen-select select_colonia select_colonia_persona" style="width:100%;" tabindex="2" name="colonia"  required>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-xs-9">
@@ -262,6 +260,11 @@
                                                             </label>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button class="btn btn-primary dim btn_form_nueva_persona" type="submit">Guardar <i class="fa fa-save"></i></button>
                                                 </div>
                                             </div>
                                         </form>
@@ -347,11 +350,14 @@
     <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
     <script src="js/plugins/dataTables/dataTables.responsive.js"></script>
     <script src="js/plugins/dataTables/dataTables.tableTools.min.js"></script>
-
+    
+    <!--funciones personales -->
+    <script src="js/funciones.js"></script> 
     <script>
-        
-    </script>
+        get_colonias();
+        get_ocupaciones();
 
+    </script>
 
 </body>
 

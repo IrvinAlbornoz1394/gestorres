@@ -58,11 +58,34 @@
         .buscar{
             width: 85% !important;
         }
+        #contenedor_spinner{
+            background: rgba(250,240,245,1);
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 10000;
+        }
+        .preloader{
+            margin-top: 20%;
+        }
     </style>
 
 </head>
 
 <body>
+    <div id="contenedor_spinner">
+        <div class="row preloader">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="sk-spinner sk-spinner-wave">
+                    <div class="sk-rect1"></div>
+                    <div class="sk-rect2"></div>
+                    <div class="sk-rect3"></div>
+                    <div class="sk-rect4"></div>
+                    <div class="sk-rect5"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="wrapper">
 
@@ -282,7 +305,11 @@
     <script src="js/plugins/dataTables/dataTables.responsive.js"></script>
     <script src="js/plugins/dataTables/dataTables.tableTools.min.js"></script>
 
+    <!--funciones personales -->
+    <script src="js/funciones.js"></script>    
+
     <script>
+
         $(document).ready(function(){
             buscar_personas();
         });
@@ -313,7 +340,10 @@
                                                 +  "<td> Calle "+json.data[i].calle+" No. "+json.data[i].num_ext+num_int+" X "+json.data[i].cruzamiento_1+" y "+json.data[i].cruzamiento_2+" "+json.data[i].colonia+"</td>"
                                                 +  "<td>"+json.data[i].cve_elector+"</td>"
                                                 +  "<td>"+json.data[i].celular+"</td>"
-                                                +  "<td></td>"
+                                                +  "<td>"
+                                                +  "<a onclick='delete_persona("+JSON.stringify(json.data[i])+");'><i class='fa fa-trash'></i></a>&nbsp;&nbsp;&nbsp;"
+                                                +  "<a><i class='fa fa-pencil'></i></a>"
+                                                +  "</td>"
                                                 +  "</tr>"
                             }else{
                                 html_personas += "<tr>"
@@ -321,19 +351,23 @@
                                                 +  "<td> Calle "+json.data[i].calle+" No. "+json.data[i].num_ext+num_int+" X "+json.data[i].cruzamiento_1+" y "+json.data[i].cruzamiento_2+" "+json.data[i].colonia+"</td>"
                                                 +  "<td>"+json.data[i].cve_elector+"</td>"
                                                 +  "<td>"+json.data[i].celular+"</td>"
-                                                +  "<td></td>"
+                                                +  "<td>"
+                                                +  "<a onclick='delete_persona("+JSON.stringify(json.data[i])+");'><i class='fa fa-trash'></i></a>&nbsp;&nbsp;&nbsp;"
+                                                +  "<a><i class='fa fa-pencil'></i></a>"
+                                                +  "</td>"
                                                 +  "</tr>"
                             }
                         }
+                        $(".tables_data").DataTable().clear().draw().destroy();
                         $(".tbody_militantes").html(html_militantes);
                         $(".tbody_personas").html(html_personas);
                         $(".tables_data").dataTable({
                                 "bLengthChange": false,
                                 "language": {
                                     "lengthMenu": "Display _MENU_ records per page",
-                                    "zeroRecords": "Nothing found - sorry",
+                                    "zeroRecords": "Tabla Vacia",
                                     "info": "Pagina  _PAGE_ de _PAGES_",
-                                    "infoEmpty": "No records available",
+                                    "infoEmpty":  "No se encuentran resultados",
                                     "search": "Buscar:  ",
                                     "paginate": {
                                         "first":      "Primero",
@@ -353,6 +387,44 @@
                     $(".gif_loading").hide();
                 }
             });
+        }
+
+
+        function delete_persona(json){
+            swal({
+                title: "Eliminar a "+json.nombres+" "+json.apellidopat+" "+json.apellidomat,
+                text: "¿Deseas Eliminar esta persona?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Si, Eliminar!",
+                closeOnConfirm: false
+            }, function () {
+                estatus_persona(json,0);
+            });
+        }
+
+        function estatus_persona(json,estatus){
+            var datos = "id="+json.id+"&estatus="+estatus+"&opc=estatus_persona";
+            $.ajax({
+                url:'php/funciones.php',
+                data: datos,
+                dataType:'json',
+                type:'post',
+                success:function(json){
+                    if(json.success){
+                        swal("Correcto", json.message, "success");    
+                        buscar_personas();
+                    }else{
+                        swal("Error!", json.message, "error");
+                    }
+                    
+                },
+                error:function(error){
+                    swal("Error!", "Error en el sistema", "error");
+                }
+            });
+
         }
     </script>
 

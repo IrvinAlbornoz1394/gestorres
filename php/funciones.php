@@ -60,6 +60,9 @@
 		case 'logout':
 			logout();
 			break;
+		case 'estatus_persona':
+			estatus_persona();
+			break;
 		default:
 			# code...
 			break;
@@ -105,7 +108,7 @@
 			}
 		}
 
-		$query = "SELECT p.*,c.prefijo, c.nombre_colonia FROM personas p inner join catColonias c on (c.idColonia = p.id_colonia) ".$filtro;
+		$query = "SELECT p.*,c.prefijo, c.nombre_colonia FROM personas p inner join catColonias c on (c.idColonia = p.id_colonia) ".$filtro." AND p.estatus = 1";
 		$result = $mysqli->query($query);
 		if(!$result){
 			$success = false;
@@ -308,7 +311,7 @@
 			exit();
 		}
 
-		$query = "INSERT INTO personas VALUES ('','$nombres','$apellidopat','$apellidomat','$fecha_nac',0,'$sexo','$telefono','$celular','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$cve_elector',NOW(),'$ocupacion','$colonia',$militante) ON DUPLICATE KEY UPDATE nombres = '$nombres', apellidopat = '$apellidopat', apellidomat = '$apellidomat', fecha_nac = '$fecha_nac', telefono = '$telefono', celular = '$celular', id_ocupacion = '$ocupacion',calle = '$calle',num_ext = '$num_ext',num_int = '$num_int',cruzamiento_1 = '$cruzamiento_1', cruzamiento_2 = '$cruzamiento_2',id_colonia = '$colonia', es_militante = $militante";
+		$query = "INSERT INTO personas VALUES ('','$nombres','$apellidopat','$apellidomat','$fecha_nac',0,'$sexo','$telefono','$celular','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$cve_elector',NOW(),'$ocupacion','$colonia',$militante,1) ON DUPLICATE KEY UPDATE nombres = '$nombres', apellidopat = '$apellidopat', apellidomat = '$apellidomat', fecha_nac = '$fecha_nac', telefono = '$telefono', celular = '$celular', id_ocupacion = '$ocupacion',calle = '$calle',num_ext = '$num_ext',num_int = '$num_int',cruzamiento_1 = '$cruzamiento_1', cruzamiento_2 = '$cruzamiento_2',id_colonia = '$colonia', es_militante = $militante";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "NO se pudo crear la información";
@@ -560,6 +563,30 @@
 		$success = true;
 
 		$query = "UPDATE tipo_gestion set estatus = '$estatus' WHERE idtipog = '$id'";
+		if(!$mysqli->query($query)){
+			$success = false;
+			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
+		}
+		$json = array('success' => $success,
+					  'message' => $message);
+		echo json_encode($json);
+	}
+
+
+	function estatus_persona(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		$id = $_POST['id'];
+		$estatus = $_POST['estatus'];
+		$message = "Consulta realizada con éxito.";
+		$success = true;
+
+		$query = "UPDATE personas set estatus = '$estatus' WHERE idpersona = '$id'";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "Ocurrio un error en la consulta, intentalo mas tarde";

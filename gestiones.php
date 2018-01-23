@@ -538,6 +538,9 @@
     <script src="js/plugins/dataTables/dataTables.responsive.js"></script>
     <script src="js/plugins/dataTables/dataTables.tableTools.min.js"></script>
 
+    <!--funciones personales -->
+    <script src="js/funciones.js"></script>    
+
     <script>
         $(document).ready(function(){
             var datos = "opc=get_gestiones";
