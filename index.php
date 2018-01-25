@@ -35,8 +35,8 @@
                             <img alt="image" class="img-circle" src="img/profile_small.jpg" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>
-                             </a>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?= $_SESSION["usuario"] ?></strong>
+                        </a>
                     </div>
                     <div class="logo-element">
                         IN+
@@ -177,25 +177,7 @@
     <script src="js/inspinia.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
     <script>
-      var citymap = {
-          chicago: {
-            center: {lat: 20.9639106, lng: -89.6029777},
-            population: 100
-          },
-          newyork: {
-            center: {lat: 20.973282, lng: -89.6370882},
-            population: 45
-          },
-          losangeles: {
-            center: {lat: 21.0038491, lng: -89.6260009},
-            population: 38
-          },
-          vancouver: {
-            center: {lat: 49.25, lng: -123.1},
-            population: 603502
-          }
-        };
-
+        var map;
         function initMap() {
           // Create the map.
           var map = new google.maps.Map(document.getElementById('map'), {
@@ -203,23 +185,87 @@
             center: {lat: 20.9760828, lng: -89.6292097},
             mapTypeId: 'terrain'
           });
+          var datos = "";
+          set_markers(datos,map);
+            /*var citymap = {
+              chicago: {        
+                center: {lat: 20.9639106, lng: -89.6029777},
+                population: 100
+              },
+              newyork: {
+                center: {lat: 20.973282, lng: -89.6370882},
+                population: 45
+              },
+              losangeles: {
+                center: {lat: 21.0038491, lng: -89.6260009},
+                population: 38
+              }
+            };*/
+        
+            /*for (var city in citymap) {
+                // Add the circle for this city to the map.
+                var cityCircle = new google.maps.Circle({
+                  strokeColor: '#FF0000',
+                  strokeOpacity: 0.8,
+                  strokeWeight: 2,
+                  fillColor: '#FF0000',
+                  fillOpacity: 0.35,
+                  map: map,
+                  center: citymap[city].center,
+                  radius: Math.sqrt(citymap[city].population) * 100
+                });
+              }
+            }*/
+        }
 
-  // Construct the circle for each value in citymap.
-  // Note: We scale the area of the circle based on the population.
-  for (var city in citymap) {
-    // Add the circle for this city to the map.
-    var cityCircle = new google.maps.Circle({
-      strokeColor: '#FF0000',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#FF0000',
-      fillOpacity: 0.35,
-      map: map,
-      center: citymap[city].center,
-      radius: Math.sqrt(citymap[city].population) * 100
-    });
-  }
-}
+        function set_markers(datos,map){
+            datos+="opc=get_gestiones";
+            $.ajax({
+                url:'php/funciones.php',
+                data: datos,
+                dataType:'json',
+                type:'post',
+                success:function(json){
+                    if(json.data.length > 0){
+                        var infowindow = new google.maps.InfoWindow();
+                        var marker, i,info;
+                        for (i = 0; i < json.data.length; i++) {
+                            var row = json.data[i]; 
+                            info = "";
+                            console.log(row);
+                            info = "<h2>"+row.solicitante+"</h2>"
+                                     + "<b>"+row.subcat+"</b>";
+                            marker = new google.maps.Marker({
+                              position: new google.maps.LatLng(parseFloat(row.lat),parseFloat(row.lng)),
+                              map: map
+                            });
+                            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                              return function() {
+                                infowindow.setContent(info);
+                                infowindow.open(map, marker);
+                              }
+                            })(marker, i));
+
+                        }
+                    }   
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            })
+
+            /*for (var i = 0; i < beaches.length; i++) {
+                var beach = beaches[i];
+                var marker = new google.maps.Marker({
+                  position: {lat: beach[1], lng: beach[2]},
+                  map: map,
+                  icon: image,
+                  shape: shape,
+                  title: beach[0],
+                  zIndex: beach[3]
+                });
+            }*/
+      }   
 
     </script>
     <script async defer
@@ -229,23 +275,20 @@
     <!-- Flot demo data -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-            new Chartist.Bar('#ct-chart4', {
-                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                series: [
-                    [5, 4, 3, 7, 5, 10, 3],
-                    [3, 2, 9, 5, 4, 6, 4]
-                ]
-            }, {
-                seriesBarDistance: 10,
-                reverseData: true,
-                horizontalBars: true,
-                axisY: {
-                    offset: 70
-                }
-            });    
-        
-
-
+        new Chartist.Bar('#ct-chart4', {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            series: [
+                [5, 4, 3, 7, 5, 10, 3],
+                [3, 2, 9, 5, 4, 6, 4]
+            ]
+        }, {
+            seriesBarDistance: 10,
+            reverseData: true,
+            horizontalBars: true,
+            axisY: {
+                offset: 70
+            }
+        });
 
       google.charts.load('current', {'packages':['bar']});
       google.charts.setOnLoadCallback(drawChart);

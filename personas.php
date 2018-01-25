@@ -229,6 +229,144 @@
                     </div>
                 </div>
             </div>
+            <div class="modal inmodal fade" id="modal_info_persona" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">Editar información</h4>
+                            <small class="font-bold">Llena la informacion correctamente.</small>
+                        </div>
+                        <form class="form_info_persona form">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <input type="hidden" name="origen" value="tablas" class="origen">
+                                        <div class="form-group">
+                                            <label>Nombres</label>
+                                            <input type="text" id="nombres" placeholder="" class="form-control" name="nombres" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Primer Apellido</label>
+                                            <input type="text" placeholder="" class="form-control" name="apellidopat" required id="primer_apellido">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Segundo Apellido</label>
+                                            <input type="text" placeholder="" class="form-control" name="apellidomat" required id="segundo_apellido">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Cve Elector</label>
+                                            <input type="text" class="form-control" name="cve_elector" required id="cve_elector">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 col-xs-9">
+                                        <div class="form-group">
+                                            <label >Fecha de Nacimiento</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" data-mask="99/99/9999"  class="form-control fecha_nacimiento" name="fecha_nacimiento" required id="fecha_nacimiento">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-xs-3">
+                                        <div class="form-group">
+                                            <label>Sexo</label>
+                                            <select name="sexo" class="form-control" required id="sexo">
+                                                <option value="0" selected disabled>Seleccionar una opcion</option>
+                                                <option value="M">M</option>
+                                                <option value="F">F</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6">
+                                        <div class="form-group">
+                                            <label>Telefono</label>
+                                            <input type="text" placeholder="" class="form-control" name="telefono" id="telefono">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6">
+                                        <div class="form-group">
+                                            <label>Celular</label>
+                                            <input type="text" placeholder="" class="form-control" name="celular" id="celular">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="font-noraml">calle</label>
+                                            <input type="text" class="form-control calle_persona" name="calle" required id="calle">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="font-noraml">Num Ext.</label>
+                                            <input type="text" class="form-control num_ext_persona" name="num_ext" required id="num_ext">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="font-noraml">N. Int.</label>
+                                            <input type="text" class="form-control num_int_persona" name="num_int" id="num_int">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="font-noraml">Cruzam. 1</label>
+                                            <input type="text" class="form-control" name="cruzamiento_1" id="cruzamiento_1">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="font-noraml">Cruzam. 2</label>
+                                            <input type="text" class="form-control" name="cruzamiento_2" id="cruzamiento_2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Colonia</label>
+                                            <select class="chosen-select select_colonia select_colonia_persona" style="width:100%;" tabindex="2" name="colonia"  required id="colonia">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-9">
+                                        <div class="form-group">
+                                            <label>Ocupacion</label>
+                                            <select class="chosen-select select_ocupacion" tabindex="2" name="ocupacion" style="width: 100%;" id="ocupacion">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="font-noraml center-block text-center">Militante</label>
+                                        <div class="switch" style="margin-left: 20%;">
+                                            <div class="onoffswitch">
+                                                <input type="checkbox" class="onoffswitch-checkbox" id="es_militante" class="es_militante" name="es_militante">
+                                                <label class="onoffswitch-label" for="es_militante">
+                                                    <span class="onoffswitch-inner"></span>
+                                                    <span class="onoffswitch-switch"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary btn_form_nueva_persona">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             <div class="footer">
                 <div class="pull-right">
@@ -312,7 +450,15 @@
 
         $(document).ready(function(){
             buscar_personas();
+            get_colonias();
+            get_ocupaciones();
         });
+
+        $("#modal_info_persona").on('shown.bs.modal', function () {
+          $('.select_colonia_persona', this).chosen('destroy').chosen();
+          $('.select_ocupacion', this).chosen('destroy').chosen();
+        });
+
 
         var lng = $("div#tab-1").find('div.col-sm-6');
         console.log(lng);
@@ -342,7 +488,7 @@
                                                 +  "<td>"+json.data[i].celular+"</td>"
                                                 +  "<td>"
                                                 +  "<a onclick='delete_persona("+JSON.stringify(json.data[i])+");'><i class='fa fa-trash'></i></a>&nbsp;&nbsp;&nbsp;"
-                                                +  "<a><i class='fa fa-pencil'></i></a>"
+                                                +  "<a onclick='edit_persona("+JSON.stringify(json.data[i])+")'><i class='fa fa-pencil'></i></a>"
                                                 +  "</td>"
                                                 +  "</tr>"
                             }else{
@@ -353,7 +499,7 @@
                                                 +  "<td>"+json.data[i].celular+"</td>"
                                                 +  "<td>"
                                                 +  "<a onclick='delete_persona("+JSON.stringify(json.data[i])+");'><i class='fa fa-trash'></i></a>&nbsp;&nbsp;&nbsp;"
-                                                +  "<a><i class='fa fa-pencil'></i></a>"
+                                                +  "<a onclick='edit_persona("+JSON.stringify(json.data[i])+")'><i class='fa fa-pencil'></i></a>"
                                                 +  "</td>"
                                                 +  "</tr>"
                             }
@@ -402,6 +548,39 @@
             }, function () {
                 estatus_persona(json,0);
             });
+        }
+
+        function edit_persona(json){
+            $("#nombres").val(json.nombres);
+            $("#primer_apellido").val(json.apellidomat);
+            $("#segundo_apellido").val(json.apellidopat);
+            $("#cve_elector").val(json.cve_elector);
+            var fn = json.fecha_nac.split("-");
+            var fecha_nac = fn[2]+"/"+fn[1]+"/"+fn[0];
+            $("#fecha_nacimiento").val(fecha_nac);
+            $('#sexo option[value='+json.sexo+']').prop("selected",true);
+            $("#telefono").val(json.telefono);
+            $("#celular").val(json.celular);
+            $("#calle").val(json.calle);
+            $("#num_ext").val(json.num_ext);
+            $("#num_int").val(json.num_int);
+            $("#cruzamiento_1").val(json.cruzamiento_1);
+            $("#cruzamiento_2").val(json.cruzamiento_2);
+
+            $('#colonia option[value='+json.id_colonia+']').attr("selected",true);
+            $("#colonia").trigger("chosen:updated");
+
+            $('#ocupacion option[value='+json.ocupacion+']').attr("selected",true);
+            $("#ocupacion").trigger("chosen:updated");
+
+            if(json.militante == 1){
+                $("#es_militante").prop('checked', true);
+            }else{
+                $("#es_militante").prop('checked', false);
+            }
+            $("#es_militante").iCheck('update');
+
+            $("#modal_info_persona").modal('show');
         }
 
         function estatus_persona(json,estatus){

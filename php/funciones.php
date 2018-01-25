@@ -121,6 +121,7 @@
 								'apellidopat' => $row['apellidopat'],
 								'apellidomat' => $row['apellidomat'],
 								'fecha_nac' => $row['fecha_nac'],
+								'sexo' => $row['sexo'],
 								'telefono' => $row['telefono'],
 								'celular' => $row['celular'],
 								'calle' => $row['calle'],
@@ -130,6 +131,7 @@
 								'cruzamiento_2' => $row['cruzamiento_2'],
 								'id_colonia' => $row['id_colonia'],
 								'colonia' => $row['prefijo']." ".$row['nombre_colonia'],
+								'ocupacion' => $row['id_ocupacion'],
 								'cve_elector' => $row['clave_elec'],
 								'militante' => $row['es_militante']
 							);
@@ -311,7 +313,7 @@
 			exit();
 		}
 
-		$query = "INSERT INTO personas VALUES ('','$nombres','$apellidopat','$apellidomat','$fecha_nac',0,'$sexo','$telefono','$celular','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$cve_elector',NOW(),'$ocupacion','$colonia',$militante,1) ON DUPLICATE KEY UPDATE nombres = '$nombres', apellidopat = '$apellidopat', apellidomat = '$apellidomat', fecha_nac = '$fecha_nac', telefono = '$telefono', celular = '$celular', id_ocupacion = '$ocupacion',calle = '$calle',num_ext = '$num_ext',num_int = '$num_int',cruzamiento_1 = '$cruzamiento_1', cruzamiento_2 = '$cruzamiento_2',id_colonia = '$colonia', es_militante = $militante";
+		$query = "INSERT INTO personas VALUES ('','$nombres','$apellidopat','$apellidomat','$fecha_nac',0,'$sexo','$telefono','$celular','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$cve_elector',NOW(),'$ocupacion','$colonia',$militante,1) ON DUPLICATE KEY UPDATE nombres = '$nombres', apellidopat = '$apellidopat', apellidomat = '$apellidomat', fecha_nac = '$fecha_nac', sexo = '$sexo', telefono = '$telefono', celular = '$celular', id_ocupacion = '$ocupacion',calle = '$calle',num_ext = '$num_ext',num_int = '$num_int',cruzamiento_1 = '$cruzamiento_1', cruzamiento_2 = '$cruzamiento_2',id_colonia = '$colonia', es_militante = $militante";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "NO se pudo crear la información";
@@ -422,7 +424,8 @@
 			//$filtro .= " Where estatus = 1";
 		}
 
-		$query = "SELECT g.*, s.nom_sol, b.nom_benf,CONCAT(c.prefijo, ' ', c.nombre_colonia) as nom_colonia, cat.nombre as cat, sc.nombre as subcat from gestiones g inner join catColonias c on c.idColonia = g.idColonia_entrega inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_sol from personas) as s inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_benf from personas) as b inner join tipo_gestion cat on (cat.idtipog = g.idCategoria) inner join subcat sc on (sc.idsubcat = g.idSubCategoria) ".$filtro." group by g.idGestion";
+		$query = "SELECT g.*, s.nom_sol, b.nom_benf,CONCAT(c.prefijo, ' ', c.nombre_colonia) as nom_colonia, cat.nombre as cat, sc.nombre as subcat, e.nombre_evento from gestiones g inner join catColonias c on c.idColonia = g.idColonia_entrega inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_sol from personas) as s on s.idpersona = g.idSolicitante inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_benf from personas) as b on b.idpersona = g.idSolicitante inner join tipo_gestion cat on (cat.idtipog = g.idCategoria) inner join subcat sc on (sc.idsubcat = g.idSubCategoria) inner join eventos e on e.id = g.id_evento ".$filtro." group by g.idGestion";
+
 		$result = $mysqli->query($query);
 		if(!$result){
 			$success = false;
@@ -454,7 +457,10 @@
 							 'colonia' => $row['nom_colonia'],
 							 'detalles' => $row['detalles'],
 							 'estatus' => $row['estatus'],
-							 'comentarios' => $row['comentarios_extras']
+							 'comentarios' => $row['comentarios_extras'],
+							 'idEvento' => $row['id_evento'],
+							 'lat' => $row['lat_entrega'],
+							 'lng' => $row['lng_entrega']
 			);
 		}
 		$json = array('success' => $success,

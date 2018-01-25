@@ -493,7 +493,7 @@
         </div>
     </div>
     
-    <div class="modal inmodal fade" id="modal_nva_persona" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal inmodal fade" id="modal_info_persona" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -501,7 +501,7 @@
                     <h4 class="modal-title">Alta de nueva persona</h4>
                     <small class="font-bold">Llena la informacion correctamente.</small>
                 </div>
-                <form class="form_nueva_persona form">
+                <form class="form_info_persona form">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-3">
@@ -804,17 +804,17 @@
             $(".btn_nva_persona").click(function(){
                 $(".origen").val("personas");
                 $(".seleccionado").iCheck('update');
-                $("#modal_nva_persona").modal('show');
+                $("#modal_info_persona").modal('show');
 
             });
             $(".btn_nvo_beneficiario").click(function(){
                 $(".origen").val("beneficiarios");
                 $("#modal_busqueda").modal('hide');
                 $(".seleccionado").iCheck('update')
-                $("#modal_nva_persona").modal('show');
+                $("#modal_info_persona").modal('show');
             });
 
-            $('#modal_nva_persona').on('shown.bs.modal', function () {
+            $('#modal_info_persona').on('shown.bs.modal', function () {
               $('.select_colonia_persona', this).chosen('destroy').chosen();
               $('.select_ocupacion', this).chosen('destroy').chosen();
             });

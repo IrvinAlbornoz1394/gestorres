@@ -12,7 +12,7 @@ var config = {
 for (var selector in config) {
     $(selector).chosen(config[selector]);
 }
-$(".form_nueva_persona").on('submit',function(e){
+$(".form_info_persona").on('submit',function(e){
     e.preventDefault();
     swal({
         title: "¿La información capturada es correcta?",
@@ -74,7 +74,7 @@ function get_ocupaciones(){
 
 
 function nva_persona(){
-    var datos = $(".form_nueva_persona").serialize();
+    var datos = $(".form_info_persona").serialize();
     datos += "&opc=nva_persona";
     console.log(datos);
     $.ajax({
@@ -85,19 +85,22 @@ function nva_persona(){
         success:function(json){
             if(json.success){
                 swal("Correcto", "Informacion guardada", "success");
-                $("#modal_nva_persona").modal('hide');
+                $("#modal_info_persona").modal('hide');
                 if(json.info.origen == 'personas'){
                     set_gestion(json.info);
                 }
                 if(json.info.origen == 'beneficiarios'){
                     set_beneficiario(json.info);    
                 }
-                $(".form_nueva_persona")[0].reset();
+                if(json.info.origen == 'tablas'){
+                    buscar_personas();
+                }
+                $(".form_info_persona")[0].reset();
             }else{
                 swal ( "Oops" ,  success.message ,  "error" );
             }
             console.log(json);
-            $(".form_nueva_persona")[0].reset();
+            $(".form_info_persona")[0].reset();
         },
         error:function(error){
             swal ( "Oops" ,  "Ocurrio un error en la consulta" ,  "error" );
