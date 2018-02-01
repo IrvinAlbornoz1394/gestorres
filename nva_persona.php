@@ -143,7 +143,7 @@
                             <div class="ibox-content">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <form class="form_nueva_persona form">
+                                        <form class="form_info_persona form">
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <input type="hidden" name="origen" class="origen">
@@ -356,7 +356,6 @@
     <script>
         get_colonias();
         get_ocupaciones();
-
     </script>
 
 </body>

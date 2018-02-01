@@ -27,6 +27,10 @@ $(".form_info_persona").on('submit',function(e){
     });
 });
 
+$("#modal_info_persona").on('hidden.bs.modal', function () {
+    $(".form_info_persona")[0].reset();
+});
+
 
 function get_colonias(){
     $.ajax({
