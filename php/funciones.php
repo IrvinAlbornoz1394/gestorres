@@ -51,6 +51,9 @@
 		case 'insert_ocup':
 			insert_ocup();
 			break;
+		case 'insert_evento':
+			insert_evento();
+			break;
 		case 'estatus_subCat':
 			estatus_subCat();
 			break;
@@ -62,6 +65,9 @@
 			break;
 		case 'get_eventos':
 			get_eventos();
+			break;
+		case 'borrarEvento':
+			borrarEvento();
 			break;
 		case 'logout':
 			logout();
@@ -268,7 +274,7 @@
 		$success = true;
 		$message = "OK";
 		$ocupaciones = [];
-		$query = "SELECT * FROM eventos Where estatus = 1";
+		$query = "SELECT * FROM eventos";
 		$result = $mysqli->query($query);
 		if(!$result){
 			$success = false;
@@ -282,6 +288,28 @@
 					  'message' => $message,
 					  'data' => $eventos);
 		echo json_encode($json);
+	}
+
+	function borrarEvento(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		$id = $_POST['id'];
+		$message = "Consulta realizada con éxito.";
+		$success = true;
+
+		$query = "DELETE FROM eventos WHERE id = '$id'";
+		if(!$mysqli->query($query)){
+			$success = false;
+			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
+		}
+		$json = array('success' => $success,
+					  'message' => $message);
+		echo json_encode($json);	
 	}
 
 	function nva_persona(){
@@ -583,6 +611,30 @@
 		$json = array('success' => $success,
 					  'message' => $message);
 		echo json_encode($json);
+	}
+
+	function insert_evento(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+
+		$id = $_POST['id'];
+		$nombre = $_POST['nombre'];
+		$message = "Consulta realizada con éxito.";
+		$success = true;
+
+		$query = "INSERT INTO eventos values ('$id','$nombre') ON DUPLICATE KEY UPDATE nombre_evento = '$nombre'";
+		if(!$mysqli->query($query)){
+			$success = false;
+			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
+		}
+		$json = array('success' => $success,
+					  'message' => $message);
+		echo json_encode($json);	
 	}
 
 	function estatus_cat(){

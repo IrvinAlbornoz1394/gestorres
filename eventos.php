@@ -121,8 +121,8 @@
                         <ul class="nav nav-second-level collapse">
                             <li><a href="categorias.php">Categorias</a></li>
                             <li><a href="roles.php">Roles/permiso</a></li>
-                            <li class="active"><a href="roles.php">Ocupaciones</a></li>
-                            <li><a href="eventos.php">Eventos</a></li>
+                            <li><a href="roles.php">Ocupaciones</a></li>
+                            <li class="active"><a href="eventos.php">Eventos</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -164,18 +164,18 @@
                                 <p>
                                     Escribe el nombre del evento
                                 </p>
-                                <form action="#" class="form_ocup">
-                                    <input type="hidden" name="id" id="id_eventos">
+                                <form action="#" class="form_evento">
+                                    <input type="hidden" name="id" id="id_evento">
                                     <div class="form-group">
                                         <label for="" class="">Nombre</label>
-                                        <input type="text" class="form-control disabled-evento" name="nombre" id="nombre_ocup" disabled required>
-                                        <small class="small-ocup"></small>
+                                        <input type="text" class="form-control disabled-evento" name="nombre" id="nombre_evento" disabled required>
+                                        <small class="small-evento"></small>
                                     </div>
                                     <button class="btn btn-sm btn-primary disabled-evento" disabled>Guardar <i class="fa fa-save"></i></button>
-                                    <button type="button" class="btn btn-sm btn-white disabled-evento" onclick="form_reset_ocup();" disabled>Cancelar</button>
-                                    <button type="button" class="btn btn-sm btn-white pull-right nva-ocup">Nuevo <i class="fa fa-plus"></i></button>
+                                    <button type="button" class="btn btn-sm btn-white disabled-evento" onclick="form_reset_evento();" disabled>Cancelar</button>
+                                    <button type="button" class="btn btn-sm btn-white pull-right nvo-evento">Nuevo <i class="fa fa-plus"></i></button>
                                     <hr>
-                                    <table class="table table-hover table-ocupaciones">
+                                    <table class="table table-hover table-eventos">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -183,7 +183,7 @@
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        <tbody class="tbody_ocup">
+                                        <tbody class="tbody_eventos">
                                         </tbody>
                                     </table>
                                 </form>
@@ -269,33 +269,33 @@
     <script src="js/plugins/dataTables/dataTables.tableTools.min.js"></script>
 
     <script>
-        var tableOcup = $('.table-ocupaciones');
+        var tableOcup = $('.table-eventos');
 
         $(document).ready(function(){
-            get_ocup();
+            get_eventos();
         });
 
 
-        function get_ocup() {
+        function get_eventos() {
             $.ajax({
                 url:'php/funciones.php',
-                data: "opc=get_ocupaciones",
+                data: "opc=get_eventos",
                 dataType:'json',
                 type:'post',
                 success:function(json){
                     console.log(json);
                     if(json.success){
-                        var html_ocup = "";
+                        var html_eventos = "";
                         for (var i = 0; i < json.data.length; i++) {
-                            html_ocup += "<tr>"
+                            html_eventos += "<tr>"
                                       + "<td>"+json.data[i].id+"</td>"
                                       + "<td>"+json.data[i].nombre+"</td>"
-                                      + "<td><a title='Editar' class='tr-active' onclick='editOcup("+JSON.stringify(json.data[i])+")'><i class='fa fa-pencil'></i></a>&nbsp&nbsp&nbsp"
-                                      +"<a onclick='borrarOcup("+json.data[i].id+")' title='Borrar'><i class='fa fa-trash'></i></td>"
+                                      + "<td><a title='Editar' class='tr-active' onclick='editEvento("+JSON.stringify(json.data[i])+")'><i class='fa fa-pencil'></i></a>&nbsp&nbsp&nbsp"
+                                      +"<a onclick='borrarEvento("+json.data[i].id+")' title='Borrar'><i class='fa fa-trash'></i></td>"
                                       + "</tr>";
                         }
                         tableOcup.DataTable().clear().draw().destroy();
-                        $(".tbody_ocup").html(html_ocup);
+                        $(".tbody_eventos").html(html_eventos);
                         tableOcup.dataTable(
                             {"searching": false,
                             "bLengthChange": false
@@ -311,16 +311,16 @@
 
 
 
-        function editOcup(json){
+        function editEvento(json){
             console.log(json);
             $(".disabled-evento").attr('disabled',false);
-            $(".small-ocup").html("editando").show();
-            $("#id_ocup").val(json.id);
-            $("#nombre_ocup").val(json.nombre).addClass('border_focus');
+            $(".small-evento").html("editando").show();
+            $("#id_evento").val(json.id);
+            $("#nombre_evento").val(json.nombre).addClass('border_focus');
         }
 
 
-        function borrarOcup(id){
+        function borrarEvento(id){
             swal({
                 title: "Borrar Categoria",
                 text: "¿Estas seguro?",
@@ -330,12 +330,12 @@
                 confirmButtonText: "Si, Eliminar!",
                 closeOnConfirm: false
             }, function () {
-                eliminarOcupacion(id);
+                eliminarEvento(id);
             });
         }
 
-        function eliminarOcupacion(id){
-            var datos = "opc=borrarOcup&id="+id;
+        function eliminarEvento(id){
+            var datos = "opc=borrarEvento&id="+id;
             $.ajax({
                 url:'php/funciones.php',
                 data: datos,
@@ -344,7 +344,7 @@
                 success:function(json){
                     if(json.success){
                         swal("Correcto", json.message, "success");
-                        get_ocup();
+                        get_eventos();
                     }else{
                         swal("Ups!", json.message, "error");
                     }
@@ -355,39 +355,19 @@
             })
         }
 
-        function estatus_subCat(id,estatus){
-            var datos = "opc=estatus_subCat&id="+id+"&estatus="+estatus;
-            $.ajax({
-                url:'php/funciones.php',
-                data: datos,
-                dataType:'json',
-                type:'post',
-                success:function(json){
-                    if(json.success){
-                        swal("Correcto", json.message, "success");
-                        get_cat();
-                    }else{
-                        swal("Ups!", json.message, "error");
-                    }
-                },
-                error:function(error){
-                    swal("Ups!", json.error, "error");
-                }
-            })
-        }
 
-        function form_reset_ocup(){
+        function form_reset_evento(){
             $(".disabled-evento").attr('disabled',true);
-            $(".small-ocup").hide();
-            $("#id_ocup").val("");
-            $("#nombre_ocup").val("").removeClass("border_focus");
+            $(".small-evento").hide();
+            $("#id_evento").val("");
+            $("#nombre_evento").val("").removeClass("border_focus");
         }
 
 
-        $(".form_ocup").on('submit',function(e){
+        $(".form_evento").on('submit',function(e){
             e.preventDefault();
             var datos = $(this).serialize();
-            datos += "&opc=insert_ocup";
+            datos += "&opc=insert_evento";
             $.ajax({
                 url:'php/funciones.php',
                 data: datos,
@@ -396,8 +376,8 @@
                 success:function(json){
                     if(json.success){
                         swal("Correcto", json.message, "success");
-                        form_reset_ocup();
-                        get_ocup();
+                        form_reset_evento();
+                        get_eventos();
                     }else{
                         swal("Ups!", json.message, "error");
                     }
@@ -409,42 +389,12 @@
         });
 
 
-        $(".nva-ocup").click(function(){
+        $(".nvo-evento").click(function(){
             $(".disabled-evento").attr('disabled',false);
-            $("#id_ocup").val("");
-            $("#nombre_ocup").val("");
-            $(".small-ocup").hide();
+            $("#id_evento").val("");
+            $("#nombre_evento").val("");
+            $(".small-evento").hide();
         });
-
-        $(".form_subCat").on('submit',function(e){
-            var cat = $(".select_categoria").val();
-            if(cat == null){
-                $(".chosen-container-single").addClass('border_error')
-                $(".form_select").addClass('color_error');
-                return false;
-            }
-            e.preventDefault();
-            var datos = $(this).serialize();
-            datos += "&opc=insert_subCat";
-            $.ajax({
-                url:'php/funciones.php',
-                data: datos,
-                dataType:'json',
-                type:'post',
-                success:function(json){
-                    if(json.success){
-                        swal("Correcto", json.message, "success");
-                        form_reset_subCat();
-                        get_cat();
-                    }else{
-                        swal("Ups!", json.message, "error");
-                    }
-                },
-                error:function(error){
-                    swal("Ups!", error, "error");
-                }
-            })
-        })
 
 
         
