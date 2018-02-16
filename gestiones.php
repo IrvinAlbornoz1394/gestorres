@@ -112,6 +112,8 @@
                         <ul class="nav nav-second-level collapse">
                             <li><a href="categorias.php">Categorias</a></li>
                             <li><a href="roles.php">Roles/permiso</a></li>
+                            <li><a href="ocupaciones.php">Ocupaciones</a></li>
+                            <li><a href="eventos.php">Eventos</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -183,7 +185,7 @@
                                                     <th>Direccion entrega</th>
                                                     <th>Estatus</th>
                                                     <th>Indicador</th>
-                                                    <th>Action</th>
+                                                    <th>Acción</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="tbody_gestiones">
@@ -251,10 +253,17 @@
                                         <span class="txt_detalles_gestion txt_direccion_entrega"></span>
                                     </p>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <p>
                                         <small>Comentarios :</small><br>
                                         <span class="txt_detalles_gestion txt_comentarios">
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+                                        <small>Detalles  Finaliza/Cancelar :</small><br>
+                                        <span class="txt_detalles_gestion txt_detalles_fc">
                                         </span>
                                     </p>
                                 </div>
@@ -673,6 +682,7 @@
                 $(".txt_fecha_real_entrega").html("");
                 $(".txt_direccion_entrega").html("");
                 $(".txt_comentarios").html("");
+                $(".txt_detalles_fc").html("");
             });
 
             $(".btn_elminar_gestion").click(function(){
@@ -820,6 +830,7 @@
             $(".txt_fecha_real_entrega").html(json.fRealEntrega);
             $(".txt_direccion_entrega").html(json.direccion_entrega+" "+json.colonia);
             $(".txt_comentarios").html(json.detalles);
+            $(".txt_detalles_fc").html(json.comentarios);
             $("#modal_detalles").modal('show');
         }
 

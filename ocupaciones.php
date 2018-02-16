@@ -119,9 +119,9 @@
                             <span class="nav-label">Configucacioón</span> <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-second-level collapse">
-                            <li class="active"><a href="categorias.php">Categorias</a></li>
+                            <li><a href="categorias.php">Categorias</a></li>
                             <li><a href="roles.php">Roles/permiso</a></li>
-                            <li><a href="ocupaciones.php">Ocupaciones</a></li>
+                            <li class="active"><a href="roles.php">Ocupaciones</a></li>
                             <li><a href="eventos.php">Eventos</a></li>
                         </ul>
                     </li>
@@ -147,7 +147,7 @@
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Categorias</h2>
+                    <h2>Ocupaciones</h2>
                 </div>
                 <div class="col-lg-2">
 
@@ -158,72 +158,32 @@
                     <div class="col-md-6">
                         <div class="ibox ">
                             <div class="ibox-title">
-                                <h5>Crear Categorias</h5>
+                                <h5>Crear ocupación</h5>
                             </div>
                             <div class="ibox-content">
                                 <p>
-                                    Escribe el nombre de la nueva categoria
+                                    Escribe el nombre de la nueva cupación
                                 </p>
-                                <form action="#" class="form_cat">
-                                    <input type="hidden" name="id" id="id_cat">
+                                <form action="#" class="form_ocup">
+                                    <input type="hidden" name="id" id="id_ocup">
                                     <div class="form-group">
                                         <label for="" class="">Nombre</label>
-                                        <input type="text" class="form-control disabled-cat" name="nombre" id="nombre_cat" disabled required>
-                                        <small class="small-cat"></small>
+                                        <input type="text" class="form-control disabled-ocup" name="nombre" id="nombre_ocup" disabled required>
+                                        <small class="small-ocup"></small>
                                     </div>
-                                    <button class="btn btn-sm btn-primary disabled-cat" disabled>Guardar <i class="fa fa-save"></i></button>
-                                    <button type="button" class="btn btn-sm btn-white disabled-cat" onclick="form_reset_cat();" disabled>Cancelar</button>
-                                    <button type="button" class="btn btn-sm btn-white pull-right nvo-cat">Nuevo <i class="fa fa-plus"></i></button>
+                                    <button class="btn btn-sm btn-primary disabled-ocup" disabled>Guardar <i class="fa fa-save"></i></button>
+                                    <button type="button" class="btn btn-sm btn-white disabled-ocup" onclick="form_reset_ocup();" disabled>Cancelar</button>
+                                    <button type="button" class="btn btn-sm btn-white pull-right nva-ocup">Nuevo <i class="fa fa-plus"></i></button>
                                     <hr>
-                                    <table class="table table-hover table-cat">
+                                    <table class="table table-hover table-ocupaciones">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nombre</th>
                                                 <th></th>
-                                                <th></th>
                                             </tr>
                                         </thead>
-                                        <tbody class="tbody_cat">
-                                        </tbody>
-                                    </table>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <h5>Crear SubCategorias</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <button type="button" class="btn btn-sm btn-white pull-right nvo-subCat">Nuevo <i class="fa fa-plus"></i></button><br>
-                                <form action="#" class="form_subCat">
-                                    <input type="hidden" name="id" id="id_subCat">
-                                    <div class="form-group">
-                                        <label for="">Nombre</label>
-                                        <input type="text" class="form-control disabled-subCat" name="nombre" id="nombre_subCat" required disabled>
-                                        <small class="small-subCat" style="display: none;">Editando</small>
-                                    </div>
-                                    <div class="form-group form_select">
-                                        <label for="">Categoria</label>
-                                        <select data-placeholder="Choose a Country..." name="categoria" class="chosen-select select_categoria" style="width: 100%;" required disabled>
-                                        </select>
-                                    </div>
-                                    <button class="btn btn-sm btn-primary disabled-subCat" disabled>Guardar <i class="fa fa-save"></i></button>
-                                    <button class="btn btn-sm btn-white disabled-subCat" onclick="form_reset_subCat();" disabled>Cancelar</button>
-                                    <hr>
-                                    <table class="table table-hover table-subCat">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Nombre</th>
-                                                <th>Categoria</th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="tbody_subCat">
+                                        <tbody class="tbody_ocup">
                                         </tbody>
                                     </table>
                                 </form>
@@ -309,41 +269,34 @@
     <script src="js/plugins/dataTables/dataTables.tableTools.min.js"></script>
 
     <script>
-        var tableCat = $('.table-cat');
-        var tableSubCat = $('.table-subCat');
+        var tableOcup = $('.table-ocupaciones');
 
         $(document).ready(function(){
-            get_cat();
+            get_ocup();
         });
 
 
-        function get_cat() {
+        function get_ocup() {
             $.ajax({
                 url:'php/funciones.php',
-                data: "opc=get_cat_subCat",
+                data: "opc=get_ocupaciones",
                 dataType:'json',
                 type:'post',
                 success:function(json){
                     console.log(json);
                     if(json.success){
-                        subcategorias = json.subcategorias;
-                        set_subCat(subcategorias);
-                        var cat = "<option val='' disabled selected>Selecciona una categoria</option>";
-                        var html_cat = "";
-                        for (var i = 0; i < json.categorias.length; i++) {
-                            cat += "<option value="+json.categorias[i].id+">"+json.categorias[i].nombre+"</option>";
-                            html_cat += "<tr>"
-                                      + "<td>"+json.categorias[i].id+"</td>"
-                                      + "<td>"+json.categorias[i].nombre+"</td>"
-                                      + "<td><a title='Editar' class='tr-active' onclick='editCat("+JSON.stringify(json.categorias[i])+")'><i class='fa fa-pencil'></i></a></td>"
-                                      +"<td><a onclick='borrar_cat("+json.categorias[i].id+")' title='Borrar'><i class='fa fa-trash'></i></td>"
+                        var html_ocup = "";
+                        for (var i = 0; i < json.data.length; i++) {
+                            html_ocup += "<tr>"
+                                      + "<td>"+json.data[i].id+"</td>"
+                                      + "<td>"+json.data[i].nombre+"</td>"
+                                      + "<td><a title='Editar' class='tr-active' onclick='editOcup("+JSON.stringify(json.data[i])+")'><i class='fa fa-pencil'></i></a>&nbsp&nbsp&nbsp"
+                                      +"<a onclick='borrarOcup("+json.data[i].id+")' title='Borrar'><i class='fa fa-trash'></i></td>"
                                       + "</tr>";
                         }
-                        $(".select_categoria").html(cat).trigger("chosen:updated");
-
-                        tableCat.DataTable().clear().draw().destroy();
-                        $(".tbody_cat").html(html_cat);
-                        tableCat.dataTable(
+                        tableOcup.DataTable().clear().draw().destroy();
+                        $(".tbody_ocup").html(html_ocup);
+                        tableOcup.dataTable(
                             {"searching": false,
                             "bLengthChange": false
                             }
@@ -357,54 +310,17 @@
         }
 
 
-        function set_subCat(json){
-            var html = "";
-            for (var i = 0; i < json.length; i++) {
-                html += "<tr>"
-                      + "<td>"+json[i].id+"</td>"
-                      + "<td>"+json[i].nombre+"</td>"
-                      + "<td>"+json[i].cat+"</td>"
-                      + "<td><a title='Editar' onclick='editSubCat("+JSON.stringify(json[i])+")'><i class='fa fa-pencil'></i></a></td>"
-                      + "<td><a onclick='borrar_subCat("+json[i].id+")' title='Borrar'><i class='fa fa-trash'></i></td>"
-                      + "</tr>";
-            }
-            tableSubCat.DataTable().clear().draw().destroy();
-            $(".tbody_subCat").html(html);
-            tableSubCat.dataTable(
-                {"searching": false,
-                "bLengthChange": false
-                }
-            );
-        }
 
-        function editCat(json){
+        function editOcup(json){
             console.log(json);
-            $(".disabled-cat").attr('disabled',false);
-            $(".small-cat").html("editando").show();
-            $("#id_cat").val(json.id);
-            $("#nombre_cat").val(json.nombre).addClass('border_focus');
+            $(".disabled-ocup").attr('disabled',false);
+            $(".small-ocup").html("editando").show();
+            $("#id_ocup").val(json.id);
+            $("#nombre_ocup").val(json.nombre).addClass('border_focus');
         }
 
 
-        function editSubCat(json){
-            console.log(json);
-            $(".select_categoria").find('option:first-child').prop('selected', true).end().trigger('chosen:updated');
-            $('.select_categoria option[value='+json.idCat+']').attr("selected",true);
-            $(".chosen-container-single").removeClass('border_error')
-            $(".form_select").removeClass('color_error');
-            $(".disabled-subCat").attr('disabled',false);
-            $(".select_categoria").prop('disabled',false).trigger("chosen:updated");
-            $(".small-subCat").show();
-            $("#id_subCat").val(json.id);
-            $("#nombre_subCat").val(json.nombre);
-
-            $(".disabled-subCat").attr('disabled',false);
-            $(".small-subCat").html("editando").show();
-            $("#id_subCat").val(json.id);
-            $("#nombre_subCat").val(json.nombre).addClass('border_focus');
-        }
-
-        function borrar_cat(id){
+        function borrarOcup(id){
             swal({
                 title: "Borrar Categoria",
                 text: "¿Estas seguro?",
@@ -414,26 +330,12 @@
                 confirmButtonText: "Si, Eliminar!",
                 closeOnConfirm: false
             }, function () {
-                estatus_cat(id,0);
+                eliminarOcupacion(id);
             });
         }
 
-        function borrar_subCat(id){
-            swal({
-                title: "Borrar SubCategoria",
-                text: "¿Estas seguro?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#f93a4c",
-                confirmButtonText: "Si, Eliminar!",
-                closeOnConfirm: false
-            }, function () {
-                estatus_subCat(id,0);
-            });
-        }
-
-        function estatus_cat(id,estatus){
-            var datos = "opc=estatus_cat&id="+id+"&estatus="+estatus;
+        function eliminarOcupacion(id){
+            var datos = "opc=borrarOcup&id="+id;
             $.ajax({
                 url:'php/funciones.php',
                 data: datos,
@@ -442,7 +344,7 @@
                 success:function(json){
                     if(json.success){
                         swal("Correcto", json.message, "success");
-                        get_cat();
+                        get_ocup();
                     }else{
                         swal("Ups!", json.message, "error");
                     }
@@ -474,28 +376,18 @@
             })
         }
 
-        function form_reset_cat(){
-            $(".disabled-cat").attr('disabled',true);
-            $(".small-cat").hide();
-            $("#id_cat").val("");
-            $("#nombre_cat").val("").removeClass("border_focus");
+        function form_reset_ocup(){
+            $(".disabled-ocup").attr('disabled',true);
+            $(".small-ocup").hide();
+            $("#id_ocup").val("");
+            $("#nombre_ocup").val("").removeClass("border_focus");
         }
 
-        function form_reset_subCat(){
-            $(".select_categoria").find('option:first-child').prop('selected', true).end().trigger('chosen:updated');
-            $(".chosen-container-single").removeClass('border_error')
-            $(".form_select").removeClass('color_error');
-            $(".disabled-subCat").attr('disabled',true);
-            $(".select_categoria").prop('disabled',true).trigger("chosen:updated");
-            $(".small-subCat").hide();
-            $("#id_subCat").val("");
-            $("#nombre_subCat").val("").removeClass('border_focus');
-        }
 
-        $(".form_cat").on('submit',function(e){
+        $(".form_ocup").on('submit',function(e){
             e.preventDefault();
             var datos = $(this).serialize();
-            datos += "&opc=insert_cat";
+            datos += "&opc=insert_ocup";
             $.ajax({
                 url:'php/funciones.php',
                 data: datos,
@@ -504,8 +396,8 @@
                 success:function(json){
                     if(json.success){
                         swal("Correcto", json.message, "success");
-                        form_reset_cat();
-                        get_cat();
+                        form_reset_ocup();
+                        get_ocup();
                     }else{
                         swal("Ups!", json.message, "error");
                     }
@@ -514,6 +406,14 @@
                     swal("Ups!", error, "error");
                 }
             });
+        });
+
+
+        $(".nva-ocup").click(function(){
+            $(".disabled-ocup").attr('disabled',false);
+            $("#id_ocup").val("");
+            $("#nombre_ocup").val("");
+            $(".small-ocup").hide();
         });
 
         $(".form_subCat").on('submit',function(e){
@@ -547,27 +447,7 @@
         })
 
 
-        $(".select_categoria").change(function(){
-            if($(this).val() !== null ){
-                $(".chosen-container-single").removeClass('border_error')
-                $(".form_select").removeClass('color_error');
-            }        
-        })
-
-        $(".nvo-cat").click(function(){
-            $(".disabled-cat").attr('disabled',false);
-            $("#id_cat").val("");
-            $("#nombre_cat").val("");
-            $(".small-cat").hide();
-        });
-
-        $(".nvo-subCat").click(function(){
-            $(".disabled-subCat").attr('disabled',false);
-            $(".select_categoria").prop('disabled',false).trigger("chosen:updated");
-            $("#id_subCat").val("");
-            $("#nombre_subCat").val("");
-            $(".small-subCat").hide();
-        });
+        
 
         var config = {
                 '.chosen-select'           : {},

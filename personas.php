@@ -134,6 +134,8 @@
                         <ul class="nav nav-second-level collapse">
                             <li><a href="categorias.php">Categorias</a></li>
                             <li><a href="roles.php">Roles/permiso</a></li>
+                            <li><a href="ocupaciones.php">Ocupaciones</a></li>
+                            <li><a href="eventos.php">Eventos</a></li>
                         </ul>
                     </li>
                 </ul>

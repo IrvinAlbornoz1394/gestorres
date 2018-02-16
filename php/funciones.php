@@ -48,8 +48,14 @@
 		case 'insert_subCat':
 			insert_subCat();
 			break;
+		case 'insert_ocup':
+			insert_ocup();
+			break;
 		case 'estatus_subCat':
 			estatus_subCat();
+			break;
+		case 'borrarOcup':
+			borrar_ocupacion();
 			break;
 		case 'get_ocupaciones':
 			get_ocupaciones();
@@ -555,6 +561,30 @@
 		echo json_encode($json);
 	}
 
+	function insert_ocup(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+
+		$id = $_POST['id'];
+		$nombre = $_POST['nombre'];
+		$message = "Consulta realizada con éxito.";
+		$success = true;
+
+		$query = "INSERT INTO ocupaciones values ('$id','$nombre') ON DUPLICATE KEY UPDATE nombre_ocupacion = '$nombre'";
+		if(!$mysqli->query($query)){
+			$success = false;
+			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
+		}
+		$json = array('success' => $success,
+					  'message' => $message);
+		echo json_encode($json);
+	}
+
 	function estatus_cat(){
 		$mysqli = conexion();
 		if(!$mysqli){
@@ -578,6 +608,27 @@
 		echo json_encode($json);
 	}
 
+	function borrar_ocupacion(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		$id = $_POST['id'];
+		$message = "Consulta realizada con éxito.";
+		$success = true;
+
+		$query = "DELETE FROM ocupaciones WHERE id = '$id'";
+		if(!$mysqli->query($query)){
+			$success = false;
+			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
+		}
+		$json = array('success' => $success,
+					  'message' => $message);
+		echo json_encode($json);	
+	}
 
 	function estatus_persona(){
 		$mysqli = conexion();
