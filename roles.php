@@ -147,46 +147,71 @@
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Eventos</h2>
-                </div>
-                <div class="col-lg-2">
-
+                    <h2>Roles x Permiso</h2>
                 </div>
             </div>
             <div class="wrapper wrapper-content animated fadeInRight">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="ibox ">
                             <div class="ibox-title">
-                                <h5>Captura de eventos</h5>
+                                <h5>Asignacion de permisos</h5>
                             </div>
                             <div class="ibox-content">
                                 <p>
-                                    Escribe el nombre del evento
+                                    Escribe el nombre del Rol
                                 </p>
-                                <form action="#" class="form_evento">
+                                <form action="#" class="form_evento col-md-8">
                                     <input type="hidden" name="id" id="id_evento">
                                     <div class="form-group">
                                         <label for="" class="">Nombre</label>
-                                        <input type="text" class="form-control disabled-evento" name="nombre" id="nombre_evento" disabled required>
+                                        <input type="text" class="form-control disabled-rol" name="nombre" id="nombre_evento" disabled required>
                                         <small class="small-evento"></small>
                                     </div>
-                                    <button class="btn btn-sm btn-primary disabled-evento" disabled>Guardar <i class="fa fa-save"></i></button>
-                                    <button type="button" class="btn btn-sm btn-white disabled-evento" onclick="form_reset_evento();" disabled>Cancelar</button>
+                                    <div class="form-group">
+                                        <label class="font-noraml">Permiso</label>
+                                        <div class="input-group">
+                                            <select  class="chosen-select form-control disabled-rol" data-placeholder="Escribe un permiso" multiple tabindex="4" disabled>
+                                                <option value="">Dashboard</option>
+                                                <optgroup label="Gesiton">
+                                                    <option value="">Alta Gestion</option>
+                                                    <option value="">Ver Gestiones</option>
+                                                    <option value="">Editar Gestion</option>
+                                                    <option value="">Finalizar Gestion</option>
+                                                    <option value="">Cancelar Gestion</option>
+                                                </optgroup>
+                                                <optgroup label="Personas">
+                                                    <option value="">Alta Persona</option>
+                                                    <option value="">Ver Personas</option>
+                                                    <option value="">Editar Persona</option>
+                                                    <option value="">Eliminar Persona</option>
+                                                </optgroup>
+                                                <optgroup label="Usuarios">
+                                                    <option value="">Ver Usuarios</option>
+                                                    <option value="">Alta Usuario</option>
+                                                    <option value="">Eliminar Usuario</option>
+                                                    <option value="">Editar Usuario</option>
+                                                    <option value="">Reiniciar Contraseña</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-sm btn-primary disabled-rol" disabled>Guardar <i class="fa fa-save"></i></button>
+                                    <button type="button" class="btn btn-sm btn-white disabled-rol" onclick="form_reset_evento();" disabled>Cancelar</button>
                                     <button type="button" class="btn btn-sm btn-white pull-right nvo-evento">Nuevo <i class="fa fa-plus"></i></button>
                                     <hr>
-                                    <table class="table table-hover table-eventos">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Nombre</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="tbody_eventos">
-                                        </tbody>
-                                    </table>
                                 </form>
+                                <table class="table table-hover table-eventos">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nombre</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody_eventos">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -313,7 +338,7 @@
 
         function editEvento(json){
             console.log(json);
-            $(".disabled-evento").attr('disabled',false);
+            $(".disabled-rol").attr('disabled',false);
             $(".small-evento").html("editando").show();
             $("#id_evento").val(json.id);
             $("#nombre_evento").val(json.nombre).addClass('border_focus');
@@ -357,7 +382,7 @@
 
 
         function form_reset_evento(){
-            $(".disabled-evento").attr('disabled',true);
+            $(".disabled-rol").attr('disabled',true);
             $(".small-evento").hide();
             $("#id_evento").val("");
             $("#nombre_evento").val("").removeClass("border_focus");
@@ -390,7 +415,7 @@
 
 
         $(".nvo-evento").click(function(){
-            $(".disabled-evento").attr('disabled',false);
+            $(".disabled-rol").attr('disabled',false);
             $("#id_evento").val("");
             $("#nombre_evento").val("");
             $(".small-evento").hide();
