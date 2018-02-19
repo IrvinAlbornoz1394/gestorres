@@ -69,6 +69,12 @@
         .color_error{
             color: red;
         }
+        @media only screen and (min-width : 900px) {
+            #select-permiso{
+                width: 500px;
+            }
+        }
+        
     </style>
 
 </head>
@@ -165,14 +171,14 @@
                                     <input type="hidden" name="id" id="id_evento">
                                     <div class="form-group">
                                         <label for="" class="">Nombre</label>
-                                        <input type="text" class="form-control disabled-rol" name="nombre" id="nombre_evento" disabled required>
+                                        <input type="text" class="form-control disabled-rol text-perm" name="nombre" id="nombre_evento" disabled required>
                                         <small class="small-evento"></small>
                                     </div>
                                     <div class="form-group">
                                         <label class="font-noraml">Permiso</label>
                                         <div class="input-group">
-                                            <select  class="chosen-select form-control disabled-rol" data-placeholder="Escribe un permiso" multiple tabindex="4" disabled>
-                                                <option value="">Dashboard</option>
+                                            <select  class="chosen-select form-control disabled-rol" id="select-permiso" data-placeholder="Escribe un permiso" multiple tabindex="4" disabled>
+                                                <!--<option value="">Dashboard</option>
                                                 <optgroup label="Gesiton">
                                                     <option value="">Alta Gestion</option>
                                                     <option value="">Ver Gestiones</option>
@@ -192,7 +198,7 @@
                                                     <option value="">Eliminar Usuario</option>
                                                     <option value="">Editar Usuario</option>
                                                     <option value="">Reiniciar Contraseña</option>
-                                                </optgroup>
+                                                </optgroup>-->
                                             </select>
                                         </div>
                                     </div>
@@ -206,6 +212,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Nombre</th>
+                                            <th></th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -297,30 +304,34 @@
         var tableOcup = $('.table-eventos');
 
         $(document).ready(function(){
-            get_eventos();
+            get_roles();
+            get_permisos();
         });
 
 
-        function get_eventos() {
+        function get_roles() {
             $.ajax({
                 url:'php/funciones.php',
-                data: "opc=get_eventos",
+                data: "opc=get_roles",
                 dataType:'json',
                 type:'post',
                 success:function(json){
                     console.log(json);
                     if(json.success){
-                        var html_eventos = "";
+                        var html_roles = "";
                         for (var i = 0; i < json.data.length; i++) {
-                            html_eventos += "<tr>"
-                                      + "<td>"+json.data[i].id+"</td>"
-                                      + "<td>"+json.data[i].nombre+"</td>"
-                                      + "<td><a title='Editar' class='tr-active' onclick='editEvento("+JSON.stringify(json.data[i])+")'><i class='fa fa-pencil'></i></a>&nbsp&nbsp&nbsp"
-                                      +"<a onclick='borrarEvento("+json.data[i].id+")' title='Borrar'><i class='fa fa-trash'></i></td>"
+                            html_roles += "<tr>"
+                                      + "<td width='10%'>"+json.data[i].idRol+"</td>"
+                                      + "<td width='20%'>"+json.data[i].nombre+"</td><td>";
+                                      for (var x = 0; x < json.data[i].permisos.length; x++) {
+                                        html_roles += json.data[i].permisos[x].nombrepermiso+",  ";   
+                                      }
+                                      html_roles += "</td><td width='10%'><a title='Editar' class='tr-active' onclick='editEvento("+JSON.stringify(json.data[i])+")'><i class='fa fa-pencil'></i></a>&nbsp&nbsp&nbsp"
+                                      +"<a onclick='borrarEvento("+json.data[i].idRol+")' title='Borrar'><i class='fa fa-trash'></i></td>"
                                       + "</tr>";
                         }
                         tableOcup.DataTable().clear().draw().destroy();
-                        $(".tbody_eventos").html(html_eventos);
+                        $(".tbody_eventos").html(html_roles);
                         tableOcup.dataTable(
                             {"searching": false,
                             "bLengthChange": false
@@ -338,7 +349,7 @@
 
         function editEvento(json){
             console.log(json);
-            $(".disabled-rol").attr('disabled',false);
+            $(".disabled-rol").attr('disabled',false).trigger("chosen:updated");
             $(".small-evento").html("editando").show();
             $("#id_evento").val(json.id);
             $("#nombre_evento").val(json.nombre).addClass('border_focus');
@@ -380,9 +391,33 @@
             })
         }
 
+        function get_permisos(){
+            $.ajax({
+                url:'php/funciones.php',
+                data: "opc=get_permisos",
+                dataType:'json',
+                type:'post',
+                success: function(json){
+                    if(json.success){
+                        var perm = "";
+                        for (var i = 0; i < json.data.length; i++) {
+                            perm += "<option value="+json.data[i].id+">"+json.data[i].nombre+"</option>";
+                        }
+                        $("#select-permiso").html(perm).trigger("chosen:updated").chosen('destroy').chosen();
+                        var wdt = $(".text-perm").width();
+                        $("#select-permiso").css('width',wdt);
+
+                    }
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            });
+        }
 
         function form_reset_evento(){
-            $(".disabled-rol").attr('disabled',true);
+            $("#select-permiso").val([]);
+            $(".disabled-rol").attr('disabled',true).trigger("chosen:updated");
             $(".small-evento").hide();
             $("#id_evento").val("");
             $("#nombre_evento").val("").removeClass("border_focus");
@@ -415,7 +450,7 @@
 
 
         $(".nvo-evento").click(function(){
-            $(".disabled-rol").attr('disabled',false);
+            $(".disabled-rol").attr('disabled',false).trigger("chosen:updated");
             $("#id_evento").val("");
             $("#nombre_evento").val("");
             $(".small-evento").hide();

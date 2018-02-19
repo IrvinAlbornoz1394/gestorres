@@ -24,6 +24,9 @@
 		case 'get_colonias':
 			get_colonias();
 			break;
+		case 'get_permisos':
+			get_permisos();
+			break;
 		case 'nva_persona':
 			nva_persona();
 			break;
@@ -65,6 +68,9 @@
 			break;
 		case 'get_eventos':
 			get_eventos();
+			break;
+		case 'get_roles':
+			get_roles();
 			break;
 		case 'borrarEvento':
 			borrarEvento();
@@ -287,6 +293,77 @@
 		$json = array('success' => $success,
 					  'message' => $message,
 					  'data' => $eventos);
+		echo json_encode($json);
+	}
+
+	function get_roles(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		$success = true;
+		$message = "OK";
+		$roles = [];
+		$query = "SELECT * from roles";
+		$result = $mysqli->query($query);
+		if(!$result){
+			$success = false;
+			$message = "No se encontraron resultados de tipo de gestion";
+		}
+		while ($row = mysqli_fetch_array($result)) {
+			$query1 = "SELECT p.* from permisos p inner join rolxpermiso rp on p.id = rp.idpermiso Where rp.idrol = ".$row['idrol'];
+			$result1 = $mysqli->query($query1);
+			if(!$result1){
+				$success = false;
+				$message = "No se encontraron resultados de tipo de gestion";
+			}
+			$rxp = [];
+			while ($row1 = mysqli_fetch_array($result1)) {
+				$rxp[] = array('nombrepermiso' => $row1['nompermiso'],
+						  'cve_permiso' => $row1['clavepermiso']);
+			}
+
+			$roles[] = array('idRol' => $row['idrol'],
+						  'nombre' => $row['nomrol'],
+						  'permisos' => $rxp);
+		}
+
+		$json = array('success' => $success,
+					  'message' => $message,
+					  'data' => $roles);
+		echo json_encode($json);
+	}
+
+
+
+
+	function get_permisos(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		$success = true;
+		$message = "OK";
+		$ocupaciones = [];
+		$query = "SELECT * FROM permisos";
+		$result = $mysqli->query($query);
+		if(!$result){
+			$success = false;
+			$message = "No se encontraron resultados de tipo de gestion";
+		}
+		while ($row = mysqli_fetch_array($result)) {
+			$permisos[] = array('id' => $row['id'],
+						  'nombre' => $row['nompermiso']);
+		}
+		$json = array('success' => $success,
+					  'message' => $message,
+					  'data' => $permisos);
 		echo json_encode($json);
 	}
 
