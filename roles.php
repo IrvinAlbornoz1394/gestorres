@@ -167,12 +167,12 @@
                                 <p>
                                     Escribe el nombre del Rol
                                 </p>
-                                <form action="#" class="form_evento col-md-8">
-                                    <input type="hidden" name="id" id="id_evento">
+                                <form action="#" class="form_rol col-md-8">
+                                    <input type="hidden" name="id" id="id_rol">
                                     <div class="form-group">
                                         <label for="" class="">Nombre</label>
-                                        <input type="text" class="form-control disabled-rol text-perm" name="nombre" id="nombre_evento" disabled required>
-                                        <small class="small-evento"></small>
+                                        <input type="text" class="form-control disabled-rol text-perm" name="nombre" id="nombre_rol" disabled required>
+                                        <small class="small-rol"></small>
                                     </div>
                                     <div class="form-group">
                                         <label class="font-noraml">Permiso</label>
@@ -203,8 +203,8 @@
                                         </div>
                                     </div>
                                     <button class="btn btn-sm btn-primary disabled-rol" disabled>Guardar <i class="fa fa-save"></i></button>
-                                    <button type="button" class="btn btn-sm btn-white disabled-rol" onclick="form_reset_evento();" disabled>Cancelar</button>
-                                    <button type="button" class="btn btn-sm btn-white pull-right nvo-evento">Nuevo <i class="fa fa-plus"></i></button>
+                                    <button type="button" class="btn btn-sm btn-white disabled-rol" onclick="form_reset_rol();" disabled>Cancelar</button>
+                                    <button type="button" class="btn btn-sm btn-white pull-right nvo_rol">Nuevo <i class="fa fa-plus"></i></button>
                                     <hr>
                                 </form>
                                 <table class="table table-hover table-eventos">
@@ -326,8 +326,8 @@
                                       for (var x = 0; x < json.data[i].permisos.length; x++) {
                                         html_roles += json.data[i].permisos[x].nombrepermiso+",  ";   
                                       }
-                                      html_roles += "</td><td width='10%'><a title='Editar' class='tr-active' onclick='editEvento("+JSON.stringify(json.data[i])+")'><i class='fa fa-pencil'></i></a>&nbsp&nbsp&nbsp"
-                                      +"<a onclick='borrarEvento("+json.data[i].idRol+")' title='Borrar'><i class='fa fa-trash'></i></td>"
+                                      html_roles += "</td><td width='10%'><a title='Editar' class='tr-active' onclick='editRol("+JSON.stringify(json.data[i])+")'><i class='fa fa-pencil'></i></a>&nbsp&nbsp&nbsp"
+                                      +"<a onclick='borrarRol("+json.data[i].idRol+")' title='Borrar'><i class='fa fa-trash'></i></td>"
                                       + "</tr>";
                         }
                         tableOcup.DataTable().clear().draw().destroy();
@@ -347,16 +347,16 @@
 
 
 
-        function editEvento(json){
+        function editRol(json){
             console.log(json);
             $(".disabled-rol").attr('disabled',false).trigger("chosen:updated");
-            $(".small-evento").html("editando").show();
-            $("#id_evento").val(json.id);
-            $("#nombre_evento").val(json.nombre).addClass('border_focus');
+            $(".small-rol").html("editando").show();
+            $("#id_rol").val(json.id);
+            $("#nombre_rol").val(json.nombre).addClass('border_focus');
         }
 
 
-        function borrarEvento(id){
+        function borrarRol(id){
             swal({
                 title: "Borrar Categoria",
                 text: "¿Estas seguro?",
@@ -366,12 +366,12 @@
                 confirmButtonText: "Si, Eliminar!",
                 closeOnConfirm: false
             }, function () {
-                eliminarEvento(id);
+                eliminarRol(id);
             });
         }
 
-        function eliminarEvento(id){
-            var datos = "opc=borrarEvento&id="+id;
+        function eliminarRol(id){
+            var datos = "opc=borrarRol&id="+id;
             $.ajax({
                 url:'php/funciones.php',
                 data: datos,
@@ -415,19 +415,19 @@
             });
         }
 
-        function form_reset_evento(){
+        function form_reset_rol(){
             $("#select-permiso").val([]);
             $(".disabled-rol").attr('disabled',true).trigger("chosen:updated");
-            $(".small-evento").hide();
-            $("#id_evento").val("");
-            $("#nombre_evento").val("").removeClass("border_focus");
+            $(".small-rol").hide();
+            $("#id_rol").val("");
+            $("#nombre_rol").val("").removeClass("border_focus");
         }
 
 
-        $(".form_evento").on('submit',function(e){
+        $(".form_rol").on('submit',function(e){
             e.preventDefault();
             var datos = $(this).serialize();
-            datos += "&opc=insert_evento";
+            datos += "&opc=insert_rol";
             $.ajax({
                 url:'php/funciones.php',
                 data: datos,
@@ -436,7 +436,7 @@
                 success:function(json){
                     if(json.success){
                         swal("Correcto", json.message, "success");
-                        form_reset_evento();
+                        form_reset_rol();
                         get_eventos();
                     }else{
                         swal("Ups!", json.message, "error");
@@ -449,11 +449,11 @@
         });
 
 
-        $(".nvo-evento").click(function(){
+        $(".nvo_rol").click(function(){
             $(".disabled-rol").attr('disabled',false).trigger("chosen:updated");
-            $("#id_evento").val("");
-            $("#nombre_evento").val("");
-            $(".small-evento").hide();
+            $("#id_rol").val("");
+            $("#nombre_rol").val("");
+            $(".small-rol").hide();
         });
 
 
