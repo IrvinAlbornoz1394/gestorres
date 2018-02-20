@@ -126,9 +126,9 @@
                         </a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="categorias.php">Categorias</a></li>
-                            <li><a href="roles.php">Roles/permiso</a></li>
+                            <li class="active"><a href="roles.php">Roles/permiso</a></li>
                             <li><a href="ocupaciones.php">Ocupaciones</a></li>
-                            <li class="active"><a href="eventos.php">Eventos</a></li>
+                            <li><a href="eventos.php">Eventos</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -177,7 +177,7 @@
                                     <div class="form-group">
                                         <label class="font-noraml">Permiso</label>
                                         <div class="input-group">
-                                            <select  class="chosen-select form-control disabled-rol" id="select-permiso" data-placeholder="Escribe un permiso" multiple tabindex="4" disabled>
+                                            <select name="permisos[]" class="chosen-select form-control disabled-rol" id="select-permiso" data-placeholder="Escribe un permiso" multiple tabindex="4" disabled>
                                                 <!--<option value="">Dashboard</option>
                                                 <optgroup label="Gesiton">
                                                     <option value="">Alta Gestion</option>
@@ -212,7 +212,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Nombre</th>
-                                            <th></th>
+                                            <th>Permisos</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -351,7 +351,7 @@
             console.log(json);
             $(".disabled-rol").attr('disabled',false).trigger("chosen:updated");
             $(".small-rol").html("editando").show();
-            $("#id_rol").val(json.id);
+            $("#id_rol").val(json.idRol);
             $("#nombre_rol").val(json.nombre).addClass('border_focus');
         }
 
@@ -380,7 +380,7 @@
                 success:function(json){
                     if(json.success){
                         swal("Correcto", json.message, "success");
-                        get_eventos();
+                        get_roles();
                     }else{
                         swal("Ups!", json.message, "error");
                     }
@@ -437,7 +437,7 @@
                     if(json.success){
                         swal("Correcto", json.message, "success");
                         form_reset_rol();
-                        get_eventos();
+                        get_roles();
                     }else{
                         swal("Ups!", json.message, "error");
                     }

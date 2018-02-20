@@ -57,6 +57,9 @@
 		case 'insert_evento':
 			insert_evento();
 			break;
+		case 'insert_rol':
+			insert_rol();
+			break;
 		case 'estatus_subCat':
 			estatus_subCat();
 			break;
@@ -637,6 +640,47 @@
 		$json = array('success' => $success,
 					  'message' => $message);
 		echo json_encode($json);
+	}
+
+	function insert_rol(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		
+		$id = $_POST['id'];
+		$nombre = $_POST['nombre'];
+		$permisos = $_POST['permisos'];
+		$message = "Consulta realizada con éxito.";
+		$success = true;
+
+		$query = "INSERT INTO roles values ('$id','$nombre') ON DUPLICATE KEY UPDATE nomrol = '$nombre'";
+		if(!$mysqli->query($query)){
+			$success = false;
+			$message = "No pudo ingresarse la iformacion del rol";
+		}
+		if($id == ""){
+			$id= $mysqli->insert_id;
+		}else{
+			$query_delete = "DELETE FROM rolxpermiso Where idrol = '$id'";	
+			$mysqli->query($query_delete);
+		}
+
+		for ($i=0; $i < count($permisos); $i++) { 
+			$query_rp = "INSERT INTO rolxpermiso values ('$id','$permisos[$i]')";
+			if(!$mysqli->query($query_rp)){
+				$success = false;
+				$message = "No pudo ingresarse la iformacion del rol";
+			}
+		}
+    	
+		$json = array('success' => $success,
+					  'message' => $message);
+		echo json_encode($json);
+
 	}
 
 	function insert_subCat(){
