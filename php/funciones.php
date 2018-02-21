@@ -78,6 +78,9 @@
 		case 'borrarEvento':
 			borrarEvento();
 			break;
+		case 'borrarRol':
+			borrarRol();
+			break;
 		case 'logout':
 			logout();
 			break;
@@ -325,8 +328,9 @@
 			}
 			$rxp = [];
 			while ($row1 = mysqli_fetch_array($result1)) {
-				$rxp[] = array('nombrepermiso' => $row1['nompermiso'],
-						  'cve_permiso' => $row1['clavepermiso']);
+				$rxp[] = array(	'id' => $row1['id'],
+								'nombrepermiso' => $row1['nompermiso'],
+						  		'cve_permiso' => $row1['clavepermiso']);
 			}
 
 			$roles[] = array('idRol' => $row['idrol'],
@@ -384,6 +388,30 @@
 
 		$query = "DELETE FROM eventos WHERE id = '$id'";
 		if(!$mysqli->query($query)){
+			$success = false;
+			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
+		}
+		$json = array('success' => $success,
+					  'message' => $message);
+		echo json_encode($json);	
+	}
+
+	function borrarRol(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		$id = $_POST['id'];
+		$message = "Consulta realizada con éxito.";
+		$success = true;
+
+		$query_rp = "DELETE FROM rolxpermiso WHERE idrol = '$id'";
+		$mysqli->query($query_rp);
+		$query_rol = "DELETE FROM roles WHERE idrol = '$id'";
+		if(!$mysqli->query($query_rol)){
 			$success = false;
 			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
 		}

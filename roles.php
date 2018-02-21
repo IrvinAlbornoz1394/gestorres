@@ -348,10 +348,16 @@
 
 
         function editRol(json){
-            console.log(json);
+            $("#select-permiso").val([]).trigger("chosen:updated");
             $(".disabled-rol").attr('disabled',false).trigger("chosen:updated");
             $(".small-rol").html("editando").show();
             $("#id_rol").val(json.idRol);
+            console.log(json.permisos);
+            $.each(json.permisos, function(i,e){
+                console.log(e.id);
+                $('#select-permiso option[value='+e.id+']').prop("selected",true);
+            });
+            $("#select-permiso").trigger("chosen:updated");
             $("#nombre_rol").val(json.nombre).addClass('border_focus');
         }
 
