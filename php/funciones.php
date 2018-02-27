@@ -1,5 +1,5 @@
 <?php
- 
+ 	session_start();
 	if(isset($_POST['opc'])){
 		$opc = $_POST['opc'];
 	}elseif (isset($_GET['opc'])) {
@@ -20,6 +20,9 @@
 			break;
 		case 'get_galeria':
 			get_galeria();
+			break;
+		case 'get_usuarios':
+			get_usuarios();
 			break;
 		case 'get_colonias':
 			get_colonias();
@@ -54,6 +57,9 @@
 		case 'insert_ocup':
 			insert_ocup();
 			break;
+		case 'insert_usuario':
+			insert_usuario();
+			break;
 		case 'insert_evento':
 			insert_evento();
 			break;
@@ -84,8 +90,14 @@
 		case 'logout':
 			logout();
 			break;
+		case 'estatusUsuario':
+			estatusUsuario();
+			break;
 		case 'estatus_persona':
 			estatus_persona();
+			break;
+		case 'cambiar_password':
+			cambiar_password();
 			break;
 		default:
 			# code...
@@ -371,6 +383,37 @@
 		$json = array('success' => $success,
 					  'message' => $message,
 					  'data' => $permisos);
+		echo json_encode($json);
+	}
+
+	function get_usuarios(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		$success = true;
+		$message = "OK";
+		$usuarios = [];
+		$query = "Select u.*,r.nomrol from usuarios u left join roles r on r.idrol = u.idrol";
+		$result = $mysqli->query($query);
+		if(!$result){
+			$success = false;
+			$message = "No se encontraron resultados de usuarios";
+		}
+		while ($row = mysqli_fetch_array($result)) {
+			$usuarios[] = array('id' => $row['idusuario'],
+						  'nombre_completo' => $row['nombre_completo'],
+						  'nombre_usuario' => $row['nomusuario'],
+						  'idRol' => $row['idrol'],
+						  'rol' => $row['nomrol'],
+						  'estatus' => $row['estatus']);
+		}
+		$json = array('success' => $success,
+					  'message' => $message,
+					  'data' => $usuarios);
 		echo json_encode($json);
 	}
 
@@ -762,6 +805,37 @@
 		echo json_encode($json);
 	}
 
+	function insert_usuario(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+
+		$id = $_POST['id'];
+		$nombre_completo = $_POST['nombre_completo'];
+		$nombre_usuario = $_POST['nombre_usuario'];
+		$password = "";
+		if(isset($_POST['password'])){
+			$password = md5($_POST['password']);
+		}
+		$rol = $_POST['rol'];
+		$user = $_SESSION["usuario"];
+		$message = "Consulta realizada con éxito.";
+		$success = true;
+
+		$query = "INSERT INTO usuarios values ('$id','$nombre_completo', '$nombre_usuario', '$password', '$rol','1',NOW(), '$user',NOW(), '$user') ON DUPLICATE KEY UPDATE nombre_completo = '$nombre_completo', nomusuario = '$nombre_usuario', idrol = '$rol', updated_at = NOW(), updated_by = '$user'";
+		if(!$mysqli->query($query)){
+			$success = false;
+			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
+		}
+		$json = array('success' => $success,
+					  'message' => $message);
+		echo json_encode($json);
+	}
+
 	function insert_evento(){
 		$mysqli = conexion();
 		if(!$mysqli){
@@ -809,6 +883,38 @@
 		echo json_encode($json);
 	}
 
+	function cambiar_password(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		$id = $_POST['id'];
+		$nvo_password = $_POST['nvo_password'];
+		$confirm_password = $_POST['confirm_password'];
+		$pass = md5($nvo_password);
+		$user = $_SESSION["usuario"];
+		if($nvo_password !== $confirm_password){
+			$json = array('success' => false,
+			              'mesage' => 'Las contraseñas no son iguales.');
+			echo json_encode($json);
+			exit();	
+		}
+		$message = "Consulta realizada con éxito.";
+		$success = true;
+
+		$query = "UPDATE usuarios set password = '$pass', updated_at = NOW(), updated_by = '$user' WHERE idusuario = '$id'";
+		if(!$mysqli->query($query)){
+			$success = false;
+			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
+		}
+		$json = array('success' => $success,
+					  'message' => $message);
+		echo json_encode($json);
+	}
+
 	function borrar_ocupacion(){
 		$mysqli = conexion();
 		if(!$mysqli){
@@ -845,6 +951,29 @@
 		$success = true;
 
 		$query = "UPDATE personas set estatus = '$estatus' WHERE idpersona = '$id'";
+		if(!$mysqli->query($query)){
+			$success = false;
+			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
+		}
+		$json = array('success' => $success,
+					  'message' => $message);
+		echo json_encode($json);
+	}
+
+	function estatusUsuario(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		$id = $_POST['id'];
+		$estatus = $_POST['estatus'];
+		$message = "Consulta realizada con éxito.";
+		$success = true;
+
+		$query = "UPDATE usuarios set estatus = '$estatus' WHERE idusuario = '$id'";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "Ocurrio un error en la consulta, intentalo mas tarde";

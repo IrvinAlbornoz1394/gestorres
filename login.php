@@ -11,7 +11,9 @@
             $query = "SELECT * FROM usuarios Where nomusuario = '$usuario' && password = '$password' && estatus = 1";
             $result = $mysqli->query($query);
             if(mysqli_num_rows($result) >= 1){
-                $_SESSION["usuario"] = $usuario;
+                $row = mysqli_fetch_array($result);
+                $_SESSION["usuario"] = $row['nomusuario'];
+                $_SESSION['nombre_completo'] = $row['nombre_completo'];
                 header('location: index.php');
             }else{
                 $error = '<div class="alert alert-danger" role="alert">

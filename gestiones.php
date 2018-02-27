@@ -75,7 +75,7 @@
                                 <img alt="image" class="img-circle" src="img/profile_small.jpg" />
                                  </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>
+                                <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?=$_SESSION["nombre_completo"];?></strong>
                                  </a>
                         </div>
                         <div class="logo-element">
@@ -706,6 +706,7 @@
                 type:'post',
                 success:function(json){
                     var label_estatus = "";
+                    var desact ="";
                     if(json.success){
                         var html = "";
                         for (var i = 0; i < json.data.length; i++) {
@@ -728,9 +729,11 @@
                                     break;
                                 case '2':
                                     label_estatus = "Entregado";
+                                    desact = "disabled";
                                     break;
                                 case '3':
                                     label_estatus = "Cancelado";
+                                    desact = "disabled";
                                     break;
                                 default:
                                     label_estatus = "Desconocido";
@@ -753,9 +756,9 @@
                                             +'<ul class="dropdown-menu">'
                                                 +'<li><a href="#" onclick=\'detalles_gestion('+JSON.stringify(json.data[i])+');\'>Ver Detalles <i class="fa fa-eye"></i></a></li>'
                                                 +'<li>'
-                                                +'<li><a href="#" onclick=\'editar_gestion('+JSON.stringify(json.data[i])+');\'>Editar <i class="fa fa-pencil"></i></a></li>'
+                                                +'<li><a href="#" onclick=\'editar_gestion('+JSON.stringify(json.data[i])+');\' '+desact+'>Editar <i class="fa fa-pencil"></i></a></li>'
                                                 +'<li>'
-                                                    +'<a href="#" onclick=\'finalizar_gestion('+JSON.stringify(json.data[i])+')\'>Finalizar <i class="fa fa-check"></i></a>'
+                                                    +'<a href="#" onclick=\'finalizar_gestion('+JSON.stringify(json.data[i])+')\' '+desact+'>Finalizar <i class="fa fa-check"></i></a>'
 
                                                 +'</li>'
                                                 +'<li>'
