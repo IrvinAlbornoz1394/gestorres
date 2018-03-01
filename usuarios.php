@@ -329,6 +329,14 @@
             get_roles();
         });
 
+        $("#modal_reset_password").on('hidden.bs.modal', function () {
+           form_password_reset(); 
+        });
+
+        function form_password_reset(){
+            $("#nvo_password").val("");
+            $("#confirm_password").val("");
+        }
 
         function get_usuarios() {
             $.ajax({
@@ -506,7 +514,8 @@
                 type:'post',
                 success:function(json){
                     if(json.success){
-                        swal("Correcto", json.message, "success");
+                        $("#modal_reset_password").modal('hide');
+                        swal("Correcto", "Contraseña modificada correctamente", "success");
                         form_reset_();
                         get_usuarios();
                     }else{
