@@ -53,6 +53,11 @@
 
     <!-- Sweet Alert -->
     <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <style>
+        .chosen-container .chosen-results {
+            max-height:90px;
+        }
+    </style>
 
 </head>
 
@@ -265,6 +270,39 @@
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Seccion</label>
+                                                        <select class="chosen-select select_seccion" style="width:100%;" tabindex="2" name="seccion"  required>
+                                                            <option value="" disabled selected="">Elige una opcion</option>
+                                                            <option value="1">Seccion 1</option>
+                                                            <option value="2">Seccion 2</option>
+                                                            <option value="3">Seccion 3</option>
+                                                            <option value="4">Seccion 4</option>
+                                                            <option value="5">Seccion 5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Distrito</label>
+                                                        <select class="chosen-select select_distrito" style="width:100%;" tabindex="2" name="distrito"  required>
+                                                            <option value="" disabled selected="">Elige una opcion</option>
+                                                            <option value="1">Distrito 1</option>
+                                                            <option value="2">Distrito 2</option>
+                                                            <option value="3">Distrito 3</option>
+                                                            <option value="4">Distrito 4</option>
+                                                            <option value="5">Distrito 5</option>
+                                                            <option value="6">Distrito 6</option>
+                                                            <option value="7">Distrito 7</option>
+                                                            <option value="8">Distrito 8</option>
+                                                            <option value="9">Distrito 9</option>
+                                                            <option value="10">Distrito 10</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-12">
                                                     <button class="btn btn-primary dim btn_form_nueva_persona" type="submit">Guardar <i class="fa fa-save"></i></button>
                                                 </div>
@@ -356,8 +394,11 @@
     <!--funciones personales -->
     <script src="js/funciones.js"></script> 
     <script>
-        get_colonias();
-        get_ocupaciones();
+       $(document).ready(function(){
+            get_colonias();
+            get_ocupaciones();
+        });
+        
     </script>
 
 </body>

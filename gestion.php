@@ -374,10 +374,24 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="font-noraml">Evento</label>
                                                 <select data-placeholder="Choose a Country..." name="evento" class="chosen-select select_evento" required style="width: 100%">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Distrito</label>
+                                                <select data-placeholder="Choose a Country..." name="" class="chosen-select " required style="width: 100%">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Sección</label>
+                                                <select data-placeholder="Choose a Country..." name="" class="chosen-select " required style="width: 100%">
                                                 </select>
                                             </div>
                                         </div>

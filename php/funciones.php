@@ -483,6 +483,8 @@
 		$celular = $_POST['celular'];
 		$ocupacion = $_POST['ocupacion'];
 		$origen = $_POST['origen'];
+		$seccion = $_POST['seccion'];
+		$distrito = $_POST['distrito'];
 		$militante = 0;
 		if(isset($_POST['es_militante'])){
 			$militante = 1;
@@ -498,7 +500,7 @@
 			exit();
 		}
 
-		$query = "INSERT INTO personas VALUES ('','$nombres','$apellidopat','$apellidomat','$fecha_nac',0,'$sexo','$telefono','$celular','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$cve_elector',NOW(),'$ocupacion','$colonia',$militante,1) ON DUPLICATE KEY UPDATE nombres = '$nombres', apellidopat = '$apellidopat', apellidomat = '$apellidomat', fecha_nac = '$fecha_nac', sexo = '$sexo', telefono = '$telefono', celular = '$celular', id_ocupacion = '$ocupacion',calle = '$calle',num_ext = '$num_ext',num_int = '$num_int',cruzamiento_1 = '$cruzamiento_1', cruzamiento_2 = '$cruzamiento_2',id_colonia = '$colonia', es_militante = $militante";
+		$query = "INSERT INTO personas VALUES ('','$nombres','$apellidopat','$apellidomat','$fecha_nac',0,'$sexo','$telefono','$celular','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$cve_elector',NOW(),'$ocupacion','$colonia',$militante,1,'$seccion','$distrito') ON DUPLICATE KEY UPDATE nombres = '$nombres', apellidopat = '$apellidopat', apellidomat = '$apellidomat', fecha_nac = '$fecha_nac', sexo = '$sexo', telefono = '$telefono', celular = '$celular', id_ocupacion = '$ocupacion',calle = '$calle',num_ext = '$num_ext',num_int = '$num_int',cruzamiento_1 = '$cruzamiento_1', cruzamiento_2 = '$cruzamiento_2',id_colonia = '$colonia', es_militante = $militante, id_seccion = '$seccion', id_distrito = '$distrito'";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "NO se pudo crear la información";

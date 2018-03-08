@@ -663,7 +663,13 @@
                         }
                         $('.table_gestiones').DataTable().clear().draw().destroy();
                         $(".tbody_gestiones").html(html);
-                        $('.table_gestiones').DataTable();
+                        $('.table_gestiones').DataTable( buttons: [
+        {
+            extend: 'print',
+            text: 'Print current page',
+            autoPrint: false
+        }
+    ]);
                     }
                     },
                     error:function(error){

@@ -492,7 +492,7 @@
             $("#nombre_subCat").val("").removeClass('border_focus');
         }
 
-        $(".form_cat").on('submit',function(e){
+        $('form').on('submit',function(e){
             e.preventDefault();
             var datos = $(this).serialize();
             datos += "&opc=insert_cat";

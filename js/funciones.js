@@ -101,7 +101,7 @@ function nva_persona(){
                 }
                 $(".form_info_persona")[0].reset();
             }else{
-                swal ( "Oops" ,  success.message ,  "error" );
+                swal ( "Oops" ,  json.message ,  "error" );
             }
             console.log(json);
             $(".form_info_persona")[0].reset();
