@@ -169,7 +169,9 @@
 								'colonia' => $row['prefijo']." ".$row['nombre_colonia'],
 								'ocupacion' => $row['id_ocupacion'],
 								'cve_elector' => $row['clave_elec'],
-								'militante' => $row['es_militante']
+								'militante' => $row['es_militante'],
+								'seccion' => $row['id_seccion'],
+								'distrito' => $row['id_distrito'],
 							);
 			}
 			$json = array('success' => true,
@@ -551,6 +553,8 @@
 		$id_evento = $_POST['evento'];
 		$lat = $_POST['lat'];
 		$lng = $_POST['lng'];
+		$seccion = $_POST['seccion'];
+		$distrito = $_POST['distrito'];
 
 		if(isset($_POST['es_beneficiario'])){
 			$id_beneficiario = $id_solicitante;
@@ -561,7 +565,7 @@
 			echo json_encode($json);
 			exit();
 		}
-		$query = "INSERT INTO gestiones VALUES ('','$fecha_captura','$fecha_entrega','','$id_solicitante','$id_beneficiario','$cat','$subcat','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$id_colonia','$comentarios','$estatus','','$id_evento','$lat','$lng')";
+		$query = "INSERT INTO gestiones VALUES ('','$fecha_captura','$fecha_entrega','','$id_solicitante','$id_beneficiario','$cat','$subcat','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$id_colonia','$comentarios','$estatus','','$id_evento','$lat','$lng','$seccion','$distrito')";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "NO se guarda la informacion intentalo mas tarde.";
@@ -647,7 +651,9 @@
 							 'comentarios' => $row['comentarios_extras'],
 							 'idEvento' => $row['id_evento'],
 							 'lat' => $row['lat_entrega'],
-							 'lng' => $row['lng_entrega']
+							 'lng' => $row['lng_entrega'],
+							 'seccion' => $row['id_seccion'],
+							 'distrito' => $row['id_distrito'],
 			);
 		}
 		$json = array('success' => $success,

@@ -183,6 +183,8 @@
                                                     <th>Solicitante</th>
                                                     <th>Fecha alta</th>
                                                     <th>Direccion entrega</th>
+                                                    <th>Distrito</th>
+                                                    <th>Seccion</th>
                                                     <th>Estatus</th>
                                                     <th>Indicador</th>
                                                     <th>Acción</th>
@@ -640,6 +642,8 @@
                                   + "<td>"+json.data[i].solicitante+"</td>"
                                   + "<td>"+fa+"</td>"
                                   + "<td> Calle "+json.data[i].calle+" No. "+json.data[i].num_int+num_int+" por "+json.data[i].cruzamiento_1+" y "+json.data[i].cruzamiento_2+" "+json.data[i].colonia+"</td>"
+                                  + "<td>"+json.data[i].seccion+"</td>"
+                                  + "<td>"+json.data[i].distrito+"</td>"
                                   + "<td><span class='label label-default'>"+label_estatus+"</span></td>"
                                   + "<td></td>"
                                   + '<td>'
@@ -663,13 +667,7 @@
                         }
                         $('.table_gestiones').DataTable().clear().draw().destroy();
                         $(".tbody_gestiones").html(html);
-                        $('.table_gestiones').DataTable( buttons: [
-        {
-            extend: 'print',
-            text: 'Print current page',
-            autoPrint: false
-        }
-    ]);
+                        $('.table_gestiones').DataTable();
                     }
                     },
                     error:function(error){
@@ -754,6 +752,8 @@
                                   + "<td>"+json.data[i].solicitante+"</td>"
                                   + "<td>"+fa+"</td>"
                                   + "<td> Calle "+json.data[i].calle+" No. "+json.data[i].num_int+num_int+" por "+json.data[i].cruzamiento_1+" y "+json.data[i].cruzamiento_2+" "+json.data[i].colonia+"</td>"
+                                  + "<td>"+json.data[i].seccion+"</td>"
+                                  + "<td>"+json.data[i].distrito+"</td>"
                                   + "<td><span class='label label-default'>"+label_estatus+"</span></td>"
                                   + "<td></td>"
                                   + '<td>'

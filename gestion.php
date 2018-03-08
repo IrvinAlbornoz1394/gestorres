@@ -296,7 +296,7 @@
                                             <div class="form-group">
                                                 <label class="font-noraml">Fecha de Captura</label>
                                                 <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" data-mask="99/99/9999"  class="form-control fecha_entrega" name="fecha_captura">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" data-mask="99/99/9999"  class="form-control fecha_entrega" name="fecha_captura" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -304,7 +304,7 @@
                                             <div class="form-group">
                                                 <label class="font-noraml">Fecha de entrega</label>
                                                 <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" data-mask="99/99/9999"  class="form-control fecha_entrega" name="fecha_entrega">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" data-mask="99/99/9999"  class="form-control fecha_entrega" name="fecha_entrega" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -383,15 +383,32 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="font-noraml">Distrito</label>
-                                                <select data-placeholder="Choose a Country..." name="" class="chosen-select " required style="width: 100%">
+                                                <label>Seccion</label>
+                                                <select class="chosen-select" style="width:100%;" tabindex="2" name="seccion" id="id_seccion_gestion"  required>
+                                                    <option value="" disabled selected="">Elige una opcion</option>
+                                                    <option value="1">Seccion 1</option>
+                                                    <option value="2">Seccion 2</option>
+                                                    <option value="3">Seccion 3</option>
+                                                    <option value="4">Seccion 4</option>
+                                                    <option value="5">Seccion 5</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="font-noraml">Sección</label>
-                                                <select data-placeholder="Choose a Country..." name="" class="chosen-select " required style="width: 100%">
+                                                <label class="font-noraml">Distrito</label>
+                                                <select data-placeholder="Choose a Country..." name="distrito" class="chosen-select " required id="id_distrito_gestion" style="width: 100%">
+                                                    <option value="" disabled selected="">Elige una opcion</option>
+                                                            <option value="1">Distrito 1</option>
+                                                            <option value="2">Distrito 2</option>
+                                                            <option value="3">Distrito 3</option>
+                                                            <option value="4">Distrito 4</option>
+                                                            <option value="5">Distrito 5</option>
+                                                            <option value="6">Distrito 6</option>
+                                                            <option value="7">Distrito 7</option>
+                                                            <option value="8">Distrito 8</option>
+                                                            <option value="9">Distrito 9</option>
+                                                            <option value="10">Distrito 10</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -883,7 +900,11 @@
             $(".cruzamiento_1").val(json.cruzamiento_1);
             $(".cruzamiento_2").val(json.cruzamiento_2);
             $('#id_colonia_gestion option[value='+json.id_colonia+']').attr("selected",true);
+            $('#id_seccion_gestion option[value='+json.seccion+']').attr("selected",true);
+            $('#id_distrito_gestion option[value='+json.distrito+']').attr("selected",true);
             $("#id_colonia_gestion").trigger("chosen:updated");
+            $("#id_seccion_gestion").trigger("chosen:updated");
+            $("#id_distrito_gestion").trigger("chosen:updated");
             $(".lista_personas").slideToggle('slow');
             $(".div_gestion").slideToggle('slow');
             google.maps.event.trigger(map, 'resize');
@@ -1002,6 +1023,7 @@
                 type:'post',
                 success:function(json){
                     if(json.success){
+                        console.log(json);
                         if(json.data.length <= 0){
                             console.log(json.data.length);
                             $(".alert_table_empty").show();
