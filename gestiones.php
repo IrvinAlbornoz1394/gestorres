@@ -168,6 +168,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <button class="btn btn-success">Buscar</button>
+                                            <a class="btn btn-primary pull-right" id="imprimir_gestiones">Imprimir<i class="fa fa-print"></i></a>
                                         </div>
                                     </form>  
                                 </div>
@@ -553,6 +554,7 @@
     <script src="js/funciones.js"></script>    
 
     <script>
+        var gestiones;
         $(document).ready(function(){
             var datos = "opc=get_gestiones";
             get_gestiones(datos);
@@ -589,6 +591,13 @@
             })
 
 
+            $("#imprimir_gestiones").click(function(){
+                var datos = JSON.stringify(gestiones);
+                window.open('pdf.php?gestiones='+datos, '_blank');
+                
+            });
+
+
             $(".form_filtro_gestiones").on('submit',function(e){
                 e.preventDefault();
                 var fi = $(".fecha_inicial").val();
@@ -609,6 +618,7 @@
                         var label_estatus = "";
                         console.log(json);
                         if(json.success){
+                        gestiones = json.data;
                         var html = "";
                         for (var i = 0; i < json.data.length; i++) {
                             var aux = json.data[i].fCaptura.split("-");
@@ -713,6 +723,7 @@
                     var desact ="";
                     if(json.success){
                         var html = "";
+                        gestiones = json.data;
                         for (var i = 0; i < json.data.length; i++) {
                             var aux = json.data[i].fCaptura.split("-");
                             var fa = aux[2]+"/"+aux[1]+"/"+aux[0];

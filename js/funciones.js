@@ -1,3 +1,5 @@
+var secciones;
+
 window.onload = function(){
             $("#contenedor_spinner").fadeOut('slow');
         }
@@ -31,6 +33,21 @@ $("#modal_info_persona").on('hidden.bs.modal', function () {
     $(".form_info_persona")[0].reset();
 });
 
+
+$(".select_distrito").change(function(){
+    $(".select_seccion").html('');
+    var dis = $(this).val();
+    console.log(dis);
+    var select_seccion = "<option val='' disabled selected>Selecciona una sección</option>";
+    if( dis !== null ){
+        for (var i = 0; i < secciones.length; i++) {
+            if (dis == secciones[i].id_distrito) {
+                select_seccion += "<option value="+secciones[i].id+"> Sección "+secciones[i].seccion+"</option>";    
+            }
+        }
+        $(".select_seccion").html(select_seccion).trigger("chosen:updated");
+    }
+});
 
 function get_colonias(){
     $.ajax({
@@ -68,6 +85,30 @@ function get_ocupaciones(){
                     ocup += "<option value="+json.data[i].id+">"+json.data[i].nombre+"</option>";
                 }
                 $(".select_ocupacion").html(ocup).trigger("chosen:updated");
+            }
+        },
+        error:function(error){
+            console.log(error);
+        }
+    });
+}
+
+function get_distritos_secciones(){
+    datos = "opc=get_distritos_secciones";
+    $.ajax({
+        url:'php/funciones.php',
+        data: datos,
+        dataType:'json',
+        type:'post',
+        success:function(json){
+            if(json.success){
+                var d = json.data.distritos;
+                secciones = json.data.secciones;
+                var select_d = "<option val='' disabled selected>Selecciona un distrito</option>";
+                for (var i = 0; i < d.length; i++) {
+                    select_d += "<option value='"+d[i].id+"'> Distrito "+d[i].distrito+"</option>";
+                }
+                $(".select_distrito").html(select_d).trigger("chosen:updated");
             }
         },
         error:function(error){

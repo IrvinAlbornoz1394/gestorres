@@ -39,6 +39,9 @@
 		case 'nva_gestion':
 			nva_gestion();
 			break;
+		case 'get_distritos_secciones':
+			get_distritos_secciones();
+			break;
 		case 'get_gestiones':
 			get_gestiones();
 			break;
@@ -107,6 +110,7 @@
 	function conexion(){
 		//$mysqli = new mysqli("localhost", "boonwaya_oliver", "B00NWAYAK09*", "boonwaya_oliverDB");
 		$mysqli = new mysqli("localhost", "root", "", "gestorres");
+		mysqli_set_charset($mysqli,"utf8");
 		/* check connection */
 		if (!$mysqli->connect_errno) {
 			return $mysqli;
@@ -359,6 +363,50 @@
 	}
 
 
+	function get_distritos_secciones(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+		$success = true;
+		$message = "OK";
+		$distritos = [];
+		$secciones = [];
+		$queryD = "SELECT * FROM distritos";
+		$resultD = $mysqli->query($queryD);
+		if(!$resultD){
+			$success = false;
+			$message = "No se encontraron resultados de Distritos";
+		}
+		while ($rowD = mysqli_fetch_array($resultD)) {
+			$distritos[] = array('id' => $rowD['id'],
+						  'distrito' => $rowD['distrito'],
+						  'representante' => $rowD['representante'],
+						  'cabecera' => $rowD['cabecera']);
+		}
+
+		$queryS = "SELECT * from secciones";
+		$resultS = $mysqli->query($queryS);
+		if(!$resultS){
+			$success = false;
+			$message = "No se encontraron resultados de Secciones";
+		}
+		while ($rowS = mysqli_fetch_array($resultS)) {
+			$secciones[] = array('id' => $rowS['id'],
+						  'seccion' => $rowS['seccion'],
+						  'id_distrito' => $rowS['id_distrito'],
+						  'representante' => $rowS['representante']);
+		}$data = array('distritos' => $distritos,
+					  'secciones' => $secciones);
+
+		$json = array('success' => $success,
+					  'message' => $message,
+					  'data' => $data);
+		echo json_encode($json);
+	}
 
 
 	function get_permisos(){
