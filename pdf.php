@@ -4,6 +4,31 @@ require('pdf/fpdf/fpdf.php');
 
 class PDF extends FPDF
 {
+// Cabecera de página
+function Header()
+{
+    // Logo
+    $this->Image('img/logo_incay.png',10,8,33);
+    // Arial bold 15
+    $this->SetFont('Arial','B',25);
+    // Movernos a la derecha
+    // Título
+    $this->Cell(0,0,'Lista de Gestiones',0,0,'C');
+    // Salto de línea
+    $this->Ln(20);
+}
+
+// Pie de página
+function Footer()
+{
+    // Posición: a 1,5 cm del final
+    $this->SetY(-15);
+    // Arial italic 8
+    $this->SetFont('Arial','I',8);
+    // Número de página
+    $this->Cell(0,10,'Pagina '.$this->PageNo(),0,0,'C');
+}
+
 // Cargar los datos
 function LoadData($file)
 {
@@ -57,7 +82,7 @@ $pdf = new PDF();
 // Títulos de las columnas
 $data = json_decode($_GET['gestiones']);
 $header = array('Solicitante', 'Beneficiario', 'Articulo', 'Fecha_A','Fecha_E','Fecha_RE','Dirección','Estatus');
-$pdf->SetFont('Arial','',14);
+$pdf->SetFont('Arial','',10);
 $pdf->AddPage('L');
 $pdf->FancyTable($header,$data);
 $pdf->Output();
