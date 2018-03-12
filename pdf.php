@@ -10,7 +10,7 @@ function Header()
     // Logo
     $this->Image('img/logo_incay.png',10,8,33);
     // Arial bold 15
-    $this->SetFont('Arial','B',25);
+    $this->SetFont('Arial','B',10);
     // Movernos a la derecha
     // Título
     $this->Cell(0,0,'Lista de Gestiones',0,0,'C');
@@ -61,14 +61,14 @@ function FancyTable($header,$data)
     $fill = false;
     foreach($data as $row)
     {
-        $this->Cell($w[0],6,$row->solicitante,'LR',0,'L',$fill);
-        $this->Cell($w[1],6,$row->beneficiario,'LR',0,'L',$fill);
-        $this->Cell($w[2],6,$row->subcat,'LR',0,'R',$fill);
-        $this->Cell($w[3],6,$row->fCaptura,'LR',0,'L',$fill);
-        $this->Cell($w[4],6,$row->fEntrega,'LR',0,'L',$fill);
-        $this->Cell($w[5],6,$row->fRealEntrega,'LR',0,'R',$fill);
-        $this->Cell($w[6],6,$row->calle,'LR',0,'L',$fill);
-        $this->Cell($w[7],6,$row->estatus,'LR',0,'L',$fill);
+        $this->Cell($w[0],4,$row->solicitante,'LR',0,'L',$fill);
+        $this->Cell($w[1],4,$row->beneficiario,'LR',0,'L',$fill);
+        $this->Cell($w[2],4,$row->subcat,'LR',0,'R',$fill);
+        $this->Cell($w[3],4,$row->fCaptura,'LR',0,'L',$fill);
+        $this->Cell($w[4],4,$row->fEntrega,'LR',0,'L',$fill);
+        $this->Cell($w[5],4,$row->fRealEntrega,'LR',0,'R',$fill);
+        $this->Cell($w[6],4,$row->calle,'LR',0,'L',$fill);
+        $this->Cell($w[7],4,$row->estatus,'LR',0,'L',$fill);
         $this->Ln();
         $fill = !$fill;
     }

@@ -383,32 +383,15 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Seccion</label>
-                                                <select class="chosen-select" style="width:100%;" tabindex="2" name="seccion" id="id_seccion_gestion"  required>
-                                                    <option value="" disabled selected="">Elige una opcion</option>
-                                                    <option value="1">Seccion 1</option>
-                                                    <option value="2">Seccion 2</option>
-                                                    <option value="3">Seccion 3</option>
-                                                    <option value="4">Seccion 4</option>
-                                                    <option value="5">Seccion 5</option>
+                                                <label>Distrito</label>
+                                                <select class="chosen-select select_distrito" style="width:100%;" tabindex="2" name="distrito"  required>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="font-noraml">Distrito</label>
-                                                <select data-placeholder="Choose a Country..." name="distrito" class="chosen-select " required id="id_distrito_gestion" style="width: 100%">
-                                                    <option value="" disabled selected="">Elige una opcion</option>
-                                                            <option value="1">Distrito 1</option>
-                                                            <option value="2">Distrito 2</option>
-                                                            <option value="3">Distrito 3</option>
-                                                            <option value="4">Distrito 4</option>
-                                                            <option value="5">Distrito 5</option>
-                                                            <option value="6">Distrito 6</option>
-                                                            <option value="7">Distrito 7</option>
-                                                            <option value="8">Distrito 8</option>
-                                                            <option value="9">Distrito 9</option>
-                                                            <option value="10">Distrito 10</option>
+                                                <label>Seccion</label>
+                                                <select class="chosen-select select_seccion" style="width:100%;" tabindex="2" name="seccion"  required>
                                                 </select>
                                             </div>
                                         </div>
@@ -422,7 +405,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <button class="btn btn-info btn-block" onclick="set_ubicacion();">Obtener ubicacion</button>
+                                            <a class="btn btn-info btn-block" onclick="set_ubicacion();">Obtener ubicacion</a>
                                             <div id="map" style="width: 100%;height: 200px;"></div>
                                             <input type="hidden" name="lat" class="lat_map">
                                             <input type="hidden" name="lng" class="lng_map">
@@ -750,7 +733,7 @@
             get_cat_subCat();
             get_colonias();
             get_ocupaciones();
-            
+            get_distritos_secciones();
 
 
             $(".form_beneficiario").on('submit',function(e){
