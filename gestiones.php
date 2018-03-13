@@ -217,24 +217,24 @@
                                 </div>
                                 <div class="col-md-6">
                                     <p>
-                                        <small>Solicitante :</small><br>
+                                        <b><small>Solicitante :</small></b><br>
                                         <span class="txt_detalles_gestion txt_solicitante"></span></p>
                                 </div>
                                 <div class="col-md-6">
                                     <p>
-                                        <small>Beneficiaio :</small><br>
+                                        <b><small>Beneficiaio :</small></b><br>
                                         <span class="txt_detalles_gestion txt_beneficiario"></span>
                                     </p>
                                 </div>
                                 <div class="col-md-6">
                                     <p>
-                                        <small>Articulo :</small><br>
+                                        <b><small>Articulo :</small></b><br>
                                         <span class="txt_detalles_gestion txt_articulo"></span>
                                     </p>    
                                 </div>
                                 <div class="col-md-6">
                                     <p>
-                                        <small>Fecha de Alta :</small><br>
+                                        <b><small>Fecha de Alta :</small></b><br>
                                         <span class="txt_detalles_gestion txt_fecha_alta"></span>
                                     </p>
                                 </div>
@@ -246,29 +246,34 @@
                                 </div>
                                 <div class="col-md-6">
                                     <p>
-                                        <small>Fecha Real Entrega :</small><br>
+                                        <b><small>Fecha Real Entrega :</small></b><br>
                                         <span class="txt_detalles_gestion txt_fecha_real_entrega"></span>
                                     </p>
                                 </div>
                                 <div class="col-md-12">
                                     <p>
-                                        <small>Direccion de entrega :</small><br>
+                                        <b><small>Direccion de entrega :</small></b><br>
                                         <span class="txt_detalles_gestion txt_direccion_entrega"></span>
                                     </p>
                                 </div>
+                                <hr>
+                                <div class="clearfix"></div>
                                 <div class="col-md-6">
                                     <p>
-                                        <small>Comentarios :</small><br>
+                                        <b><small>Comentarios :</small></b><br>
                                         <span class="txt_detalles_gestion txt_comentarios">
                                         </span>
                                     </p>
                                 </div>
                                 <div class="col-md-6">
                                     <p>
-                                        <small>Detalles  Finaliza/Cancelar :</small><br>
+                                        <b><small>Detalles  Finaliza/Cancelar :</small></b><br>
                                         <span class="txt_detalles_gestion txt_detalles_fc">
                                         </span>
                                     </p>
+                                </div>
+                                <div class="col-md-12">
+                                    <div id="map" style="width: 100%;height: 200px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -555,9 +560,13 @@
 
     <script>
         var gestiones;
+        var map;
+        var marker;
+        var item_gestion;
         $(document).ready(function(){
             var datos = "opc=get_gestiones";
             get_gestiones(datos);
+
 
 
             $('.fechas').datepicker({
@@ -592,6 +601,7 @@
 
 
             $("#imprimir_gestiones").click(function(){
+                console.log(gestiones);
                 var datos = JSON.stringify(gestiones);
                 window.open('pdf.php?gestiones='+datos, '_blank');
                 
@@ -687,6 +697,7 @@
             });
 
             $('#modal_detalles').on('hidden.bs.modal', function () {
+                deleteMarkers();
                 $(".label-estatus").html("");
                 $(".txt_solicitante").html("");
                 $(".txt_beneficiario").html("");
@@ -740,18 +751,18 @@
 
                             switch(json.data[i].estatus) {
                                 case '1':
-                                label_estatus = "Pendiente";
+                                label_estatus = "<span class='label label-success'>Pendiente</span>";
                                     break;
                                 case '2':
-                                    label_estatus = "Entregado";
+                                    label_estatus = "<span class='label label-primary'>Entregado</span>";
                                     desact = "disabled";
                                     break;
                                 case '3':
-                                    label_estatus = "Cancelado";
+                                    label_estatus = "<span class='label label-danger'>Cancelado</span>";
                                     desact = "disabled";
                                     break;
                                 default:
-                                    label_estatus = "Desconocido";
+                                    label_estatus = "<span class='label label-default'>Desconocido</span>";
                             }
 
                             if(json.data[i].num_int !== ""){
@@ -763,9 +774,9 @@
                                   + "<td>"+json.data[i].solicitante+"</td>"
                                   + "<td>"+fa+"</td>"
                                   + "<td> Calle "+json.data[i].calle+" No. "+json.data[i].num_int+num_int+" por "+json.data[i].cruzamiento_1+" y "+json.data[i].cruzamiento_2+" "+json.data[i].colonia+"</td>"
-                                  + "<td>"+json.data[i].seccion+"</td>"
-                                  + "<td>"+json.data[i].distrito+"</td>"
-                                  + "<td><span class='label label-default'>"+label_estatus+"</span></td>"
+                                  + "<td> Sección "+json.data[i].seccion+"</td>"
+                                  + "<td> Distrito "+json.data[i].distrito+"</td>"
+                                  + "<td>"+label_estatus+"</td>"
                                   + "<td></td>"
                                   + '<td>'
                                         +'<div class="btn-group">'
@@ -804,19 +815,14 @@
             });
         }
 
-        var config = {
-                '.chosen-select'           : {},
-                '.chosen-select-deselect'  : {allow_single_deselect:true},
-                '.chosen-select-no-single' : {disable_search_threshold:10},
-                '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-                '.chosen-select-width'     : {width:"95%"}
-                }
         for (var selector in config) {
             $(selector).chosen(config[selector]);
         }
 
 
         function detalles_gestion(json){
+            initMap();
+            item_gestion = json;
             console.log(json);
             var estatus = "";
             switch(json.estatus) {
@@ -848,10 +854,19 @@
             $(".txt_fecha_alta").html(json.fCaptura);
             $(".txt_fecha_entrega").html(json.fEntrega);
             $(".txt_fecha_real_entrega").html(json.fRealEntrega);
-            $(".txt_direccion_entrega").html(json.direccion_entrega+" "+json.colonia);
+            $(".txt_direccion_entrega").html("Calle "+json.calle+" No. "+json.num_int+num_int+" por "+json.cruzamiento_1+" y "+json.cruzamiento_2+" "+json.colonia);
             $(".txt_comentarios").html(json.detalles);
             $(".txt_detalles_fc").html(json.comentarios);
             $("#modal_detalles").modal('show');
+            if(marker){
+                deleteMarkers();
+            }
+            set_marker(item_gestion);
+        }
+
+        function deleteMarkers(){
+            console.log(marker);
+            marker.setMap(null);
         }
 
         function editar_gestion(json){
@@ -920,6 +935,28 @@
             })
         }
 
+        function initMap() {
+            var uluru = {lat: 21.0127021, lng: -89.692326};
+            map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 12,
+              center: uluru
+            });
+          }
+
+        //$.when(deleteMarkers()).then(set_marker(item_gestion));
+
+        function set_marker(json){
+            var lat = parseFloat(json.lat);
+            var lng = parseFloat(json.lng);
+            var location = {lat: lat, lng: lng};
+            marker = new google.maps.Marker({
+                title:"Arrastrame al punto deseado",
+                position: location,
+                map: map
+            });
+            map.setZoom(16);
+            map.setCenter(location);
+        }
 
 
          var config = {
@@ -932,6 +969,9 @@
         for (var selector in config) {
             $(selector).chosen(config[selector]);
         }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn5leYbE_WFaLGF7yCiYXSBVNUZz02qZ4&callback=initMap">
     </script>
 
 </body>

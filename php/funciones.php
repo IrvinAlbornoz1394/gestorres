@@ -663,7 +663,8 @@
 			//$filtro .= " Where estatus = 1";
 		}
 
-		$query = "SELECT g.*, s.nom_sol, b.nom_benf,CONCAT(c.prefijo, ' ', c.nombre_colonia) as nom_colonia, cat.nombre as cat, sc.nombre as subcat, e.nombre_evento from gestiones g inner join catColonias c on c.idColonia = g.idColonia_entrega inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_sol from personas) as s on s.idpersona = g.idSolicitante inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_benf from personas) as b on b.idpersona = g.idSolicitante inner join tipo_gestion cat on (cat.idtipog = g.idCategoria) inner join subcat sc on (sc.idsubcat = g.idSubCategoria) inner join eventos e on e.id = g.id_evento ".$filtro." group by g.idGestion";
+		$query = "SELECT g.*, s.nom_sol, b.nom_benf,CONCAT(c.prefijo, ' ', c.nombre_colonia) as nom_colonia, cat.nombre as cat, sc.nombre as subcat, e.nombre_evento,scc.seccion, d.distrito from gestiones g inner join catColonias c on c.idColonia = g.idColonia_entrega inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_sol from personas) as s on s.idpersona = g.idSolicitante inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_benf from personas) as b on b.idpersona = g.idSolicitante inner join tipo_gestion cat on (cat.idtipog = g.idCategoria) inner join subcat sc on (sc.idsubcat = g.idSubCategoria) inner join eventos e on e.id = g.id_evento LEFT JOIN secciones scc ON scc.id = g.id_seccion LEFT JOIN distritos d ON d.id = g.id_distrito".$filtro." group by g.idGestion";
+
 
 		$result = $mysqli->query($query);
 		if(!$result){
@@ -700,8 +701,8 @@
 							 'idEvento' => $row['id_evento'],
 							 'lat' => $row['lat_entrega'],
 							 'lng' => $row['lng_entrega'],
-							 'seccion' => $row['id_seccion'],
-							 'distrito' => $row['id_distrito'],
+							 'seccion' => $row['seccion'],
+							 'distrito' => $row['distrito'],
 			);
 		}
 		$json = array('success' => $success,

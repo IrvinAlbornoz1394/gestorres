@@ -49,7 +49,7 @@ function FancyTable($header,$data)
     $this->SetLineWidth(.3);
     $this->SetFont('','B');
     // Cabecera
-    $w = array(50,50,30,30,30,30,30,30);
+    $w = array(50,50,30,30,30,30,35,30);
     for($i=0;$i<count($header);$i++)
         $this->Cell($w[$i],7,$header[$i],1,0,'C',true);
     $this->Ln();
@@ -63,11 +63,11 @@ function FancyTable($header,$data)
     {
         $this->Cell($w[0],4,$row->solicitante,'LR',0,'L',$fill);
         $this->Cell($w[1],4,$row->beneficiario,'LR',0,'L',$fill);
-        $this->Cell($w[2],4,$row->subcat,'LR',0,'R',$fill);
-        $this->Cell($w[3],4,$row->fCaptura,'LR',0,'L',$fill);
-        $this->Cell($w[4],4,$row->fEntrega,'LR',0,'L',$fill);
-        $this->Cell($w[5],4,$row->fRealEntrega,'LR',0,'R',$fill);
-        $this->Cell($w[6],4,$row->calle,'LR',0,'L',$fill);
+        $this->Cell($w[2],4,$row->subcat,'LR',0,'L',$fill);
+        $this->Cell($w[3],4,$row->fCaptura,'LR',0,'C',$fill);
+        $this->Cell($w[4],4,$row->fEntrega,'LR',0,'C',$fill);
+        $this->Cell($w[5],4,$row->fRealEntrega,'LR',0,'C',$fill);
+        $this->Cell($w[6],4,"C.".$row->calle." #".$row->num_ext." x ".$row->cruzamiento_1." y ".$row->cruzamiento_2.$row->colonia,'LR',0,'L',$fill);
         $this->Cell($w[7],4,$row->estatus,'LR',0,'L',$fill);
         $this->Ln();
         $fill = !$fill;
@@ -82,7 +82,7 @@ $pdf = new PDF();
 // Títulos de las columnas
 $data = json_decode($_GET['gestiones']);
 $header = array('Solicitante', 'Beneficiario', 'Articulo', 'Fecha_A','Fecha_E','Fecha_RE','Dirección','Estatus');
-$pdf->SetFont('Arial','',10);
+$pdf->SetFont('Arial','',8);
 $pdf->AddPage('L');
 $pdf->FancyTable($header,$data);
 $pdf->Output();
