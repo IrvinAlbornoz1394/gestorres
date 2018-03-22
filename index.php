@@ -180,6 +180,7 @@
     <script src="js/plugins/pace/pace.min.js"></script>
     <script>
         var map;
+        var infoWindows = [];
         function initMap() {
           // Create the map.
           var map = new google.maps.Map(document.getElementById('map'), {
@@ -230,31 +231,68 @@
                 success:function(json){
                     if(json.data.length > 0){
                         var infowindow = new google.maps.InfoWindow();
-                        var marker, i,info;
-                        for (i = 0; i < json.data.length; i++) {
+                        for (var i = 0; i < json.data.length; i++) {
                             var row = json.data[i]; 
-                            info = "";
                             console.log(row);
-                            info = "<h2>"+row.solicitante+"</h2>"
-                                     + "<b>"+row.subcat+"</b>";
+                            var est,colorPin = "";
+
+                            if(row.estatus == 1){
+                                est = "<span class='badge badge-warning'>Pendiente</span>";
+                                colorPin = "f8ac59"; 
+                            }
+                            if(row.estatus == 2){
+                                est = "<span class='badge badge-primary'>Entregada</span>";
+                                colorPin = "1ab394";
+                            }
+                            if(row.estatus == 3){
+                                est = "<span class='badge badge-danger'>Cancelada</span>";
+                                colorPin = "ed5565";
+                            }
+
+                            //Se crea el icono del markador
+                            var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+row.solicitante[0]+"|" + colorPin);
                             marker = new google.maps.Marker({
                               position: new google.maps.LatLng(parseFloat(row.lat),parseFloat(row.lng)),
-                              map: map
+                              map: map,
+                              icon: pinImage,
                             });
-                            google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                              return function() {
-                                infowindow.setContent(info);
-                                infowindow.open(map, marker);
-                              }
-                            })(marker, i));
 
+                            //Centrar el mapa en la posicion del markador
+                            //map.setCenter(marker.getPosition());
+                            var f = row.fCaptura.split("-");
+                            var fc = f[2]+"/"+f[1]+"/"+f[0];
+                            
+                            
+                            var info = "<div>"
+                                        +"<h3><strong>"+row.solicitante+"</strong></h3>"
+                                        +"<address><p><i class='fa fa-calendar-o'></i> "+fc+"</p>"
+                                        +"<p><i class='fa fa-star'></i> <u>Medicamento</u></p>"
+                                        +"<p><i class='fa fa-map-marker'></i> "+row.calle+" "+row.colonia+"</p>"
+                                        +"<p><i class='fa fa-exclamation'></i> "+est+"</p>"
+                                        +"</address></div>"
+
+                            var infowindow = new google.maps.InfoWindow();
+                            infoWindows.push(infowindow);
+                            google.maps.event.addListener(marker,'click', (function(marker,info,infowindow){ 
+                                return function() {
+                                    closeAllInfoWindows();
+                                    infowindow.setContent(info);
+                                    infowindow.open(map,marker);
+                                };
+                            })(marker,info,infowindow));
                         }
                     }   
                 },
                 error:function(error){
                     console.log(error);
                 }
-            })
+            });
+
+            function closeAllInfoWindows() {
+              for (var i=0;i<infoWindows.length;i++) {
+                 infoWindows[i].close();
+              }
+            }
 
             /*for (var i = 0; i < beaches.length; i++) {
                 var beach = beaches[i];

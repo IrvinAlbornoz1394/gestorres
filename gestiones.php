@@ -273,6 +273,8 @@
                                     </p>
                                 </div>
                                 <div class="col-md-12">
+                                    <hr>
+                                    <b><small>Mapa</small></b><br>
                                     <div id="map" style="width: 100%;height: 200px;"></div>
                                 </div>
                             </div>
@@ -625,7 +627,7 @@
                     dataType:'json',
                     type:'post',
                     success:function(json){
-                        var label_estatus = "";
+                        var label_estatus,color_td = "";
                         console.log(json);
                         if(json.success){
                         gestiones = json.data;
@@ -662,8 +664,8 @@
                                   + "<td>"+json.data[i].solicitante+"</td>"
                                   + "<td>"+fa+"</td>"
                                   + "<td> Calle "+json.data[i].calle+" No. "+json.data[i].num_int+num_int+" por "+json.data[i].cruzamiento_1+" y "+json.data[i].cruzamiento_2+" "+json.data[i].colonia+"</td>"
-                                  + "<td>"+json.data[i].seccion+"</td>"
                                   + "<td>"+json.data[i].distrito+"</td>"
+                                  + "<td>"+json.data[i].seccion+"</td>"
                                   + "<td><span class='label label-default'>"+label_estatus+"</span></td>"
                                   + "<td></td>"
                                   + '<td>'
@@ -672,7 +674,8 @@
                                             +'<ul class="dropdown-menu">'
                                                 +'<li><a href="#" onclick=\'detalles_gestion('+JSON.stringify(json.data[i])+');\'>Ver Detalles <i class="fa fa-eye"></i></a></li>'
                                                 +'<li>'
-                                                +'<li><a href="#" onclick=\'editar_gestion('+JSON.stringify(json.data[i])+');\'>Editar <i class="fa fa-pencil"></i></a></li>'
+                                                +'<li><a href="#" onclick=\'editar_gestion('+JSON.stringify(json.data[i])+');\'>Editar <i class="fa fa-pencil"></i></a>'
+                                                +'</li>'
                                                 +'<li>'
                                                     +'<a href="#" onclick=\'finalizar_gestion('+JSON.stringify(json.data[i])+')\'>Finalizar <i class="fa fa-check"></i></a>'
 
@@ -751,15 +754,18 @@
 
                             switch(json.data[i].estatus) {
                                 case '1':
-                                label_estatus = "<span class='label label-success'>Pendiente</span>";
+                                label_estatus = "<span class='label label-warning'>Pendiente</span>";
+                                color_td = "#f8ac59"
                                     break;
                                 case '2':
                                     label_estatus = "<span class='label label-primary'>Entregado</span>";
                                     desact = "disabled";
+                                    color_td = "#1ab394";
                                     break;
                                 case '3':
                                     label_estatus = "<span class='label label-danger'>Cancelado</span>";
                                     desact = "disabled";
+                                    color_td = "#ed5565";
                                     break;
                                 default:
                                     label_estatus = "<span class='label label-default'>Desconocido</span>";
@@ -774,10 +780,10 @@
                                   + "<td>"+json.data[i].solicitante+"</td>"
                                   + "<td>"+fa+"</td>"
                                   + "<td> Calle "+json.data[i].calle+" No. "+json.data[i].num_int+num_int+" por "+json.data[i].cruzamiento_1+" y "+json.data[i].cruzamiento_2+" "+json.data[i].colonia+"</td>"
-                                  + "<td> Sección "+json.data[i].seccion+"</td>"
                                   + "<td> Distrito "+json.data[i].distrito+"</td>"
+                                  + "<td> Sección "+json.data[i].seccion+"</td>"
                                   + "<td>"+label_estatus+"</td>"
-                                  + "<td></td>"
+                                  + "<td style='background:"+color_td+"'></td>"
                                   + '<td>'
                                         +'<div class="btn-group">'
                                             +'<button data-toggle="dropdown" class="btn btn-default btn-xs dropdown-toggle" aria-expanded="false">Accion <span class="caret"></span></button>'
