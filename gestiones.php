@@ -324,6 +324,7 @@
                                             <h3>
                                                 Informacion del solicitante
                                             </h3>
+                                            <input type="hidden" id="id_gestion" name="id_gestion">
                                         </div>
                                         <div class="col-md-4 col-xs-12">
                                             <div class="form-group">
@@ -342,7 +343,7 @@
                                             <label class="font-noraml">La persona es beneficiario</label>
                                             <div class="switch" style="margin-left: 20%;">
                                                 <div class="onoffswitch">
-                                                    <input type="checkbox" checked class="onoffswitch-checkbox" id="es_beneficiario" class="es_beneficiario" name="es_beneficiario">
+                                                    <input type="checkbox" class="onoffswitch-checkbox es_beneficiario" id="es_beneficiario"  name="es_beneficiario">
                                                     <label class="onoffswitch-label" for="es_beneficiario">
                                                         <span class="onoffswitch-inner"></span>
                                                         <span class="onoffswitch-switch"></span>
@@ -352,7 +353,7 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="row" id="es_beneficiario" style="display: none;">
+                                    <div class="row" id="beneficiario">
                                         <div class="col-md-12">
                                             <h3>
                                                 Informacion del Beneficiario
@@ -509,8 +510,8 @@
                                 </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary submit_gestion">Guardar Cambios</button>
                         </div>
                     </div>
                 </div>
@@ -616,6 +617,18 @@
                 forceParse: false,
                 calendarWeeks: true,
                 autoclose: true
+            });
+
+            $('#modal_editar').on('hidden.bs.modal', function () {
+                console.log("cerrado");
+                if ($('input.es_beneficiario').is(':checked')) {
+                    console.log("era visible");
+                    $(".es_beneficiario").click();
+                }
+            });
+
+            $(".submit_gestion").click(function(){
+                $(".form_gestion").submit();
             });
 
             $.ajax({
@@ -763,6 +776,11 @@
             });
 
         })
+
+        $(".es_beneficiario").click(function(){
+            $("#beneficiario").slideToggle('slow');
+        });
+    
         function get_gestiones(datos){
             $.ajax({
                 url:'php/funciones.php',
@@ -917,8 +935,20 @@
             set_marker_gestion(json,true);
             console.log(json);
             $(".chosen-container").css({'width':'100%'});
+            $("#id_gestion").val(json.id);
             $(".nombre_solicitante").val(json.solicitante);
+            $(".clave_solicitante").val(json.cve_elector_s);
             $(".id_solicitante").val(json.idSolicitante);
+            $(".id_beneficiario").val(json.idBeneficiario);
+            $(".nombre_beneficiario").val(json.beneficiario);
+            $(".clave_beneficiario").val(json.cve_elector_b);
+
+            if(json.idSolicitante == json.idBeneficiario){
+                $(".es_beneficiario").click();
+            }
+
+
+
             var fc = json.fCaptura.split("-");
             $(".fecha_captura").val(fc[2]+"/"+fc[1]+"/"+fc[0]);
             var fe = json.fEntrega.split("-");
@@ -953,8 +983,8 @@
             $('.select_seccion option[value='+json.id_seccion+']').attr("selected",true);
             $(".select_seccion").trigger("chosen:updated");
 
-            $("#comentarios_gestion").val(json.comentarios);
-
+            $("#comentarios_gestion").val(json.detalles);
+            set_ubicacion();
             $("#modal_editar").modal('show');
         }
 

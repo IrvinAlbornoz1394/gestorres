@@ -762,26 +762,9 @@
                     $(".gif_loading").show();
                     buscar_personas(datos,'personas'); 
                 }
-
                 
                 e.preventDefault();
             });
-
-            $(".form_gestion").on('submit',function(e){
-                e.preventDefault();
-                var datos = $(this).serialize();
-                swal({
-                    title: "La informacion es correcta?",
-                    text: "Verifivar información",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Si, es correcta!",
-                    closeOnConfirm: false
-                }, function () {
-                    nva_gestion(datos);
-                });
-            })
 
 
             $(".open_modal_busqueda").click(function(){
@@ -869,45 +852,7 @@
             set_marker();
         };
 
-        function nva_gestion(datos){
-            console.log(datos);
-            datos += "&opc=nva_gestion";
-            $.ajax({
-                url:'php/funciones.php',
-                data: datos,
-                dataType:'json',
-                type:'post',
-                success:function(json){
-                    if(json.success){
-                        swal("Correcto", "Informacion guardada", "success");
-                        $('.form')[0].reset();
-                        deleteMarkers();
-
-                    }else{
-                        swal ( "Oops" ,  success.message ,  "error" );
-                    }
-                    $('.form_gestion')[0].reset();
-                    $('.form')[0].reset();
-
-                    if($(".div_gestion").is(":visible")){
-                        $(".div_gestion").slideToggle("slow");
-                    }
-
-                    if($(".div_busqueda_personas").is(":hidden")){
-                        $(".div_busqueda_personas").slideToggle("slow");
-                    }
-                    $(".table-personas").DataTable().clear().draw().destroy();
-                    $(".table-beneficiarios").DataTable().clear().draw().destroy();
-                    if($("#beneficiario").is(":visible")){
-                        $("#beneficiario").slideToggle("slow");
-                    }
-                },
-                error:function(error){
-                    swal ( "Oops" ,  "Ocurrio un error en la consulta" ,  "error" );
-                    console.log(error);
-                }
-            });   
-        }
+        
 
         function deleteMarkers(){
             marker.setMap(null);

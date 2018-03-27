@@ -579,6 +579,12 @@
 		$mysqli = conexion();
 		$success = true;
 		$message = "OK";
+
+		$idg = "";
+		if(isset($_POST['id_gestion'])){
+			$idg = $_POST['id_gestion'];
+		}
+
 		$id_solicitante = $_POST['id_solicitante'];
 		$id_beneficiario = $_POST['id_beneficiario'];
 		$fecha_captura = $_POST['fecha_captura'];
@@ -603,6 +609,7 @@
 		$lng = $_POST['lng'];
 		$seccion = $_POST['seccion'];
 		$distrito = $_POST['distrito'];
+		$tipo_gestion = $_POST['tipo_gestion'];
 
 		if(isset($_POST['es_beneficiario'])){
 			$id_beneficiario = $id_solicitante;
@@ -613,7 +620,7 @@
 			echo json_encode($json);
 			exit();
 		}
-		$query = "INSERT INTO gestiones VALUES ('','$fecha_captura','$fecha_entrega','','$id_solicitante','$id_beneficiario','$cat','$subcat','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$id_colonia','$comentarios','$estatus','','$id_evento','$lat','$lng','$seccion','$distrito')";
+		$query = "INSERT INTO gestiones VALUES ('$idg','$fecha_captura','$fecha_entrega','','$id_solicitante','$id_beneficiario','$cat','$subcat','$calle','$num_ext','$num_int','$cruzamiento_1','$cruzamiento_2','$id_colonia','$comentarios','$estatus','','$id_evento','$lat','$lng','$seccion','$distrito','$tipo_gestion') ON DUPLICATE KEY UPDATE fecha_captura = '$fecha_captura', fecha_entrega = '$fecha_entrega', idSolicitante = '$id_solicitante', idBeneficiario = '$id_beneficiario', idCategoria = '$cat', idSubCategoria = '$subcat', calle = '$calle', num_ext = '$num_ext', num_int = '$num_int', cruzamiento_1 = '$cruzamiento_1', cruzamiento_2 = '$cruzamiento_2', idColonia_entrega = '$id_colonia', detalles = '$comentarios', estatus = '$estatus', id_evento = '$id_evento', lat_entrega = '$lat', lng_entrega = '$lng', id_seccion = '$seccion', id_distrito = '$distrito'";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "NO se guarda la informacion intentalo mas tarde.";
@@ -663,8 +670,7 @@
 			//$filtro .= " Where estatus = 1";
 		}
 
-		$query = "SELECT g.*, s.nom_sol, b.nom_benf,CONCAT(c.prefijo, ' ', c.nombre_colonia) as nom_colonia, cat.nombre as cat, sc.nombre as subcat, e.nombre_evento,scc.seccion, d.distrito from gestiones g inner join catColonias c on c.idColonia = g.idColonia_entrega inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_sol from personas) as s on s.idpersona = g.idSolicitante inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_benf from personas) as b on b.idpersona = g.idSolicitante inner join categorias cat on (cat.idtipog = g.idCategoria) inner join subcat sc on (sc.idsubcat = g.idSubCategoria) inner join eventos e on e.id = g.id_evento LEFT JOIN secciones scc ON scc.id = g.id_seccion LEFT JOIN distritos d ON d.id = g.id_distrito".$filtro." group by g.idGestion";
-
+		$query = "SELECT g.*, s.nom_sol, s.clave_elec as cve_elector_s,  b.nom_benf, b.clave_elec as cve_elector_b, CONCAT(c.prefijo, ' ', c.nombre_colonia) as nom_colonia, cat.nombre as cat, sc.nombre as subcat, e.nombre_evento,scc.seccion, d.distrito from gestiones g inner join catColonias c on c.idColonia = g.idColonia_entrega inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_sol, clave_elec from personas) as s on s.idpersona = g.idSolicitante inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_benf, clave_elec from personas) as b on b.idpersona = g.idBeneficiario inner join categorias cat on (cat.idtipog = g.idCategoria) inner join subcat sc on (sc.idsubcat = g.idSubCategoria) inner join eventos e on e.id = g.id_evento LEFT JOIN secciones scc ON scc.id = g.id_seccion LEFT JOIN distritos d ON d.id = g.id_distrito".$filtro." group by g.idGestion";
 
 		$result = $mysqli->query($query);
 		if(!$result){
@@ -682,8 +688,10 @@
 							 'fRealEntrega' => $row['fecha_real_entrega'],
 							 'idSolicitante' => $row['idSolicitante'],
 							 'solicitante' => $row['nom_sol'],
+							 'cve_elector_s' => $row['cve_elector_s'],
 							 'idBeneficiario' => $row['idBeneficiario'],
 							 'beneficiario' => $row['nom_benf'],
+							 'cve_elector_b' => $row['cve_elector_b'],
 							 'idCat' => $row['idCategoria'],
 							 'cat' => $row['cat'],
 							 'subcat' => $row['subcat'],
@@ -695,7 +703,7 @@
 							 'cruzamiento_2' => $row['cruzamiento_2'],
 							 'id_col_entrega' => $row['idColonia_entrega'],
 							 'colonia' => $row['nom_colonia'],
-							 'detalles' => $row['detalles'],
+							 'detalles' => trim($row['detalles']),
 							 'estatus' => $row['estatus'],
 							 'comentarios' => trim($row['comentarios_extras']),
 							 'idEvento' => $row['id_evento'],
