@@ -315,16 +315,11 @@
                     <div class="modal-content animated bounceInRight">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <i class="fa fa-laptop modal-icon"></i>
-                            <h4 class="modal-title">Modal title</h4>
-                            <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+                            <h4 class="modal-title">Editar Gestion</h4>
                         </div>
                         <div class="modal-body">
                             <form action="" class="form_gestion form">
                                     <div class="row">
-                                        <div class="col-md-12 col-xs-12">
-                                            
-                                        </div>
                                         <div class="col-md-12">
                                             <h3>
                                                 Informacion del solicitante
@@ -357,7 +352,7 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="row" id="beneficiario" style="display: none;">
+                                    <div class="row" id="es_beneficiario" style="display: none;">
                                         <div class="col-md-12">
                                             <h3>
                                                 Informacion del Beneficiario
@@ -396,30 +391,54 @@
                                         <div class="col-md-4">
                                             <div class="form-group" id="data_1">
                                                 <label class="font-noraml">Fecha de Captura</label>
-                                                <div class="input-group date">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control fecha_captura fechas" name="fecha_captura" required>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" data-mask="99/99/9999"  class="form-control fecha_captura" name="fecha_captura" required>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group" id="data_1">
                                                 <label class="font-noraml">Fecha de entrega</label>
-                                                <div class="input-group date">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control fecha_entrega fechas" name="fecha_entrega" required>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" data-mask="99/99/9999"  class="form-control fecha_entrega" name="fecha_entrega" required>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-2 col-xs-12">
                                             <div class="form-group">
-                                                <label class="font-noraml">Dirección de entrega</label>
-                                                <input type="text" class="form-control direccion_entrega" name="direccion_entrega" required>
+                                                <label class="font-noraml">calle</label>
+                                                <input type="text" class="form-control calle form_domicilio" name="calle" required>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2 col-xs-6">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Num Ext.</label>
+                                                <input type="text" class="form-control num_ext form_domicilio" name="num_ext" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 col-xs-6">
+                                            <div class="form-group">
+                                                <label class="font-noraml">N. Int.</label>
+                                                <input type="text" class="form-control num_int" name="num_int">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-xs-6">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Cruzam. 1</label>
+                                                <input type="text" class="form-control cruzamiento_1 form_domicilio" name="cruzamiento_1" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-xs-6">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Cruzam. 2</label>
+                                                <input type="text" class="form-control cruzamiento_2 form_domicilio" name="cruzamiento_2" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12">
                                             <div class="form-group">
                                                 <label class="font-noraml">Colonia/Fracc.</label>
-                                                <select class="chosen-select select_colonia" id="id_colonia_gestion" style="width:200px;" tabindex="2" name="id_colonia_gestion">
+                                                <select class="chosen-select select_colonia select_colonia_gestion" id="id_colonia_gestion" tabindex="2" name="id_colonia_gestion" style="width: 100%">
                                                 </select>
                                             </div>
                                         </div>
@@ -428,48 +447,63 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label class="font-noraml">Estatus</label>
-                                                <div class="input-group">
-                                                <select data-placeholder="Choose a Country..." class="chosen-select" name="estatus" style="width:200px;" tabindex="2">
+                                                <select data-placeholder="Cargando" class="chosen-select" name="estatus"  tabindex="2" style="width: 100%" id="estatus_gestion">
                                                     <option value="1">Pediente</option>
                                                     <option value="2">Entregada</option>
                                                     <option value="3">Cancelada</option>
                                                 </select>
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="font-noraml">Categoria</label>
-                                                <div class="input-group">
-                                                <select data-placeholder="Choose a Country..." name="categoria" class="chosen-select select_categoria" style="width: 300px;" required>
+                                                <select data-placeholder="Choose a Country..." name="categoria" class="chosen-select select_categoria" id="cat_gestion" required style="width: 100%">
                                                 </select>
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="font-noraml">SubCategoria</label>
-                                                <div class="input-group">
-                                                <select data-placeholder="Choose a Country..." class="chosen-select select_subCategoria" name="subcategoria" style="width: 300px;" required="">
-                                                    
+                                                <select data-placeholder="Choose a Country..." class="chosen-select select_subCategoria" id="subCat_gestion" name="subcategoria" required style="width: 100%">
                                                 </select>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="font-noraml">Comentarios</label>
-                                                <textarea name="comentarios" id=""  rows="5" class="form-control"></textarea>
+                                                <label class="font-noraml">Evento</label>
+                                                <select data-placeholder="Choose a Country..." name="evento" class="chosen-select select_evento" required style="width: 100%">
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <button type="button" class="btn btn-outline btn-default">
-                                                Cancelar 
-                                            </button>
-                                            <button class="btn btn-primary dim pull-right" type="submit">
-                                                Guardar <i class="fa fa-save"></i></button>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Distrito</label>
+                                                <select class="chosen-select select_distrito" style="width:100%;" tabindex="2" name="distrito"  required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Seccion</label>
+                                                <select class="chosen-select select_seccion" style="width:100%;" tabindex="2" name="seccion"  required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="font-noraml">Comentarios</label>
+                                                <textarea name="comentarios" id="comentarios_gestion"  rows="7" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a class="btn btn-info btn-block" onclick="set_ubicacion();">Obtener ubicacion segun dirección</a>
+                                            <div id="map_edit" style="width: 100%;height: 200px;"></div>
+                                            <input type="hidden" name="lat" class="lat_map">
+                                            <input type="hidden" name="lng" class="lng_map">
                                         </div>
                                     </div>
                                 </form>
@@ -507,9 +541,6 @@
 
    <!-- JSKnob -->
    <script src="js/plugins/jsKnob/jquery.knob.js"></script>
-
-   <!-- Input Mask-->
-    <script src="js/plugins/jasny/jasny-bootstrap.min.js"></script>
 
    <!-- Data picker -->
    <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
@@ -559,6 +590,7 @@
 
     <!--funciones personales -->
     <script src="js/funciones.js"></script>    
+    <script src="js/maps.js"></script>
 
     <script>
         var gestiones;
@@ -568,6 +600,11 @@
         $(document).ready(function(){
             var datos = "opc=get_gestiones";
             get_gestiones(datos);
+            get_eventos();
+            get_cat_subCat();
+            get_colonias();
+            get_ocupaciones();
+            get_distritos_secciones();
 
 
 
@@ -867,7 +904,7 @@
             if(marker){
                 deleteMarkers();
             }
-            set_marker(item_gestion);
+            set_marker_gestion(item_gestion,false);
         }
 
         function deleteMarkers(){
@@ -876,8 +913,48 @@
         }
 
         function editar_gestion(json){
+            initMap_editar();
+            set_marker_gestion(json,true);
             console.log(json);
             $(".chosen-container").css({'width':'100%'});
+            $(".nombre_solicitante").val(json.solicitante);
+            $(".id_solicitante").val(json.idSolicitante);
+            var fc = json.fCaptura.split("-");
+            $(".fecha_captura").val(fc[2]+"/"+fc[1]+"/"+fc[0]);
+            var fe = json.fEntrega.split("-");
+            $(".fecha_entrega").val(fe[2]+"/"+fe[1]+"/"+fe[0]);
+            $(".calle").val(json.calle);
+            $(".num_ext").val(json.num_ext);
+            $(".num_int").val(json.num_int);
+            $(".cruzamiento_1").val(json.cruzamiento_1);
+            $(".cruzamiento_2").val(json.cruzamiento_2);
+            $('#id_colonia_gestion option[value='+json.id_col_entrega+']').attr("selected",true);
+            $("#id_colonia_gestion").trigger("chosen:updated");
+
+            $('#estatus_gestion option[value='+json.estatus+']').attr("selected",true);
+            $("#estatus_gestion").trigger("chosen:updated");
+
+            $('#cat_gestion option[value='+json.idCat+']').attr("selected",true);
+            $("#cat_gestion").trigger("chosen:updated");
+
+            set_subCat(json.idCat);
+            $('#subCat_gestion option[value='+json.idSubCat+']').attr("selected",true);
+            $("#subCat_gestion").trigger("chosen:updated");
+
+            $('.select_evento option[value='+json.idEvento+']').attr("selected",true);
+            $(".select_evento").trigger("chosen:updated");
+
+            console.log(json.id_distrito);
+            $('.select_distrito option[value='+json.id_distrito+']').attr("selected",true);
+            $(".select_distrito").trigger("chosen:updated");
+
+            set_seccion(json.id_distrito);
+            console.log(json.id_seccion);
+            $('.select_seccion option[value='+json.id_seccion+']').attr("selected",true);
+            $(".select_seccion").trigger("chosen:updated");
+
+            $("#comentarios_gestion").val(json.comentarios);
+
             $("#modal_editar").modal('show');
         }
 
@@ -941,25 +1018,24 @@
             })
         }
 
-        function initMap() {
-            var uluru = {lat: 21.0127021, lng: -89.692326};
-            map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 12,
-              center: uluru
-            });
-          }
-
         //$.when(deleteMarkers()).then(set_marker(item_gestion));
 
-        function set_marker(json){
+        function set_marker_gestion(json,drag){
             var lat = parseFloat(json.lat);
             var lng = parseFloat(json.lng);
             var location = {lat: lat, lng: lng};
             marker = new google.maps.Marker({
                 title:"Arrastrame al punto deseado",
                 position: location,
-                map: map
+                map: map,
+                draggable: drag,
             });
+            if(drag){
+                get_position(marker);
+                google.maps.event.addListener(marker, 'dragend', function() {
+                    get_position(marker);
+                });    
+            }
             map.setZoom(16);
             map.setCenter(location);
         }

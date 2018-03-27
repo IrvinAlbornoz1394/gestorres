@@ -1,5 +1,6 @@
 var secciones;
-
+var categorias;
+var subcategorias;  
 window.onload = function(){
             $("#contenedor_spinner").fadeOut('slow');
         }
@@ -35,9 +36,12 @@ $("#modal_info_persona").on('hidden.bs.modal', function () {
 
 
 $(".select_distrito").change(function(){
-    $(".select_seccion").html('');
     var dis = $(this).val();
-    console.log(dis);
+    set_seccion(dis);
+});
+
+function set_seccion(dis){
+    $(".select_seccion").html('');
     var select_seccion = "<option val='' disabled selected>Selecciona una sección</option>";
     if( dis !== null ){
         for (var i = 0; i < secciones.length; i++) {
@@ -47,7 +51,7 @@ $(".select_distrito").change(function(){
         }
         $(".select_seccion").html(select_seccion).trigger("chosen:updated");
     }
-});
+}
 
 function get_colonias(){
     $.ajax({
@@ -115,6 +119,66 @@ function get_distritos_secciones(){
             console.log(error);
         }
     });
+}
+
+ function get_eventos(){
+    $.ajax({
+        url:'php/funciones.php',
+        data: "opc=get_eventos",
+        dataType:'json',
+        type:'post',
+        success: function(json){
+            if(json.success){
+                var ocup = "<option val='' disabled selected>Selecciona una opcion</option>";
+                for (var i = 0; i < json.data.length; i++) {
+                    ocup += "<option value="+json.data[i].id+">"+json.data[i].nombre+"</option>";
+                }
+                $(".select_evento").html(ocup).trigger("chosen:updated");
+            }
+        },
+        error:function(error){
+            console.log(error);
+        }
+    });
+}
+
+function get_cat_subCat(){
+    $.ajax({
+        url:'php/funciones.php',
+        data: "opc=get_cat_subCat",
+        dataType:'json',
+        type:'post',
+        success:function(json){
+            console.log(json);
+            if(json.success){
+                subcategorias = json.subcategorias;
+                var cat = "<option val='' disabled selected>Selecciona una categoria</option>";
+                for (var i = 0; i < json.categorias.length; i++) {
+                    cat += "<option value="+json.categorias[i].id+">"+json.categorias[i].nombre+"</option>";
+                }
+                $(".select_categoria").html(cat).trigger("chosen:updated");
+            }
+        },
+        error:function(error){
+            console.log(error);
+        }
+    });
+}
+
+$(".select_categoria").change(function(){
+    var id = $(".select_categoria").val();
+    set_subCat(id);
+});
+
+function set_subCat(id){
+    var subcat = "<option val='' disabled selected>Selecciona una SubCategoria</option>";
+    $(".select_subCategoria").html('');
+    for (var i = 0; i < subcategorias.length; i++) {
+        if(subcategorias[i].idCat == id){
+            subcat += "<option value="+subcategorias[i].id+">"+subcategorias[i].nombre+"</option>";    
+        }
+    }
+    $(".select_subCategoria").html(subcat).trigger("chosen:updated");
 }
 
 

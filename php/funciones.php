@@ -228,7 +228,7 @@
 			echo json_encode($json);
 			exit();
 		}
-		$query = "SELECT * from tipo_gestion WHERE estatus = 1";
+		$query = "SELECT * from categorias WHERE estatus = 1";
 		$result = $mysqli->query($query);
 		if(!$result){
 			$success = false;
@@ -242,7 +242,7 @@
 			);
 		}
 
-		$query1 = "SELECT s.*,c.nombre as cat from subcat s inner join tipo_gestion c on s.idtipog = c.idtipog Where s.estatus = 1";
+		$query1 = "SELECT s.*,c.nombre as cat from subcat s inner join categorias c on s.idtipog = c.idtipog Where s.estatus = 1";
 		$result1 = $mysqli->query($query1);
 		if(!$result1){
 			$success = false;
@@ -597,7 +597,7 @@
 		$estatus = $_POST['estatus'];
 		$cat = $_POST['categoria'];
 		$subcat = $_POST['subcategoria'];
-		$comentarios = $_POST['comentarios'];
+		$comentarios = trim($_POST['comentarios']);
 		$id_evento = $_POST['evento'];
 		$lat = $_POST['lat'];
 		$lng = $_POST['lng'];
@@ -663,7 +663,7 @@
 			//$filtro .= " Where estatus = 1";
 		}
 
-		$query = "SELECT g.*, s.nom_sol, b.nom_benf,CONCAT(c.prefijo, ' ', c.nombre_colonia) as nom_colonia, cat.nombre as cat, sc.nombre as subcat, e.nombre_evento,scc.seccion, d.distrito from gestiones g inner join catColonias c on c.idColonia = g.idColonia_entrega inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_sol from personas) as s on s.idpersona = g.idSolicitante inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_benf from personas) as b on b.idpersona = g.idSolicitante inner join tipo_gestion cat on (cat.idtipog = g.idCategoria) inner join subcat sc on (sc.idsubcat = g.idSubCategoria) inner join eventos e on e.id = g.id_evento LEFT JOIN secciones scc ON scc.id = g.id_seccion LEFT JOIN distritos d ON d.id = g.id_distrito".$filtro." group by g.idGestion";
+		$query = "SELECT g.*, s.nom_sol, b.nom_benf,CONCAT(c.prefijo, ' ', c.nombre_colonia) as nom_colonia, cat.nombre as cat, sc.nombre as subcat, e.nombre_evento,scc.seccion, d.distrito from gestiones g inner join catColonias c on c.idColonia = g.idColonia_entrega inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_sol from personas) as s on s.idpersona = g.idSolicitante inner join (SELECT idpersona, CONCAT(nombres,' ',apellidopat,' ',apellidomat)  as nom_benf from personas) as b on b.idpersona = g.idSolicitante inner join categorias cat on (cat.idtipog = g.idCategoria) inner join subcat sc on (sc.idsubcat = g.idSubCategoria) inner join eventos e on e.id = g.id_evento LEFT JOIN secciones scc ON scc.id = g.id_seccion LEFT JOIN distritos d ON d.id = g.id_distrito".$filtro." group by g.idGestion";
 
 
 		$result = $mysqli->query($query);
@@ -697,10 +697,12 @@
 							 'colonia' => $row['nom_colonia'],
 							 'detalles' => $row['detalles'],
 							 'estatus' => $row['estatus'],
-							 'comentarios' => $row['comentarios_extras'],
+							 'comentarios' => trim($row['comentarios_extras']),
 							 'idEvento' => $row['id_evento'],
 							 'lat' => $row['lat_entrega'],
 							 'lng' => $row['lng_entrega'],
+							 'id_seccion' => $row['id_seccion'],
+							 'id_distrito' => $row['id_distrito'],
 							 'seccion' => $row['seccion'],
 							 'distrito' => $row['distrito'],
 			);
@@ -760,7 +762,7 @@
 		$message = "Consulta realizada con éxito.";
 		$success = true;
 
-		$query = "INSERT INTO tipo_gestion values ('$id','$nombre','',1) ON DUPLICATE KEY UPDATE nombre = '$nombre'";
+		$query = "INSERT INTO categorias values ('$id','$nombre','',1) ON DUPLICATE KEY UPDATE nombre = '$nombre'";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
@@ -930,7 +932,7 @@
 		$message = "Consulta realizada con éxito.";
 		$success = true;
 
-		$query = "UPDATE tipo_gestion set estatus = '$estatus' WHERE idtipog = '$id'";
+		$query = "UPDATE categorias set estatus = '$estatus' WHERE idtipog = '$id'";
 		if(!$mysqli->query($query)){
 			$success = false;
 			$message = "Ocurrio un error en la consulta, intentalo mas tarde";
