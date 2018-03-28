@@ -1,0 +1,95 @@
+p{
+	font-size: 10px;
+}
+p.text-center{
+	margin: 0 auto;
+}
+label{
+	font-size: 12px;
+}
+span{
+	font-size: 12px;
+}
+.body{
+	height: 115px;
+}
+
+
+.col-md-6{
+	width: 50%;
+	padding: 0;
+	float: left;
+}
+.col-md-9{
+	width: 70%;
+	text-align: left;
+}
+.col-md-3{
+	width: 30%;
+	text-align: right;
+}
+.ps{
+	margin-right: 1%;
+}
+.ds{
+	margin-left: 1%;
+}
+.ps1{
+	width: 65px;
+}
+.ps2{
+	width: 180px;
+}
+.ps3{
+	width: 70px;
+}
+.sellos{
+	margin-top: 10px;
+	padding: 2px;
+	background: black;
+	color: white;
+}
+.ds1{
+	width: 65px;
+}
+.ds2{
+	width: 180px;
+}
+.ds3{
+	width: 70px;
+}
+.neto{
+	margin-top: 5px;
+	width: 100%;
+}
+#psds{
+	width: 100%;
+}
+
+.border{
+	border: 1px solid;
+	margin-top: 2PX;
+}
+.firma{
+	margin-top: 70px;
+}
+.border_bottom{
+	border-bottom: 1px solid;
+	float: left !important;
+	margin-left: 200px;	
+}
+.nombre_firma{
+	padding: 0 20px;
+}
+
+.text-min table tr td strong{
+	font-size: 10px;
+}
+
+.code-qr{
+	width: 150px;
+}
+/*.mitad td {
+    border-bottom: 1px solid #ddd;
+}*/
+

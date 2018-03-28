@@ -844,16 +844,20 @@
                                             +'<button data-toggle="dropdown" class="btn btn-default btn-xs dropdown-toggle" aria-expanded="false">Accion <span class="caret"></span></button>'
                                             +'<ul class="dropdown-menu">'
                                                 +'<li><a href="#" onclick=\'detalles_gestion('+JSON.stringify(json.data[i])+');\'>Ver Detalles <i class="fa fa-eye"></i></a></li>'
+                                                +'<li>';
+
+                                            if(json.data[i].estatus < 2){
+                                                html += '<li><a href="#" onclick=\'editar_gestion('+JSON.stringify(json.data[i])+');\' '+desact+'>Editar <i class="fa fa-pencil"></i></a></li>'
                                                 +'<li>'
-                                                +'<li><a href="#" onclick=\'editar_gestion('+JSON.stringify(json.data[i])+');\' '+desact+'>Editar <i class="fa fa-pencil"></i></a></li>'
-                                                +'<li>'
-                                                    +'<a href="#" onclick=\'finalizar_gestion('+JSON.stringify(json.data[i])+')\' '+desact+'>Finalizar <i class="fa fa-check"></i></a>'
+                                                +'<a href="#" onclick=\'finalizar_gestion('+JSON.stringify(json.data[i])+')\' '+desact+'>Finalizar <i class="fa fa-check"></i></a>'
 
                                                 +'</li>'
                                                 +'<li>'
                                                     +'<a href="#" onclick=\'eliminar_gestion('+JSON.stringify(json.data[i])+')\'>Eliminar <i class="fa fa-trash"></i></a>'
-                                                +'</li>'
-                                            +'</ul>'
+                                                +'</li>';
+                                            }
+                                                
+                                            html+='</ul>'
                                         +'</div>'
                                     +'</td>'
                                   + "</tr>";
