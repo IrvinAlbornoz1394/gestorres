@@ -1,6 +1,7 @@
 var secciones;
 var categorias;
 var subcategorias;  
+
 window.onload = function(){
             $("#contenedor_spinner").fadeOut('slow');
         }

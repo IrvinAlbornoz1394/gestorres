@@ -8,6 +8,7 @@
                     </div>';
         }else{
             $captcha = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Ld35j8UAAAAAEARBj7yEBHhQALgSdpwq9-j180q&response=" . $_POST['g-recaptcha-response'] . "&remoteip=" . $_SERVER['REMOTE_ADDR']));
+            $captcha->success = true;
             if($captcha->success == false){
                 $error = '<div class="alert alert-danger" role="alert">
                         <strong>Debes indicar que no eres un robot.

@@ -637,6 +637,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Distrito</label>
+                                    <select class="chosen-select select_distrito" style="width:100%;" tabindex="2" name="distrito"  required>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Seccion</label>
+                                    <select class="chosen-select select_seccion" style="width:100%;" tabindex="2" name="seccion"  required>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
@@ -807,6 +823,8 @@
             $('#modal_info_persona').on('shown.bs.modal', function () {
               $('.select_colonia_persona', this).chosen('destroy').chosen();
               $('.select_ocupacion', this).chosen('destroy').chosen();
+              $('.select_distrito', this).chosen('destroy').chosen();
+              $('.select_seccion', this).chosen('destroy').chosen();
             });
 
             $("#id_colonia_gestion").change(function(){
@@ -871,6 +889,7 @@
             $("#modal_busqueda").modal('hide');
             $('#id_colonia_gestion option[value='+json.id_colonia+']').attr("selected",true);
             $("#id_colonia_gestion").trigger("chosen:updated");
+            set_ubicacion();
         }
 
         function buscar_personas(datos,tabla){
