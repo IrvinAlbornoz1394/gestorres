@@ -12,8 +12,14 @@
 		case 'get_usuarios':
 			get_usuarios();
 			break;
+		case 'get_casillas':
+			get_casillas();
+			break;
 		case 'insert_usuario':
 			insert_usuario();
+			break;
+		case 'get_content':
+			get_content();
 			break;
 		case 'cambiar_password':
 			cambiar_password();
@@ -65,7 +71,7 @@
 		};
 		$json = array('success' => $success,
 					  'message' =>$message,
-					  'data' => $datos);
+					  'casillas' => $datos);
 
 		echo json_encode($json);
 	}
@@ -164,6 +170,7 @@
 			echo json_encode($json);
 			exit();
 		}
+
 		$id = $_POST['id'];
 		$nvo_password = $_POST['nvo_password'];
 		$confirm_password = $_POST['confirm_password'];
@@ -186,6 +193,56 @@
 		$json = array('success' => $success,
 					  'message' => $message);
 		echo json_encode($json);
+	}
+
+	function get_content(){
+		$mysqli = conexion();
+		if(!$mysqli){
+			$json = array('success' => false,
+			              'mesage' => 'Error al conectar con la BD');
+			echo json_encode($json);
+			exit();
+		}
+
+		$success = true;
+		$message = "CORRECTO";
+		// $id_casilla = $_POST['casilla'];
+		$query_partidos = "SELECT * from partidos";
+		$result_partidos = $mysqli->query($query_partidos);
+		if(!$result_partidos){
+			$success = false;
+			$message = "No se encontraron resultados";
+		}
+		while ($row = mysqli_fetch_array($result_partidos)) {
+			$partidos[] = array('id_partido' => $row['id'],
+							 	'nombre_partido' => $row['nombre_partido']);
+		};
+
+		$query_candidatos = "SELECT * FROM candidatos";
+		$result_candidatos = $mysqli->query($query_candidatos);
+		if(!$result_candidatos){
+			$success = false;
+			$message = "No se encontraron resultados";
+		}
+
+		while ($row_c = mysqli_fetch_array($result_candidatos)) {
+			$candidatos[] = array('id_candidato' => $row_c['id'],
+							 	'candidato_a' => utf8_encode($row_c['candidato_a']));
+		};
+
+		
+		for ($i=0; $i < count($candidatos); $i++) {
+			// echo $candidatos[$i]['candidato_a']."<br>";
+			$datos[] = array('candidato' => $candidatos[$i]['candidato_a'],
+						  	'partidos' => $partidos);
+
+		}
+		$json = array('data' => $datos,
+					  'message' => $message,
+					  'success' => $success);
+		
+		echo json_encode($json);
+
 	}
 
  ?>

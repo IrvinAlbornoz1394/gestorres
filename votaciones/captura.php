@@ -173,11 +173,20 @@
         .mt0{
             margin-top: 0;
         }
+
+        .input_partido{
+            font-size: 20px;
+            width: 100%;
+            min-width: 80px;
+        }
+        th.text_center{
+            font-size: 20px;
+        }
     </style>
 
 </head>
 
-<body>
+<body class="pace-done mini-navbar">
 
     <div id="wrapper">
 
@@ -246,233 +255,49 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Casilla</label>
-                                                        <select class="chosen-select select_ocupacion"  tabindex="2" name="ocupacion" style="width: 100%;">
-                                                            <option value="" disabled selected>Selecciona una opcion</option>
-                                                            <option value="">1</option>
+                                                        <select class="chosen-select select_casilla"  tabindex="2" name="casilla" style="width: 100%;">
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="clearfix"></div>
-                                                <div class="col-md-6 col-md-offset-6">
-                                                    <table class="table table-striped mb0">
+                                                <div class="hr-line-dashed mt0"></div>
+                                                <div class="get_content table-responsive">
+                                                    <!-- <table class="table table-striped inverse text-center">
                                                         <thead>
                                                             <tr>
-                                                                <th class="text-center" style="width: 25%;">PAN</th>
-                                                                <th class="text-center" style="width: 25%;">PRI</th>
-                                                                <th class="text-center" style="width: 25%;">PRD</th>
-                                                                <th class="text-center" style="width: 25%;">Totales</th>
-                                                            </tr>
+                                                                <th class="text-center">Candidato</th>
+                                                                <th class="text-center">PAN</th>
+                                                                <th class="text-center">PRI</th>
+                                                                <th class="text-center">PRD</th>
+                                                                <th class="text-center">NVA. ALIANZA</th>
+                                                                <th class="text-center">PARTIDO NUEVO</th>
+                                                            </tr>    
                                                         </thead>
-                                                    </table>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                                <div class="hr-line-dashed mt0"></div>
-                                                <div class="col-md-6">
-                                                    <table class="table mt0">
                                                         <tbody>
                                                             <tr>
-                                                                <td>
-                                                                    <h3>Gobernador</h3>
+                                                                <td class="text-center">
+                                                                    <h2><b>Gobernador</b></h2>
                                                                 </td>
-                                                                <td>
-                                                                    <input type="radio" name="gobernador" class="input_pan" id="g_pan" value="pan"> 
-                                                                    <label for="g_pan" class="label_radio label_pan">PAN</label>
+                                                                <td class="text-center">
+                                                                    <input type="text" class=" input_partido">
                                                                 </td>
-                                                                <td>
-                                                                    <input type="radio" name="gobernador" class="input_pri" id="g_pri" value="pri">
-                                                                    <label for="g_pri" class="label_radio label_pri">PRI</label>
+                                                                <td class="text-center">
+                                                                    <input type="text" class=" input_partido">
                                                                 </td>
-                                                                <td>
-                                                                    <input type="radio" name="gobernador" class="input_prd" id="g_prd" value="prd">
-                                                                    <label for="g_prd" class="label_radio label_prd">PRD</label>
+                                                                <td class="text-center">
+                                                                    <input type="text" class=" input_partido">
                                                                 </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <h3>Presidente Mpal</h3>
+                                                                <td class="text-center">
+                                                                    <input type="text" class=" input_partido">
                                                                 </td>
-                                                                <td>
-                                                                    <input type="radio" name="p_municipal" id="p_pan" class="input_pan"  value="pan"> 
-                                                                    <label for="p_pan" class="label_radio label_pan">PAN</label>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="radio" name="p_municipal" id="p_pri" class="input_pri" value="pri">
-                                                                    <label for="p_pri" class="label_radio label_pri">PRI</label>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="radio" name="p_municipal" id="p_prd" class="input_prd" value="prd">
-                                                                    <label for="p_prd" class="label_radio label_prd">PRD</label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <h3>Diputado Local</h3>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="radio" name="d_local" id="dl_pan" class="input_pan"  value="pan"> 
-                                                                    <label for="dl_pan" class="label_radio label_pan">PAN</label>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="radio" name="d_local" id="dl_pri" class="input_pri" value="pri">
-                                                                    <label for="dl_pri" class="label_radio label_pri">PRI</label>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="radio" name="d_local" id="dl_prd" class="input_prd" value="prd">
-                                                                    <label for="dl_prd" class="label_radio label_prd">PRD</label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <h3>Diputado Federal</h3>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="radio" name="d_federal" id="df_pan" class="input_pan"  value="pan"> 
-                                                                    <label for="df_pan" class="label_radio label_pan">PAN</label>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="radio" name="d_federal" id="df_pri" class="input_pri" value="pri">
-                                                                    <label for="df_pri" class="label_radio label_pri">PRI</label></td>
-                                                                <td>
-                                                                    <input type="radio" name="d_federal" id="df_prd" class="input_prd" value="prd">
-                                                                    <label for="df_prd" class="label_radio label_prd">PRD</label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <h3>Senador</h3>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="radio" name="senador" id="s_pan" class="input_pan"  value="pan"> 
-                                                                    <label for="s_pan" class="label_radio label_pan">PAN</label>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="radio" name="senador" id="s_pri" class="input_pri" value="pri">
-                                                                    <label for="s_pri" class="label_radio label_pri">PRI</label>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="radio" name="senador" id="s_prd" class="input_prd" value="prd">
-                                                                    <label for="s_prd" class="label_radio label_prd">PRD</label>
+                                                                <td class="text-center">
+                                                                    <input type="text" class=" input_partido">
                                                                 </td>
                                                             </tr>
                                                         </tbody>
-                                                    </table>
-                                                    <!-- <div class="row">
-                                                        <div class="col-md-4">
-                                                            <h3>Gobernador</h3>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input type="radio" name="gobernador" class="input_pan" id="g_pan" value="pan"> 
-                                                            <label for="g_pan" class="label_radio label_pan">PAN</label>
-                                                            
-                                                            <input type="radio" name="gobernador" class="input_pri" id="g_pri" value="pri">
-                                                            <label for="g_pri" class="label_radio label_pri">PRI</label>
-
-                                                            <input type="radio" name="gobernador" class="input_prd" id="g_prd" value="prd">
-                                                            <label for="g_prd" class="label_radio label_prd">PRD</label>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <h3>Presidente Mpal</h3>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input type="radio" name="p_municipal" id="p_pan" class="input_pan"  value="pan"> 
-                                                            <label for="p_pan" class="label_radio label_pan">PAN</label>
-                                                            
-                                                            <input type="radio" name="p_municipal" id="p_pri" class="input_pri" value="pri">
-                                                            <label for="p_pri" class="label_radio label_pri">PRI</label>
-
-                                                            <input type="radio" name="p_municipal" id="p_prd" class="input_prd" value="prd">
-                                                            <label for="p_prd" class="label_radio label_prd">PRD</label>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <h3>Diputado Local</h3>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input type="radio" name="d_local" id="dl_pan" class="input_pan"  value="pan"> 
-                                                            <label for="dl_pan" class="label_radio label_pan">PAN</label>
-                                                            
-                                                            <input type="radio" name="d_local" id="dl_pri" class="input_pri" value="pri">
-                                                            <label for="dl_pri" class="label_radio label_pri">PRI</label>
-
-                                                            <input type="radio" name="d_local" id="dl_prd" class="input_prd" value="prd">
-                                                            <label for="dl_prd" class="label_radio label_prd">PRD</label>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <h3>Diputado Federal</h3>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input type="radio" name="d_federal" id="df_pan" class="input_pan"  value="pan"> 
-                                                            <label for="df_pan" class="label_radio label_pan">PAN</label>
-                                                            
-                                                            <input type="radio" name="d_federal" id="df_pri" class="input_pri" value="pri">
-                                                            <label for="df_pri" class="label_radio label_pri">PRI</label>
-
-                                                            <input type="radio" name="d_federal" id="df_prd" class="input_prd" value="prd">
-                                                            <label for="df_prd" class="label_radio label_prd">PRD</label>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <h3>Senador</h3>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input type="radio" name="senador" id="s_pan" class="input_pan"  value="pan"> 
-                                                            <label for="s_pan" class="label_radio label_pan">PAN</label>
-                                                            
-                                                            <input type="radio" name="senador" id="s_pri" class="input_pri" value="pri">
-                                                            <label for="s_pri" class="label_radio label_pri">PRI</label>
-
-                                                            <input type="radio" name="senador" id="s_prd" class="input_prd" value="prd">
-                                                            <label for="s_prd" class="label_radio label_prd">PRD</label>
-                                                        </div>
-                                                    </div>  -->    
+                                                        
+                                                    </table> -->
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <table class="table table-striped mt0">
-                                                        <tbody>
-                                                            <tr class="tr">
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="text" class="form-control"></td>
-                                                            </tr>
-                                                            <tr class="tr">
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="text" class="form-control"></td>
-                                                            </tr>
-                                                            <tr class="tr">
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="text" class="form-control"></td>
-                                                            </tr>
-                                                            <tr class="tr">
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="text" class="form-control"></td>
-                                                            </tr>
-                                                            <tr class="tr">
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="" name="" class="form-control"></td>
-                                                                <td><input type="text" class="form-control"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="clearfix"></div>
                                                 <div class="hr-line-dashed"></div>
                                             </div>
                                             
@@ -568,6 +393,82 @@
     <!--funciones personales -->
     <script src="../js/funciones.js"></script> 
     
+    <script>
+        $.ajax({
+            url:'php/funciones.php',
+            data: "opc=get_casillas",
+            dataType:'json',
+            type:'post',
+            success: function(json){
+                if(json.success){
+                    var casilla = "<option val='' disabled selected>Selecciona una casilla</option>";
+                    for (var i = 0; i < json.casillas.length; i++) {
+                        casilla += "<option value="+json.casillas[i].id+">"+json.casillas[i].nombre+"</option>";
+                    }
+                    $(".select_casilla").html(casilla).trigger("chosen:updated");
+                }
+            },
+            error:function(){
+
+            }
+        });
+
+        $(".select_casilla").change(function(){
+            var casilla = $(this).val();
+            get_content(casilla);
+            // if($(this).val() !== null ){
+            //     $(".chosen-container-single").removeClass('border_error')
+            //     $(".form_select").removeClass('color_error');
+            // }        
+        });
+
+
+        function get_content(casilla){
+            $.ajax({
+                url:'php/funciones.php',
+                data: "opc=get_content&casilla="+casilla,
+                dataType:'json',
+                type:'post',
+                success: function(json){
+                    if(json.success){
+                        console.log(json);
+
+                        var html = '<table class="table table-striped inverse text-center">'+
+                                    '<thead>'+
+                                        '<tr>'+
+                                            '<th>CANDIDATO</th>';
+
+                                for (var i = 0; i < json.data[0].partidos.length; i++) {
+                                    html += '<th class="text-center">'+json.data[0].partidos[i].nombre_partido+'</th>';
+                                }
+
+                                html += '</tr>'+
+                                    '</thead>'+
+                                    '<tbody>';
+
+                                for (var i = 0; i < json.data.length; i++) {
+                                    var lop = json.data[i];
+                                    html+= "<tr>"+
+                                            "<td><h3 class='text-left'>"+json.data[i]['candidato']+"</h3></td>";
+
+                                    for (var x = 0; x < lop.partidos.length; x++) {
+                                        html += '<td class="text-center"><input type="text" class=" input_partido" name="'+json.data[i]['candidato']+'_'+lop.partidos[x].nombre_partido+'"></td>';
+                                    }
+
+                                           html += "</tr>";
+                                }
+
+                                html += '</tbody>'+
+                                    '</table>';
+                        $(".get_content").html(html);
+                    }
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            });
+        }
+    </script>
 
 </body>
 
